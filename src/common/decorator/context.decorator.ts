@@ -6,7 +6,7 @@
  * @Description: context 上下文处理 结合 cls-hooked
  */
 
-import { createClsNamespace } from '../awesome/context';
+import { createClsNamespace } from '../../awesome/context';
 const clsNamespace = createClsNamespace('mqContext');
 
 export function ProcessContext(): MethodDecorator {

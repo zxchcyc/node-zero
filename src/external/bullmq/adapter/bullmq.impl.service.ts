@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-09-17 21:21:40
- * @LastEditTime: 2022-03-24 14:44:10
+ * @LastEditTime: 2022-03-24 20:58:27
  * @LastEditors: archer zheng
  * @Description: BULL MQ走这里出去
  */
@@ -14,8 +14,8 @@ import {
   IBullMsgBody,
   IBullUri,
 } from './bullmq.service.abstract';
-import { getContext } from 'src/common';
 import { runOnTransactionCommit } from 'typeorm-transactional-cls-hooked';
+import { getContext } from 'src/awesome';
 
 @Injectable()
 export class BullmqService implements AbstractBullMqService {

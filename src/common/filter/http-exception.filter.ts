@@ -6,7 +6,8 @@ import {
   Logger,
   HttpException,
 } from '@nestjs/common';
-import { EHttpErrorCode, getContext } from '..';
+import { getContext } from 'src/awesome';
+import { EHttpErrorCode } from '..';
 
 /**
  * 捕获全局异常 注意加载顺序 最先加载最后执行

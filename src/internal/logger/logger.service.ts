@@ -1,5 +1,5 @@
 import { Inject, Injectable, ConsoleLogger, LogLevel } from '@nestjs/common';
-import { getContext } from 'src/common';
+import { getContext } from 'src/awesome';
 import { WebhookService } from 'src/external/webhook/webhook.service';
 import { format } from 'util';
 import { EnvService } from '../env/env.service';

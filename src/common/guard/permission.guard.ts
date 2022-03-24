@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-24 16:06:32
+ * @LastEditTime: 2022-03-24 20:58:10
  * @LastEditors: archer zheng
  * @Description: 权限守卫
  */
@@ -11,7 +11,8 @@ import {
   ExecutionContext,
   BadRequestException,
 } from '@nestjs/common';
-import { BaseService, getContext, setContext } from '..';
+import { getContext, setContext } from 'src/awesome';
+import { BaseService } from '..';
 
 @Injectable()
 export class PermissionGuard extends BaseService implements CanActivate {

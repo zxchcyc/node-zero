@@ -1,7 +1,7 @@
 import { ExecutionContext, Injectable } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Observable } from 'rxjs';
-import { getContext } from 'src/common';
+import { getContext } from 'src/awesome';
 
 @Injectable()
 export class JwtAuthWhiteListGuard extends AuthGuard('jwt') {

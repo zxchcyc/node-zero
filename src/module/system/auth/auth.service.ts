@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IJwtPayload } from './jwt-payload.interface';
 import { jwtConstants } from './constant/constant';
-import { BaseService, ELoginWebSite, getContext } from 'src/common';
+import { BaseService, ELoginWebSite } from 'src/common';
+import { getContext } from 'src/awesome';
 
 type Token = {
   accessToken: string;

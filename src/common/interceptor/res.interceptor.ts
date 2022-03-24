@@ -17,7 +17,7 @@ import {
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { tap, map, timeout, catchError } from 'rxjs/operators';
 import { EHttpErrorCode } from '..';
-import { getContext } from '../awesome/context';
+import { getContext } from '../../awesome/context';
 
 @Injectable()
 export class ResTimeInterceptor implements NestInterceptor {

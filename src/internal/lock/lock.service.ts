@@ -1,17 +1,17 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-09-17 21:18:17
- * @LastEditTime: 2022-03-24 14:59:19
+ * @LastEditTime: 2022-03-24 20:58:40
  * @LastEditors: archer zheng
  * @Description: 分布式锁
  */
 import { Logger, Injectable } from '@nestjs/common';
 import { Redis } from 'ioredis';
 import { EnvService } from 'src/internal/env/env.service';
-import { getContext } from 'src/common';
 import { createHash } from 'crypto';
 import { RedisService } from 'node_modules_local/nestjs-redis';
 import { runOnTransactionCommit } from 'typeorm-transactional-cls-hooked';
+import { getContext } from 'src/awesome';
 
 @Injectable()
 export class LockService {
