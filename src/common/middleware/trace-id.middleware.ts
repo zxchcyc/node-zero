@@ -5,7 +5,12 @@
  */
 import { v4 as uuidv4 } from 'uuid';
 import { Request, Response } from 'express';
-import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NestMiddleware,
+} from '@nestjs/common';
 import { createClsNamespace } from '../context';
 const clsNamespace = createClsNamespace();
 
@@ -32,8 +37,18 @@ export class TraceIdMiddleware implements NestMiddleware {
       clsNamespace.set('ip', ipv4);
       // 注入 ua
       clsNamespace.set('ua', ua);
-      this.logger.debug('ipv4', ipv4);
-      return next();
+      // 注入 token
+      clsNamespace.set(
+        'token',
+        request.headers['authorization'] &&
+          request.headers['authorization'].replace('Bearer ', ''),
+      );
+      this.logger.verbose('ipv4:originalUrl', ipv4, request.originalUrl);
+      if (request.originalUrl.indexOf('undefined') !== -1) {
+        throw new BadRequestException('B0102');
+      } else {
+        return next();
+      }
     });
   }
 }

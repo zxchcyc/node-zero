@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-10-08 13:19:01
- * @LastEditTime: 2021-11-08 14:34:49
+ * @LastEditTime: 2021-12-17 17:48:58
  * @LastEditors: archer zheng
  * @Description: MapReduce 三种实现：单机 多进程 多线程
- * @FilePath: /node-zero/src/internal/map-reduce/map-reduce.ts
  */
 import { Worker, isMainThread } from 'worker_threads';
 import { cpus } from 'os';

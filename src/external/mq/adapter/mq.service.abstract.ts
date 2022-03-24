@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-08 17:22:21
- * @LastEditTime: 2021-11-08 17:27:36
+ * @LastEditTime: 2021-12-17 17:49:03
  * @LastEditors: archer zheng
  * @Description: MQ 发送抽象类
- * @FilePath: /node-zero/src/external/mq/mq.service.abstract.ts
  */
 // 根据业务确定即可
 export interface JobOptions {

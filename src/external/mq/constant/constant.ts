@@ -1,8 +1,1 @@
-export const BULL_QUEUES = [
-  'cleanStudyTask',
-  'cleanCrfTask',
-  'cleanSubjectTask',
-  'cleanRuleTask',
-  'cleanRuleConfigTask',
-  'aggSubjectProgressTask',
-];
+export const BULL_QUEUES = ['common'];

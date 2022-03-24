@@ -15,9 +15,9 @@
         ],
         "args": ["${workspaceFolder}/src/main.ts"],
         "env": {
-          "PORT": "5001",
+          "PORT": "3002",
           "NODE_ENV": "local",
-          "TASK_ENABLED": "true",
+          "TASK_ENABLED": "false",
           "CONFIG_FOLDER": "../config"
         },
         "sourceMaps": true,

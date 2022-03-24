@@ -15,17 +15,21 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { EnvService } from './internal/env/env.service';
 import { BULL_QUEUES } from './external/mq/constant/constant';
 import { LoggerService } from './internal/logger/logger.service';
-import { MicroserviceOptions } from '@nestjs/microservices';
-import { grpcClientOptions } from 'src/rpc/grpc-client.options';
 import { privateApiMiddlewareFunction } from './common';
+import {
+  initializeTransactionalContext,
+  patchTypeORMRepositoryWithBaseRepository,
+} from 'typeorm-transactional-cls-hooked';
+import { ExpressAdapter } from '@nestjs/platform-express';
+initializeTransactionalContext();
+patchTypeORMRepositoryWithBaseRepository();
 
 async function bootstrap() {
   install();
-  const app = await NestFactory.create(AppModule);
-
-  // RPC
-  app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
-  await app.startAllMicroservices();
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(), {
+    cors: true,
+    bodyParser: false,
+  });
 
   // 配置全局日志
   app.useLogger(app.get(LoggerService));
@@ -36,7 +40,6 @@ async function bootstrap() {
     new ValidationPipe({
       exceptionFactory: (errors: ValidationError[]) => {
         console.error('参数校验不通过', errors);
-        // FIXME 这里不生效
         throw new BadRequestException(errors, 'A0006');
       },
       enableDebugMessages: true,
@@ -67,19 +70,24 @@ async function bootstrap() {
 
   // 配置 Swagger API 文档
   const options = new DocumentBuilder()
-    .setTitle('NODE DW API')
+    .setTitle('NODE DA API')
     .setDescription('NODE ZERO API')
     .setVersion('V1.0.0')
     .addBearerAuth()
-    .addServer('http://localhost:3001', 'Local')
-    .addServer('http://localhost:5001', 'Debug')
+    .addServer('http://localhost:3002', 'Local')
+    .addServer('https://da-api-dev.alu120.com', 'Dev')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
   // docs 插入配置 权限分散管理
   envService.set(
-    Object.assign({ openapiPaths: document['paths'] }, envService['envConfig']),
+    Object.assign(
+      {},
+      { openapiPaths: document['paths'] },
+      envService['envConfig'],
+    ),
   );
+
   await app.listen(process.env.PORT, () => {
     logger.debug(
       `Swagger API Docs started on: http://localhost:${process.env.PORT}/docs/`,
@@ -88,6 +96,7 @@ async function bootstrap() {
       `Bull UI started on: http://localhost:${process.env.PORT}/api/private/admin/queues/`,
     );
   });
+
   // webpack 热加载
   if (module.hot) {
     module.hot.accept();

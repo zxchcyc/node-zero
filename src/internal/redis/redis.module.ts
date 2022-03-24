@@ -1,5 +1,5 @@
 import { Logger, Module } from '@nestjs/common';
-import { RedisModule } from 'nestjs-redis';
+import { RedisModule } from 'node_modules_local/nestjs-redis';
 import { EnvService } from '../env/env.service';
 const logger: Logger = new Logger('redis.module');
 // TIPS: 数据导出监听器超出限制

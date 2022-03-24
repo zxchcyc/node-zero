@@ -18,9 +18,6 @@ export const ApiCommResponse = <TModel extends Type>(
       allOf: [
         {
           properties: {
-            total: {
-              type: 'integer',
-            },
             data: {
               type: 'array',
               items: { $ref: getSchemaPath(model) },

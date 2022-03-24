@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-10-12 16:09:41
- * @LastEditTime: 2021-11-16 09:32:33
+ * @LastEditTime: 2021-12-17 17:48:26
  * @LastEditors: archer zheng
  * @Description: 生成签名
- * @FilePath: /node-zero/src/common/content-security/content-security-sign.ts
  */
 import {
   createHmac,

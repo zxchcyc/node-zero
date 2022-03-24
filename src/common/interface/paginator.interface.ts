@@ -7,5 +7,4 @@
  */
 export interface IPaginator<T> {
   data: T[];
-  total: number;
 }

@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-10-08 13:19:01
- * @LastEditTime: 2021-11-08 21:53:42
+ * @LastEditTime: 2021-12-17 17:48:56
  * @LastEditors: archer zheng
  * @Description: MapReduce workerThreads worker
- * @FilePath: /node-zero/src/internal/map-reduce/map-reduce-worker.ts
  */
 import { parentPort, threadId, workerData } from 'worker_threads';
 // Child process

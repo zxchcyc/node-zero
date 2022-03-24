@@ -20,7 +20,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     const status = exception.getStatus();
-    this.logger.error(`Catch ${exception.name}! Request path: ${request.url}`);
     const exceptionRes = exception.getResponse();
 
     const res: THttpResponse = {
@@ -68,6 +67,22 @@ export class HttpExceptionFilter implements ExceptionFilter {
       default:
         break;
     }
+
+    if (res.errorCode === 'C0003') {
+      res.message = res.error;
+    }
+
+    if (res.errorCode !== 'B0102') {
+      this.logger.error(
+        res,
+        `Catch ${exception.name}! Request path: ${
+          request.url
+        } Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(
+          request.query,
+        )} Params: ${JSON.stringify(request.params)}`,
+      );
+    }
+
     response.status(status).json(res);
   }
 }

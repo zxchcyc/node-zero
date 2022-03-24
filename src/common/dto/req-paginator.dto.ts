@@ -6,38 +6,38 @@ export class ReqPaginatorDto {
   @IsOptional()
   @IsInt()
   @Min(1)
-  @Max(1000)
+  // @Max(10000)
   @Type(() => Number)
   @ApiProperty({
     description: '获取起始页',
     type: 'integer',
   })
-  readonly page?: number = 1;
+  page?: number = 1;
 
   @IsOptional()
   @IsInt()
   @Min(0)
-  @Max(100)
+  @Max(1000)
   @Type(() => Number)
   @ApiProperty({
     description: '获取一页数量',
     type: 'integer',
   })
-  readonly limit?: number = 10;
+  limit?: number = 10;
 
   @IsOptional()
   @IsString()
   @ApiProperty({
-    description: '排序设置，如：age:-1,time:1',
+    description: '排序设置，如：-age,name',
     example: '',
   })
-  readonly sort?: string = '';
+  sortField?: string = '';
 
-  @IsOptional()
-  @IsString()
-  @ApiProperty({
-    description: '获取想要的属性（根据业务需要实现），如：name',
-    example: '',
-  })
-  readonly attr?: string = '';
+  // @IsOptional()
+  // @IsString()
+  // @ApiProperty({
+  //   description: '获取想要的属性（根据业务需要实现），如：name',
+  //   example: '',
+  // })
+  // attr?: string = '';
 }

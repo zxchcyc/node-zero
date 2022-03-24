@@ -31,4 +31,23 @@ export class WebhookService {
       await this.httpService.dingRequest(data);
     }
   }
+
+  /**
+   * 发送提示
+   *
+   * @param {string} message 警报消息
+   * @memberof WebhookService
+   */
+  async sendTip(message: string) {
+    if (this.envService.get('ENABLE_WEBHOOK')) {
+      const markdown = {
+        content: `### 【${process.env.NODE_ENV}】${process.env.SERVICE_NAME} \n #### 提示信息\n > ${message} \n\n`,
+      };
+      const data = {
+        msgtype: 'markdown',
+        markdown,
+      };
+      await this.httpService.dingRequest(data);
+    }
+  }
 }

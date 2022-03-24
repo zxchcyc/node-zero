@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-09-17 21:21:40
- * @LastEditTime: 2021-11-15 13:37:53
+ * @LastEditTime: 2022-03-24 14:44:10
  * @LastEditors: archer zheng
  * @Description: BULL MQ走这里出去
- * @FilePath: /node-zero/src/external/mq/adapter/mq-bull.impl.service.ts
  */
 import { Logger, Injectable } from '@nestjs/common';
 import { BULL_QUEUES } from '../constant/constant';
@@ -16,22 +15,49 @@ import {
   IBullUri,
 } from './mq.service.abstract';
 import { getContext } from 'src/common';
+import { runOnTransactionCommit } from 'typeorm-transactional-cls-hooked';
 
 @Injectable()
 export class MqBullService implements AbstractMqService {
   private logger: Logger = new Logger(MqBullService.name);
   private queueMap = new Map<string, Queue>();
 
-  constructor(
-    @InjectQueue('cleanStudyTask') private cleanStudyTask: Queue,
-    @InjectQueue('cleanCrfTask') private cleanCrfTask: Queue,
-    @InjectQueue('cleanSubjectTask') private cleanSubjectTask: Queue,
-    @InjectQueue('cleanRuleTask') private cleanRuleTask: Queue,
-    @InjectQueue('cleanRuleConfigTask') private cleanRuleConfigTask: Queue,
-    @InjectQueue('aggSubjectProgressTask')
-    private aggSubjectProgressTask: Queue,
-  ) {
+  constructor(@InjectQueue('common') private common: Queue) {
     BULL_QUEUES.forEach((e) => this.queueMap.set(e, this[e]));
+  }
+
+  /**
+   * 发送 bull 消息 事务成功之后在发送
+   *
+   * @param {IBullUri} uri 定位信息
+   * @param {IBullMsgBody} data 发送的数据
+   * @param {JobOptions} opts 配置
+   */
+  async add(uri: IBullUri, data: IBullMsgBody, opts?: JobOptions) {
+    try {
+      runOnTransactionCommit(async () => {
+        await this.addReal(uri, data, opts);
+      });
+    } catch (error) {
+      await this.addReal(uri, data, opts);
+    }
+  }
+
+  /**
+   * 批量发送 bull 消息 事务成功之后发送
+   *
+   * @param {IBullUri} uri 定位信息
+   * @param {IBullMsgBody[]} data 发送的数据
+   * @param {JobOptions} opts 配置
+   */
+  async addBulk(uri: IBullUri, data: IBullMsgBody[], opts?: JobOptions) {
+    try {
+      runOnTransactionCommit(async () => {
+        await this.addBulkReal(uri, data, opts);
+      });
+    } catch (error) {
+      await this.addBulkReal(uri, data, opts);
+    }
   }
 
   /**
@@ -41,9 +67,9 @@ export class MqBullService implements AbstractMqService {
    * @param {IBullMsgBody} data 发送的数据
    * @param {JobOptions} opts 配置
    */
-  async add(uri: IBullUri, data: IBullMsgBody, opts?: JobOptions) {
+  async addReal(uri: IBullUri, data: IBullMsgBody, opts?: JobOptions) {
     try {
-      this.logger.log('bull add', uri);
+      // this.logger.debug('bull add', uri);
       const { queue, topic, tag } = uri;
       await this.queueMap.get(queue).add(
         topic,
@@ -55,6 +81,7 @@ export class MqBullService implements AbstractMqService {
             ua: getContext('ua'),
             ip: getContext('ip'),
             uri: getContext('uri'),
+            user: getContext('user'),
             traceId: getContext('traceId'),
           },
         },
@@ -73,9 +100,9 @@ export class MqBullService implements AbstractMqService {
    * @param {IBullMsgBody[]} data 发送的数据
    * @param {JobOptions} opts 配置
    */
-  async addBulk(uri: IBullUri, data: IBullMsgBody[], opts?: JobOptions) {
+  async addBulkReal(uri: IBullUri, data: IBullMsgBody[], opts?: JobOptions) {
     try {
-      this.logger.log('bull addBulk', uri);
+      // this.logger.debug('bull addBulk', uri);
       const { queue, topic, tag } = uri;
       const tasks = data.map((e) => {
         return {
@@ -88,6 +115,7 @@ export class MqBullService implements AbstractMqService {
               ua: getContext('ua'),
               ip: getContext('ip'),
               uri: getContext('uri'),
+              user: getContext('user'),
               traceId: getContext('traceId'),
             },
           },

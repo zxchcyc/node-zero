@@ -1,17 +1,17 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-09-17 21:18:17
- * @LastEditTime: 2021-11-15 23:16:50
+ * @LastEditTime: 2022-03-24 14:59:19
  * @LastEditors: archer zheng
  * @Description: 分布式锁
- * @FilePath: /node-zero/src/internal/lock/lock.service.ts
  */
 import { Logger, Injectable } from '@nestjs/common';
-import { RedisService } from 'nestjs-redis';
 import { Redis } from 'ioredis';
 import { EnvService } from 'src/internal/env/env.service';
 import { getContext } from 'src/common';
 import { createHash } from 'crypto';
+import { RedisService } from 'node_modules_local/nestjs-redis';
+import { runOnTransactionCommit } from 'typeorm-transactional-cls-hooked';
 
 @Injectable()
 export class LockService {
@@ -24,7 +24,7 @@ export class LockService {
     this.redis = this.redisService.getClient(this.envService.get('REDIS_NAME'));
   }
 
-  private sleep(ms: number) {
+  sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
@@ -146,5 +146,35 @@ export class LockService {
       return;
     }
     return JSON.parse(result);
+  }
+
+  /**
+   * @description: 双删 db更新后删除缓存 事务提交后再删除一遍（根据量级决定是否用消息队列）
+   * @param {string} key
+   * @author: archer zheng
+   */
+  async doubleDel(key: string) {
+    await this.redis.del(key);
+    try {
+      runOnTransactionCommit(async () => {
+        await this.redis.del(key);
+      });
+    } catch (error) {}
+    return;
+  }
+
+  /**
+   * @description: 自增带过期时间
+   * @param {string} key
+   * @param {number} ttl
+   * @author: archer zheng
+   */
+  async incrWithExpire(key: string, ttl: number = 60 * 60 * 24) {
+    const count = await this.redis.incr(key);
+    if (count === 1) {
+      // 第一次发送给incr key设置过期时间
+      await this.redis.expire(key, ttl);
+    }
+    return count;
   }
 }

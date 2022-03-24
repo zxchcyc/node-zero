@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-15 22:40:08
- * @LastEditTime: 2021-11-15 23:23:14
+ * @LastEditTime: 2022-01-20 12:05:05
  * @LastEditors: archer zheng
  * @Description: 防止缓存击穿之进程内共享调用
- * @FilePath: /node-zero/src/common/decorator/shared-calls.decorator.ts
  */
 export function SharedCalls(
   ttl = 1, //过期时间 s
@@ -39,7 +38,7 @@ export function SharedCalls(
         do {
           this.logger.warn(key, count, '获取不到锁,等待缓存有数据');
           count++;
-          await this.utilService.common.sleep(100);
+          await this.lockService.sleep(100);
           cache = await this.lockService.getCache(key);
         } while (!cache && count <= 150);
         if (cache) {

@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'node-zero',
+      name: 'da-api',
       exec_mode: 'cluster',
       script: 'dist/main.js',
       instances: 2,
@@ -10,16 +10,30 @@ module.exports = {
       log_file: './logs/master/combined.log',
       env: {
         NODE_ENV: 'local',
-        PORT: 3001,
+        PORT: 3002,
         TASK_ENABLED: true,
-        SERVICE_NAME: 'node-zero',
+        SERVICE_NAME: 'da-api',
         CONFIG_FOLDER: '../config',
       },
       env_dev: {
         NODE_ENV: 'dev',
-        PORT: 3001,
+        PORT: 3002,
         TASK_ENABLED: true,
-        SERVICE_NAME: 'node-zero',
+        SERVICE_NAME: 'da-api',
+        CONFIG_FOLDER: '../config',
+      },
+      env_test: {
+        NODE_ENV: 'test',
+        PORT: 3002,
+        TASK_ENABLED: true,
+        SERVICE_NAME: 'da-api',
+        CONFIG_FOLDER: '../config',
+      },
+      env_prod: {
+        NODE_ENV: 'prod',
+        PORT: 3002,
+        TASK_ENABLED: true,
+        SERVICE_NAME: 'da-api',
         CONFIG_FOLDER: '../config',
       },
     },

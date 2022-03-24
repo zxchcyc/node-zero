@@ -8,11 +8,13 @@ import { ExternalModule } from './external/external.module';
 import {
   AllExceptionFilter,
   HttpExceptionFilter,
+  JsonBodyMiddleware,
   PrivateApiMiddleware,
   ResTimeInterceptor,
   TraceIdMiddleware,
 } from './common';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -27,6 +29,10 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 
     // 任务模块加载
     ScheduleModule.forRoot(),
+
+    // 限流模块加载
+    ThrottlerModule.forRoot(),
+
     // 初始化脚本加载
     ScriptModule,
   ],
@@ -51,6 +57,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(JsonBodyMiddleware).forRoutes('*');
     consumer.apply(PrivateApiMiddleware).forRoutes('private/');
     consumer.apply(TraceIdMiddleware).forRoutes('*');
   }

@@ -30,6 +30,7 @@ describe('MapReduce', () => {
     const t1 = new Date().getTime();
     const result = await mapReduce.simple(information, map, reduce);
     console.log(result);
+    //  { de: 1, informacion: 1, para: 1, primer: 2, procesado: 1, trozo: 2 }
     const t2 = new Date().getTime();
     console.log(t2 - t1);
     expect(1).toEqual(1);

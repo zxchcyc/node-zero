@@ -5,7 +5,6 @@ import { MysqlService } from './mysql.service';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      name: 'mysql',
       useClass: MysqlService,
     }),
   ],

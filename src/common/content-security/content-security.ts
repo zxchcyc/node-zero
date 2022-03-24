@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-10-12 16:09:41
- * @LastEditTime: 2021-10-14 09:34:56
+ * @LastEditTime: 2022-01-19 18:11:31
  * @LastEditors: archer zheng
  * @Description: 验签 处理过的请求（随机key）是不是要丢掉？
- * @FilePath: /node-zero/src/common/guard/content-security.ts
  */
 import {
   createHmac,
@@ -121,7 +120,7 @@ export class ContentSecurity {
   ) {
     // 时间合法性检测 ms
     const now = new Date().getTime();
-    console.log(now, secretHeader.time, tolerance);
+    // console.log(now, secretHeader.time, tolerance);
     if (
       secretHeader.time + tolerance < now ||
       now + tolerance < secretHeader.time
@@ -197,7 +196,7 @@ export class ContentSecurity {
       const ele = e.split('==');
       res[ele[0]] = ele[1];
     });
-    console.log('服务端解析', res);
+    // console.log('服务端解析', res);
     return res;
   }
 

@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-08 14:54:10
- * @LastEditTime: 2021-11-09 15:03:07
+ * @LastEditTime: 2021-12-17 17:48:37
  * @LastEditors: archer zheng
  * @Description: MQTag 转发
- * @FilePath: /node-zero/src/common/decorator/mq-tag.decorator.ts
  */
 export function MQTag(tags: string[]): MethodDecorator {
   return (
