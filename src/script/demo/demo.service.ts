@@ -12,6 +12,5 @@ export class DemoService extends BaseService {
   // @Cron('00 55 13 05 02 *')
   async handleTimeout() {
     this.logger.verbose('handleTimeout Called once after 1 seconds');
-    // await this.rocketmqService.publishMessage('test', { a: 1 });
   }
 }

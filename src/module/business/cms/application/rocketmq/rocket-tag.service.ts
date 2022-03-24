@@ -3,9 +3,9 @@ import { BaseService, MQValidate } from 'src/common';
 import { MQTag } from 'src/common';
 
 @Injectable()
-export class DemoTagService extends BaseService {
+export class RocketTagService extends BaseService {
   constructor() {
-    super(DemoTagService.name);
+    super(RocketTagService.name);
   }
 
   @MQTag(['test'])

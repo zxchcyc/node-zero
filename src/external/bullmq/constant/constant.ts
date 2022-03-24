@@ -1,1 +1,1 @@
-export const BULL_QUEUES = ['common'];
+export const BULL_QUEUES = ['common', 'cms'];
