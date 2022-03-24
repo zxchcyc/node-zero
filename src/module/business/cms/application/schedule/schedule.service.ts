@@ -10,9 +10,8 @@ export class CmsScheduleService extends BaseService {
   }
 
   // 12月31号0点 清除积分
-  // @Cron('00 00 00 31 11 *')
-  // @TaskProcess({ lock: true, prefix: 'demo' })
-  @Timeout(1000)
+  @Cron('00 00 00 31 11 *')
+  @TaskProcess({ lock: true, prefix: 'demo' })
   async demo() {
     this.logger.verbose('Called demo 12月31号0点');
     // await this.rocketmqService.publishMessage('test', { a: 1 });

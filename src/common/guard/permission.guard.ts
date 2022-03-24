@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-24 20:58:10
+ * @LastEditTime: 2022-03-24 23:06:11
  * @LastEditors: archer zheng
  * @Description: 权限守卫
  */
@@ -30,11 +30,11 @@ export class PermissionGuard extends BaseService implements CanActivate {
     // this.logger.debug('uri', uri);
     setContext('uri', uri);
     const user = getContext('user');
-    // this.logger.debug('user', user);
+    this.logger.debug('user', user);
 
-    if (!user) {
-      throw new BadRequestException('A0005');
-    }
+    // if (!user) {
+    //   throw new BadRequestException('A0005');
+    // }
     return true;
   }
 }
