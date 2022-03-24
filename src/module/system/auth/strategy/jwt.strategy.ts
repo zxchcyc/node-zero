@@ -1,9 +1,9 @@
-import { AuthService } from '../auth.service';
+import { AuthService } from '../service/auth.service';
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { jwtConstants } from '../constant/constant';
-import { IJwtPayload } from '../jwt-payload.interface';
+import { IJwtPayload } from '../interface/jwt-payload.interface';
 import { setContext } from 'src/awesome';
 
 @Injectable()

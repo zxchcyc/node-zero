@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { IJwtPayload } from './jwt-payload.interface';
-import { jwtConstants } from './constant/constant';
+import { IJwtPayload } from '../interface/jwt-payload.interface';
+import { jwtConstants } from '../constant/constant';
 import { BaseService, ELoginWebSite } from 'src/common';
 import { getContext } from 'src/awesome';
 
