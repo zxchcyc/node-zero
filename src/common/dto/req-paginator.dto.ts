@@ -32,12 +32,4 @@ export class ReqPaginatorDto {
     example: '',
   })
   sortField?: string = '';
-
-  // @IsOptional()
-  // @IsString()
-  // @ApiProperty({
-  //   description: '获取想要的属性（根据业务需要实现），如：name',
-  //   example: '',
-  // })
-  // attr?: string = '';
 }

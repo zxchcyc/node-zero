@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { MyHttpModule } from './http/http.module';
 import { WebhookModule } from './webhook/webhook.module';
-import { MqModule } from './mq/mq.module';
+import { BullmqModule } from './bullmq/bullmq.module';
 import { WechatModule } from './wechat/wechat.module';
 import { SmsModule } from './sms/sms.module';
 import { RowCacheModule } from './row-cache/row-cache.module';
@@ -14,7 +14,7 @@ import { RocketmqModule } from './rocketmq/rocketmq.module';
   imports: [
     MyHttpModule,
     WebhookModule,
-    MqModule,
+    BullmqModule,
     RocketmqModule,
     WechatModule,
     SmsModule,
@@ -25,7 +25,7 @@ import { RocketmqModule } from './rocketmq/rocketmq.module';
   exports: [
     MyHttpModule,
     WebhookModule,
-    MqModule,
+    BullmqModule,
     RocketmqModule,
     WechatModule,
     SmsModule,

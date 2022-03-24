@@ -13,7 +13,7 @@ import { BullAdapter } from 'bull-board/bullAdapter';
 import { Queue } from 'bull';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { EnvService } from './internal/env/env.service';
-import { BULL_QUEUES } from './external/mq/constant/constant';
+import { BULL_QUEUES } from './external/bullmq/constant/constant';
 import { LoggerService } from './internal/logger/logger.service';
 import { privateApiMiddlewareFunction } from './common';
 import {

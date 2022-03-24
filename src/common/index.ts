@@ -13,5 +13,4 @@ export * from './filter';
 export * from './decorator';
 export * from './guard';
 
-export * from './content-security';
-export * from './context';
+export * from './awesome';

@@ -1,6 +1,6 @@
 import { BullModule } from '@nestjs/bull';
 import { Module } from '@nestjs/common';
-import { BULL_QUEUES } from 'src/external/mq/constant/constant';
+import { BULL_QUEUES } from 'src/external/bullmq/constant/constant';
 import { BullConfigService } from './bull-config.service';
 
 const bullQueueModule = BullModule.registerQueueAsync(

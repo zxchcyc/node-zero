@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
-export function returnTypeValidate(returnType: any): MethodDecorator {
+export function ReturnTypeValidate(returnType: any): MethodDecorator {
   return (
     target: any,
     methodName: string | symbol,

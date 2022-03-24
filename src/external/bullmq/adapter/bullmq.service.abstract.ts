@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-08 17:22:21
- * @LastEditTime: 2021-12-17 17:49:03
+ * @LastEditTime: 2022-03-24 17:09:58
  * @LastEditors: archer zheng
  * @Description: MQ 发送抽象类
  */
@@ -24,7 +24,7 @@ export interface IBullUri {
   tag?: string;
 }
 
-export abstract class AbstractMqService {
+export abstract class AbstractBullMqService {
   /**
    * 发送消息
    *

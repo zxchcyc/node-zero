@@ -6,7 +6,7 @@
  * @Description: 定时任务装饰器 根据环境变量决定是否启动定时任务 TASK_ENABLED
  */
 import { v4 as uuidv4 } from 'uuid';
-import { createClsNamespace } from '../context';
+import { createClsNamespace } from '../awesome/context';
 const clsNamespace = createClsNamespace('scheduleContext');
 
 interface Options {

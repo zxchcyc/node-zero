@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-09 14:19:55
- * @LastEditTime: 2022-03-09 13:10:00
+ * @LastEditTime: 2022-03-24 16:51:59
  * @LastEditors: archer zheng
  * @Description: 打印请求耗时, 可以加慢请求监控 返回数据格式统一
  */
@@ -16,8 +16,8 @@ import {
 } from '@nestjs/common';
 import { Observable, throwError, TimeoutError } from 'rxjs';
 import { tap, map, timeout, catchError } from 'rxjs/operators';
-import { EHttpErrorCode, THttpResponse } from '..';
-import { getContext } from '../context';
+import { EHttpErrorCode } from '..';
+import { getContext } from '../awesome/context';
 
 @Injectable()
 export class ResTimeInterceptor implements NestInterceptor {
@@ -29,7 +29,7 @@ export class ResTimeInterceptor implements NestInterceptor {
     return next
       .handle()
       .pipe(
-        map(async (data): Promise<THttpResponse> => {
+        map(async (data) => {
           if (data?.result?.resType === 'wechat') {
             response.status(HttpStatus.OK).send(data.result.data);
           } else if (data?.result?.resType === 'svg') {

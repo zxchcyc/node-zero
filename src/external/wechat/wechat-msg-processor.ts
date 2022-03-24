@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { LoggerDebug } from 'src/common';
 import {
   InAuthEvent,
   InAuthMpEvent,

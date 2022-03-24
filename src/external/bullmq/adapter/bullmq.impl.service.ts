@@ -10,16 +10,16 @@ import { BULL_QUEUES } from '../constant/constant';
 import { InjectQueue } from '@nestjs/bull';
 import { JobOptions, Queue } from 'bull';
 import {
-  AbstractMqService,
+  AbstractBullMqService,
   IBullMsgBody,
   IBullUri,
-} from './mq.service.abstract';
+} from './bullmq.service.abstract';
 import { getContext } from 'src/common';
 import { runOnTransactionCommit } from 'typeorm-transactional-cls-hooked';
 
 @Injectable()
-export class MqBullService implements AbstractMqService {
-  private logger: Logger = new Logger(MqBullService.name);
+export class BullmqService implements AbstractBullMqService {
+  private logger: Logger = new Logger(BullmqService.name);
   private queueMap = new Map<string, Queue>();
 
   constructor(@InjectQueue('common') private common: Queue) {

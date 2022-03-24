@@ -67,11 +67,13 @@ export enum EVerifyCodeType {
   'changePhone' = 5,
 }
 
+// 微信关联类型
 export enum EWechatType {
   'mini' = 1,
   'public' = 2,
 }
 
+// 用户账号类型
 export enum EUserType {
   'admin' = 1,
   'dealer' = 2,

@@ -11,7 +11,7 @@ import {
   Logger,
   NestMiddleware,
 } from '@nestjs/common';
-import { createClsNamespace } from '../context';
+import { createClsNamespace } from '../awesome/context';
 const clsNamespace = createClsNamespace();
 
 /**

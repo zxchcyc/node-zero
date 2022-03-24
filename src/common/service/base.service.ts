@@ -1,12 +1,12 @@
 import { Logger, Inject } from '@nestjs/common';
 import { LockService } from 'src/internal/lock/lock.service';
-import { AbstractMqService } from 'src/external/mq/adapter/mq.service.abstract';
 import { EnvService } from 'src/internal/env/env.service';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { WebhookService } from 'src/external/webhook/webhook.service';
 import { RowCacheService } from 'src/external/row-cache/row-cache.service';
 import { AbstractRocketmqService } from 'src/external/rocketmq/adapter/rocketmq.service.abstract';
+import { AbstractBullMqService } from 'src/external/bullmq/adapter/bullmq.service.abstract';
 
 /**
  * 抽象基础服务
@@ -14,7 +14,7 @@ import { AbstractRocketmqService } from 'src/external/rocketmq/adapter/rocketmq.
  */
 export abstract class BaseService {
   @Inject()
-  protected readonly mqService: AbstractMqService;
+  protected readonly bullmqService: AbstractBullMqService;
   @Inject()
   protected readonly rocketmqService: AbstractRocketmqService;
   @Inject()
