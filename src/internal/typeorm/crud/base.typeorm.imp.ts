@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BaseService } from 'src/common';
-import { OrderByCondition, Repository } from 'typeorm';
+import { DeepPartial, OrderByCondition, Repository } from 'typeorm';
 import { findCondition, orderByFix } from './condition';
 type Paging = {
   page?: number;
@@ -46,7 +46,7 @@ export class BaseTyprOrmService<T> extends BaseService {
   }
 
   async create(data: T): Promise<T> {
-    return this.repo.save(data);
+    return this.repo.save(data as unknown as DeepPartial<T>[]) as unknown as T;
   }
 
   async updateById(id: number, data: T): Promise<void> {

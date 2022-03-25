@@ -25,7 +25,7 @@ export class SmsService {
       data,
     );
 
-    if (result.code === 0) {
+    if (result['code'] === 0) {
       return true;
     } else {
       return false;
@@ -44,7 +44,7 @@ export class SmsService {
       '/v2/sms/single_send.json',
       data,
     );
-    if (result.code === 0) {
+    if (result['code'] === 0) {
       return true;
     } else {
       return false;

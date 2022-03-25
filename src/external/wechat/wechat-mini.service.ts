@@ -45,7 +45,7 @@ export class WechatMiniService {
       page: 'pages/Home/index',
       env_version: process.env.NODE_ENV === 'prod' ? 'release' : 'trial', //release trial develop
     };
-    const result = await this.httpService.axios.post(url, data, {
+    const result: any = await this.httpService.axios.post(url, data, {
       responseType: 'arraybuffer',
     });
     // console.log('getUnlimited: ', result);
@@ -66,7 +66,7 @@ export class WechatMiniService {
     const data = {
       code,
     };
-    const result = await this.httpService.axios.post(url, data);
+    const result: any = await this.httpService.axios.post(url, data);
     // console.log('getuserphonenumber: ', result);
     if (result?.data?.errcode !== 0) {
       throw new BadRequestException('A0828');

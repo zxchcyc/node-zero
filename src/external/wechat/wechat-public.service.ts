@@ -50,7 +50,7 @@ export class WechatPublicService {
       action_name: 'QR_STR_SCENE',
       action_info: { scene: { scene_str: code } },
     };
-    const result = await this.httpService.axios.post(url, data);
+    const result: any = await this.httpService.axios.post(url, data);
     // console.log('getTicket: ', result);
     if (!result?.data?.ticket) {
       throw new BadRequestException('A0829');
@@ -63,7 +63,7 @@ export class WechatPublicService {
     // 推广码生成
     const accessToken = await this.getAccessToken();
     const url = `${PUBLICURL}user/info?access_token=${accessToken}&openid=${openid}&lang=zh_CN`;
-    const result = await this.httpService.axios.get(url);
+    const result: any = await this.httpService.axios.get(url);
     // console.log('getUnionid: ', result);
     if (!result?.data?.unionid) {
       // console.warn('获取不到公众号unionid');
