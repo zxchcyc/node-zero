@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-12-14 16:28:03
- * @LastEditTime: 2021-11-15 13:33:07
+ * @LastEditTime: 2022-02-15 16:35:25
  * @LastEditors: archer zheng
  * @Description: 日志调试
- * @FilePath: /node-zero/src/common/decorator/logger-debug.decorator.ts
  */
 export function LoggerDebug(): MethodDecorator {
   return (

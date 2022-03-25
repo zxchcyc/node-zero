@@ -3,7 +3,7 @@
   "sourceRoot": "src",
   "compilerOptions": {
     "plugins": ["@nestjs/swagger/plugin"],
-    "assets": ["**/*.proto"]
+    "assets": ["**/*.proto","**/node_modules_local/**"]
   },
   "plugins": [
     {

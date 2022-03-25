@@ -6,7 +6,8 @@ import {
   Logger,
   HttpException,
 } from '@nestjs/common';
-import { EHttpErrorCode, getContext, THttpResponse } from '..';
+import { getContext } from 'src/awesome';
+import { EHttpErrorCode } from '..';
 
 /**
  * 捕获全局异常 注意加载顺序 最先加载最后执行
@@ -20,15 +21,12 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
     const status = exception.getStatus();
-    this.logger.error(`Catch ${exception.name}! Request path: ${request.url}`);
     const exceptionRes = exception.getResponse();
 
-    const res: THttpResponse = {
-      errorCode: exceptionRes.error || exceptionRes.errorCode,
-      message: !exceptionRes.isNotEnumMsg
-        ? EHttpErrorCode[exceptionRes.error || exceptionRes.errorCode]
-        : exceptionRes.message,
-      error: exceptionRes.message || exceptionRes.errorCode,
+    const res = {
+      errorCode: exceptionRes.errorCode,
+      message: EHttpErrorCode[exceptionRes.errorCode],
+      error: exceptionRes.message,
       stack: exception.stack,
       traceId: getContext('traceId'),
     };
@@ -40,10 +38,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       case 'Request Timeout':
         res.errorCode = 'B0103';
         res.message = EHttpErrorCode['B0103'];
-        break;
-      case 'Bad Request Exception':
-        res.result = exceptionRes.result;
-        res.message = EHttpErrorCode[res.errorCode];
         break;
       case 'ThrottlerException: Too Many Requests':
         res.errorCode = 'A0002';
@@ -68,6 +62,18 @@ export class HttpExceptionFilter implements ExceptionFilter {
       default:
         break;
     }
+
+    if (res.errorCode !== 'B0102') {
+      this.logger.error(
+        res,
+        `Catch ${exception.name}! Request path: ${
+          request.url
+        } Body: ${JSON.stringify(request.body)} Query: ${JSON.stringify(
+          request.query,
+        )} Params: ${JSON.stringify(request.params)}`,
+      );
+    }
+
     response.status(status).json(res);
   }
 }

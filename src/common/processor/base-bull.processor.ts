@@ -30,7 +30,7 @@ export class BaseBullProcessor {
 
   @OnQueueStalled()
   async onQueueStalled(job: Job) {
-    this.logger.log(job, 'OnQueueStalled');
+    this.logger.warn(job, 'OnQueueStalled');
   }
 
   @OnGlobalQueueError()
@@ -50,7 +50,7 @@ export class BaseBullProcessor {
 
   @OnQueueRemoved()
   onQueueRemoved(job: Job) {
-    this.logger.log(job, 'onQueueRemoved');
+    this.logger.warn(job, 'onQueueRemoved');
   }
 
   // @OnQueueWaiting()

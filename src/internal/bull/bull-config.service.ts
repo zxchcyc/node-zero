@@ -1,10 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-08 14:25:12
- * @LastEditTime: 2021-11-09 15:17:21
+ * @LastEditTime: 2022-01-19 17:41:44
  * @LastEditors: archer zheng
  * @Description:
- * @FilePath: /node-zero/src/internal/bull/bull-config.service.ts
  */
 import { EnvService } from '../env/env.service';
 import { Injectable } from '@nestjs/common';
@@ -33,7 +32,7 @@ export class BullConfigService implements BullOptionsFactory {
         // removeOnFail: true,
       },
       settings: {
-        maxStalledCount: 1,
+        maxStalledCount: 3,
         retryProcessDelay: 5000,
       },
       limiter: {
