@@ -30,7 +30,6 @@ export type Index = {
 
 type Options = {
   // 表字段配置
-  // fields 来源：1 CRF 结构 2 数据库表结构(已知的写死)
   fields?: Field[];
   // 索引
   indexs?: Index[];
@@ -138,7 +137,6 @@ export class TableTemplate {
 
   // 校验记录值
   upsertSql(data: Record<string, unknown>): string | null {
-    // 先验证 data 规则引擎 基础定位数据洗出来的
     const fieldsObj = _.keyBy(this.fields, (o) => {
       return o.name;
     });
@@ -151,15 +149,12 @@ export class TableTemplate {
           parseInt(String(value)) === value),
     );
 
-    // console.log('===this.fields===', this.fields);
-    // console.log('===filterData===', filterData);
-
     // eslint-disable-next-line prefer-const
     for (let [key, value] of filterData.filter(([key]) => key !== 'id')) {
       if (value === null) value = undefined;
       // 字段名验证
       if (!fieldsObj[key]) {
-        // console.debug('字段名验证不通过', key, value);
+        console.debug('字段名验证不通过', key, value);
         return null;
       }
       // 跳过 undefined 字段
@@ -171,41 +166,40 @@ export class TableTemplate {
         [EFieldType.timestamp].includes(fieldsObj[key].type) &&
         !moment(value).isValid()
       ) {
-        // console.debug('时间类型字段名验证不通过', key, value);
+        console.debug('时间类型字段名验证不通过', key, value);
         return null;
       }
       if (
         ![EFieldType.timestamp].includes(fieldsObj[key].type) &&
         fieldsObj[key].type !== typeof value
       ) {
-        // console.debug(
-        //   '非时间类型字段名验证不通过',
-        //   key,
-        //   value,
-        //   fieldsObj[key].type,
-        //   typeof value,
-        // );
+        console.debug(
+          '非时间类型字段名验证不通过',
+          key,
+          value,
+          fieldsObj[key].type,
+          typeof value,
+        );
         return null;
       }
 
       // 字段长度校验
       if ([EFieldType.string].includes(fieldsObj[key].type)) {
-        // console.log(
-        //   'fieldsObj[key].charMaxLength ',
-        //   value,
-        //   chatLength(String(value)),
-        //   fieldsObj[key],
-        // );
+        console.debug(
+          'fieldsObj[key].charMaxLength ',
+          value,
+          charLength(String(value)),
+          fieldsObj[key],
+        );
         if (fieldsObj[key].charMaxLength < charLength(String(value))) {
-          // console.debug(
-          //   '字段长度校验不通过',
-          //   key,
-          //   value,
-          //   fieldsObj[key].type,
-          //   typeof value,
-          // );
+          console.debug(
+            '字段长度校验不通过',
+            key,
+            value,
+            fieldsObj[key].type,
+            typeof value,
+          );
           value = undefined;
-          // return null;
         }
 
         // 字符串防止 SQL 注入 （必要性 这里不是业务系统 ）
