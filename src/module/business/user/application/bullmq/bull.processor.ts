@@ -6,13 +6,13 @@ import { BullTagService } from './bull-tag.service';
 import { ProcessContext } from 'src/common';
 
 @Injectable()
-@Processor('template')
+@Processor('user')
 export class BullProcessor extends BaseBullProcessor {
   constructor(private readonly bullTagService: BullTagService) {
     super(BullProcessor.name);
   }
 
-  @Process('template')
+  @Process('user')
   @ProcessContext()
   async router(job: Job) {
     const { tag, data } = job.data;

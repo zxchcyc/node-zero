@@ -36,6 +36,8 @@
 
 ## 开发体验
 ### 提供代码生成器（处理复制粘贴问题）
+```node dist/cli/index.js -m user```
+
 ### DTO BO PO 转换问题
 ### typeORM 不支持参数校验 使用 class-validator
 ### @Cron('00 19 19 03 02 *')  3月3号19点19分

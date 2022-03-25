@@ -7,8 +7,8 @@ program
   .requiredOption('-m, --module [module]', '指定模块名如 demo')
   .option('-p, --path [path]', '指定模块路径如 src/module/business')
   .action(async (path, command) => {
-    console.log(path.path);
-    console.log(path.module);
+    console.log('path:', path.path);
+    console.log('module:', path.module);
     if (!path.module) {
       console.log('请输入模块名');
     }
