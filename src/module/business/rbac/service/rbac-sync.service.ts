@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { APP_CONFIG, BaseService } from 'src/common';
 import { PermissionBo, PermissionGroupBo, PgPBo } from '../bo/permission.bo';
 import { RoleBo } from '../bo/role.bo';
+import { PERMISSION_GROUP_LIST } from '../constant/permission-group';
+import { ROLE_LIST } from '../constant/role';
 import { PermissionAbstractRepoService } from '../repository/permission.abstract';
 import { RoleAbstractRepoService } from '../repository/role.abstract';
 
@@ -88,5 +90,43 @@ export class RbacSyncService extends BaseService {
       );
     }
     ops.length && (await Promise.all(ops));
+  }
+
+  async sync() {
+    await this.syncPermission(
+      PERMISSION_GROUP_LIST as PermissionGroupBo[],
+      this.getPermissionList() as PermissionBo[],
+    );
+    const pglist = await this.permissionRepoService.findPermissionGroup();
+    const plist = await this.permissionRepoService.findPermission();
+    const pgplist = await this.permissionRepoService.findPgP();
+    await this.syncRole(ROLE_LIST as unknown as RoleBo[], pglist);
+    await this.syncCache(plist, pgplist);
+    this.logger.debug('结束同步权限包、角色信息');
+  }
+
+  /**
+    @ApiExtension('x-permission', {
+      moduleName: '受试者管理',
+      groupName: ['数据录入'],
+    })
+  */
+  getPermissionList() {
+    const paths = this.envService.get('openapiPaths');
+    const permissionListFromDecorator = Object.keys(paths)
+      .map((key) =>
+        Object.keys(paths[key])
+          .filter((k) => paths[key][k]['x-permission'])
+          .map((k) =>
+            Object({
+              operationId: `${key.split(/{|}/).join('')}/${k}`,
+              name: `${paths[key][k]['x-permission'].moduleName}:${paths[key][k].summary}`,
+              permissionGroupName: paths[key][k]['x-permission'].groupName,
+            }),
+          ),
+      )
+      .flat(2);
+
+    return [...permissionListFromDecorator];
   }
 }
