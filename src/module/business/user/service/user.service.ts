@@ -16,9 +16,7 @@ import { UserAbstractRepoService } from '../repository/user.abstract';
 
 @Injectable()
 export class UserService extends BaseService {
-  constructor(
-    private readonly userRepoService: UserAbstractRepoService,
-  ) {
+  constructor(private readonly userRepoService: UserAbstractRepoService) {
     super(UserService.name);
   }
 
@@ -47,10 +45,7 @@ export class UserService extends BaseService {
     if (status === EUserStatus.done) {
       data.pubAt = new Date();
     }
-    const result = this.userRepoService.updateById(
-      id,
-      this._.omit(data, []),
-    );
+    const result = this.userRepoService.updateById(id, this._.omit(data, []));
     return result;
   }
 

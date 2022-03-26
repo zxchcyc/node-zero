@@ -49,7 +49,7 @@ export class UserWebController extends BaseController {
   @ApiCommResponse('paging', FindUserResDto)
   @ApiExtraModels(FindUserResDto)
   async getPaging(@Query() data: FindUserReqDto) {
-    const result = await this.facadeService.getPaging(data);
+    const result = await this.facadeService.find(data);
     return { result: { data: result } };
   }
 
@@ -74,10 +74,7 @@ export class UserWebController extends BaseController {
   @ApiOperation({ summary: '修改' })
   @ApiCommResponse('obj', IdResDto)
   @ApiExtraModels(IdResDto)
-  async updateById(
-    @Param() params: IdReqDto,
-    @Body() data: UpdateUserReqDto,
-  ) {
+  async updateById(@Param() params: IdReqDto, @Body() data: UpdateUserReqDto) {
     const result = await this.facadeService.updateById(params.id, data);
     return { result };
   }

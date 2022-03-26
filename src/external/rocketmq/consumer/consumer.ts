@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-03-23 13:55:21
  * @LastEditors: archer zheng
  * @Description: RocketMQ消费基础类
- * @FilePath: /da-api/src/external/rocketmq/consumer/consumer.ts
+ * @FilePath: /node-zero-api/src/external/rocketmq/consumer/consumer.ts
  */
 import { MQConsumer } from '@aliyunmq/mq-http-sdk';
 import { autoBind } from './bind';

@@ -24,7 +24,7 @@ export class UserFacadeService
   async count(data: FindUserReqBo): Promise<number> {
     return this.userService.count(data);
   }
-  async getPaging(data: FindUserReqBo): Promise<FindUserResBo[]> {
+  async find(data: FindUserReqBo): Promise<FindUserResBo[]> {
     return this.userService.find(data);
   }
   async create(data: CreateUserReqBo): Promise<UserBo> {

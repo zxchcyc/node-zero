@@ -9,21 +9,20 @@ const copy = require('recursive-copy');
  * @param {string} name 模块名
  * @author: archer zheng
  */
-export async function start(name: string, path = 'src/module/business') {
-  const dir = 'src/cli/template';
+export async function start(name: string, path: string, dir: string) {
   try {
     // 复制临时模板
-    await copy(resolve(dir), resolve(`${dir}_temp`));
-    await genModule(`${dir}_temp`, name);
+    await copy(resolve(dir), resolve(`${dir}-temp`));
+    await genModule(`${dir}-temp`, name);
     // 复制模板生成完成的模块到指定位置
-    await copy(resolve(`${dir}_temp`), resolve(path, name));
+    await copy(resolve(`${dir}-temp`), resolve(path, name));
     // 删除临时文件
-    rmdirSync(resolve(`${dir}_temp`), { recursive: true });
+    rmdirSync(resolve(`${dir}-temp`), { recursive: true });
   } catch (error) {
     console.error(error);
   } finally {
     try {
-      rmdirSync(resolve(`${dir}_temp`), { recursive: true });
+      rmdirSync(resolve(`${dir}-temp`), { recursive: true });
     } catch (error) {}
   }
 }

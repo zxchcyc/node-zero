@@ -49,7 +49,7 @@ export class TemplateWebController extends BaseController {
   @ApiCommResponse('paging', FindTemplateResDto)
   @ApiExtraModels(FindTemplateResDto)
   async getPaging(@Query() data: FindTemplateReqDto) {
-    const result = await this.facadeService.getPaging(data);
+    const result = await this.facadeService.find(data);
     return { result: { data: result } };
   }
 

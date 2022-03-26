@@ -11,7 +11,7 @@ import {
 
 export abstract class TemplateAbstractFacadeService {
   abstract count(data: FindTemplateReqBo): Promise<number>;
-  abstract getPaging(data: FindTemplateReqBo): Promise<FindTemplateResBo[]>;
+  abstract find(data: FindTemplateReqBo): Promise<FindTemplateResBo[]>;
   abstract create(data: CreateTemplateReqBo): Promise<TemplateBo>;
   abstract findById(id: number): Promise<FindOneTemplateResBo>;
   abstract updateById(id: number, data: UpdateTemplateReqBo): Promise<void>;

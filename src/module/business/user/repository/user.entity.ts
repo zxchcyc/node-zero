@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { EUserStatus, EUserType } from '../enum/user.enum';
 
-@Entity({ name: 'user_demo', synchronize: true })
+@Entity({ name: 'user_demo', synchronize: false })
 @Index(['deletedAt', 'type', 'title'])
 export class UserEntity {
   @PrimaryGeneratedColumn()

@@ -22,7 +22,7 @@ export enum ELoginTerminal {
 
 // 登录站点
 export enum ELoginWebSite {
-  'da' = 1,
+  'nodeZero' = 1,
 }
 
 // 登录方式

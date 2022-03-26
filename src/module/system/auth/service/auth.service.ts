@@ -22,7 +22,7 @@ export class AuthService extends BaseService {
   }
 
   async genToken(payload: IJwtPayload): Promise<Token> {
-    payload.website = ELoginWebSite.da;
+    payload.website = ELoginWebSite.nodeZero;
     const accessToken = this.jwtService.sign(payload);
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: jwtConstants.refreshTokenExpiresIn,

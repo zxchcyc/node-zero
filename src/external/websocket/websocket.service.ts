@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-09-01 10:05:27
- * @LastEditTime: 2022-03-24 13:53:49
+ * @LastEditTime: 2022-03-26 10:18:52
  * @LastEditors: archer zheng
  * @Description: websocket client 服务类
  * @FilePath: /node-zero/src/external/websocket/websocket.service.ts
@@ -52,9 +52,9 @@ export class WebsocketService {
     try {
       // ws server 多平台支持
       if (Array.isArray(data.sendTo)) {
-        data.sendTo = data.sendTo.map((e) => `${ELoginWebSite.da}_${e}`);
+        data.sendTo = data.sendTo.map((e) => `${ELoginWebSite.nodeZero}_${e}`);
       } else {
-        data.sendTo = `${ELoginWebSite.da}_${data.sendTo}`;
+        data.sendTo = `${ELoginWebSite.nodeZero}_${data.sendTo}`;
       }
       // 注意两者接收的方式不一样
       if (ack) {

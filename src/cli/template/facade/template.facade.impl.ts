@@ -24,7 +24,7 @@ export class TemplateFacadeService
   async count(data: FindTemplateReqBo): Promise<number> {
     return this.templateService.count(data);
   }
-  async getPaging(data: FindTemplateReqBo): Promise<FindTemplateResBo[]> {
+  async find(data: FindTemplateReqBo): Promise<FindTemplateResBo[]> {
     return this.templateService.find(data);
   }
   async create(data: CreateTemplateReqBo): Promise<TemplateBo> {
