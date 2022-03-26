@@ -1,9 +1,9 @@
 {
-  "name": "da-api",
-  "author": "livzon da team",
+  "name": "node-zero-api",
+  "author": "archer zheng",
   "private": true,
   "version": "1.0.0",
-  "description": "DA API",
+  "description": "NODE ZERO API",
   "license": "MIT",
   "scripts": {
     "test": "jest",
@@ -12,12 +12,12 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "start:online": "node dist/main",
-    "start:local": "cross-env TASK_ENABLED=false NODE_ENV=local SERVICE_NAME=da-api CONFIG_FOLDER=../config PORT=3002 nest start --watch",
-    "start:test": "pm2 start --env test --only da-api",
-    "start:dev": "pm2 start --env dev --only da-api",
-    "start:prod": "pm2 start --env prod --only da-api",
+    "start:local": "cross-env TASK_ENABLED=false NODE_ENV=local SERVICE_NAME=node-zero-api CONFIG_FOLDER=../config PORT=3002 nest start --watch",
+    "start:test": "pm2 start --env test --only node-zero-api",
+    "start:dev": "pm2 start --env dev --only node-zero-api",
+    "start:prod": "pm2 start --env prod --only node-zero-api",
     "flush": "pm2 flush",
-    "reload": "git pull && nest build && pm2 reload da-api"
+    "reload": "git pull && nest build && pm2 reload node-zero-api"
   },
   "dependencies": {
     "@alicloud/pop-core": "^1.7.10",

@@ -81,12 +81,7 @@ export class UserDto {
 
 export class FindUserReqDto extends IntersectionType(
   ReqPaginatorDto,
-  PickType(PartialType(UserDto), [
-    'title',
-    'type',
-    'finish',
-    'status',
-  ] as const),
+  PickType(PartialType(UserDto), ['title', 'type', 'finish', 'status'] as const),
 ) {
   @ApiProperty({ description: 'ID数组(前端不传)', type: [Number] })
   @IsArray()

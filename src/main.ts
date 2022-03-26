@@ -70,12 +70,12 @@ async function bootstrap() {
 
   // 配置 Swagger API 文档
   const options = new DocumentBuilder()
-    .setTitle('NODE DA API')
+    .setTitle('NODE ZERO API')
     .setDescription('NODE ZERO API')
     .setVersion('V1.0.0')
     .addBearerAuth()
     .addServer('http://localhost:3002', 'Local')
-    .addServer('https://da-api-dev.alu120.com', 'Dev')
+    .addServer('https://node-zero-api-dev.alu120.com', 'Dev')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
