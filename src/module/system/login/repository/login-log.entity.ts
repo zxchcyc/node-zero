@@ -15,7 +15,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'login_log', synchronize: false })
+@Entity({ name: 'login_log', synchronize: true })
 @Index(['uid'])
 export class LoginLogEntity {
   @PrimaryGeneratedColumn()

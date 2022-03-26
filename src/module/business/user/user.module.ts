@@ -35,6 +35,6 @@ import { UserAggService } from './service/user-agg.service';
     RocketTagService,
     RocketmqProcessor,
   ],
-  exports: [],
+  exports: [UserAbstractFacadeService],
 })
 export class UserModule {}
