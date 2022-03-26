@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-26 21:56:00
+ * @LastEditTime: 2022-03-26 22:17:26
  * @LastEditors: archer zheng
  * @Description: 功能权限守卫
  */
@@ -64,9 +64,7 @@ export class PermissionGuard extends BaseService implements CanActivate {
     if (pass) {
       return pass;
     } else {
-      // FIXME 接口权限需要配置上才能打开
-      // throw new BadRequestException('A0008');
-      return true;
+      throw new BadRequestException('A0008');
     }
   }
 }
