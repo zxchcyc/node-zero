@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { UserAbstractRepoService } from './user.abstract';
 import {
@@ -8,9 +8,12 @@ import {
   FindUserResBo,
   UpdateUserReqBo,
   UserBo,
+  UserRoleBo,
 } from '../bo/user.bo';
 import { BaseCacheTyprOrmService } from 'src/internal/typeorm/crud/base.cache.typeorm.imp';
 import { EUserType } from '../enum/user.enum';
+import { UserRoleEntity } from './user-role.entity';
+import { APP_CONFIG } from 'src/common';
 
 @Injectable()
 export class UserRepoService
@@ -21,6 +24,8 @@ export class UserRepoService
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepo: Repository<UserEntity>,
+    @InjectRepository(UserRoleEntity)
+    private readonly userRoleRepo: Repository<UserRoleEntity>,
   ) {
     super(userRepo, UserRepoService.name);
     this.table = userRepo.metadata.tableName;
@@ -96,5 +101,28 @@ export class UserRepoService
       await this.lockService.redis.del(lockKey);
     }
     return;
+  }
+
+  async updateUserRids(uid: number, rids: number[]): Promise<void> {
+    await this.userRoleRepo.delete({ uid });
+    await this.lockService.redis.del(`${APP_CONFIG.ROLE_KEY}${uid}`);
+    if (rids?.length) {
+      await this.userRoleRepo.save(
+        rids.map((e) => {
+          return { uid, rid: e };
+        }),
+      );
+      await this.lockService.redis.set(
+        `${APP_CONFIG.ROLE_KEY}${uid}`,
+        JSON.stringify(rids),
+      );
+    }
+    return;
+  }
+
+  async findRidByUid(uid: number | number[]): Promise<UserRoleBo[]> {
+    uid = Array.isArray(uid) ? uid : [uid];
+    const result = await this.userRoleRepo.find({ uid: In(uid) });
+    return result;
   }
 }

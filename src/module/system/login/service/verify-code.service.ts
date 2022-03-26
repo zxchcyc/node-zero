@@ -175,8 +175,7 @@ export class VerifyCodeService extends BaseService {
       throw new BadRequestException('A0820');
     }
     if (cacheCode === code) {
-      const { hash } = await genPassword(password);
-      await this.userFacadeService.updateById(user.id, { password: hash });
+      await this.userFacadeService.updateById(user.id, { password });
       return { done: true };
     } else {
       throw new BadRequestException('A0806');

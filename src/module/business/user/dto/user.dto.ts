@@ -115,14 +115,17 @@ export class CreateUserReqDto extends IntersectionType(
   ] as const),
 ) {}
 
-export class FindOneUserResDto extends PickType(UserDto, [
-  'name',
-  'phone',
-  'account',
-  'password',
-  'status',
-  'type',
-] as const) {}
+export class FindOneUserResDto extends IntersectionType(
+  RoleDeptDto,
+  PickType(UserDto, [
+    'name',
+    'phone',
+    'account',
+    'password',
+    'status',
+    'type',
+  ] as const),
+) {}
 
 export class UpdateUserReqDto extends IntersectionType(
   RoleDeptDto,

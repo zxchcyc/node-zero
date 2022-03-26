@@ -24,3 +24,8 @@ export class UpdateUserReqBo extends UpdateUserReqDto {
   password?: string;
   loginAt?: Date;
 }
+
+export type UserRoleBo = {
+  uid: number;
+  rid: number;
+};

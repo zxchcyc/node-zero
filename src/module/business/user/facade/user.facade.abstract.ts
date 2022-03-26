@@ -7,6 +7,7 @@ import {
   BatchDeleteReqBo,
   BatchUpdateReqBo,
   FindUserResBo,
+  UserRoleBo,
 } from '../bo/user.bo';
 import { EUserType } from '../enum/user.enum';
 
@@ -20,4 +21,5 @@ export abstract class UserAbstractFacadeService {
   abstract batchUpdate(data: BatchUpdateReqBo): Promise<void>;
   abstract findByPhone(type: EUserType, phone: string): Promise<UserBo>;
   abstract findByAccount(type: EUserType, account: string): Promise<UserBo>;
+  abstract findRidByUid(uid: number | number[]): Promise<UserRoleBo[]>;
 }

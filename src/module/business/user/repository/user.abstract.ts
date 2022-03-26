@@ -5,6 +5,7 @@ import {
   CreateUserReqBo,
   UserBo,
   UpdateUserReqBo,
+  UserRoleBo,
 } from '../bo/user.bo';
 import { EUserType } from '../enum/user.enum';
 
@@ -17,4 +18,6 @@ export abstract class UserAbstractRepoService {
   abstract deleteById(id: number): Promise<void>;
   abstract findByPhone(type: EUserType, phone: string): Promise<UserBo>;
   abstract findByAccount(type: EUserType, account: string): Promise<UserBo>;
+  abstract findRidByUid(uid: number | number[]): Promise<UserRoleBo[]>;
+  abstract updateUserRids(uid: number, rids: number[]): Promise<void>;
 }

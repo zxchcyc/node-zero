@@ -1,9 +1,9 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-24 23:06:11
+ * @LastEditTime: 2022-03-26 21:56:00
  * @LastEditors: archer zheng
- * @Description: 权限守卫
+ * @Description: 功能权限守卫
  */
 import {
   Injectable,
@@ -12,11 +12,12 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { getContext, setContext } from 'src/awesome';
-import { BaseService } from '..';
+import { UserAbstractFacadeService } from 'src/module/business/user/facade/user.facade.abstract';
+import { APP_CONFIG, BaseService, EStatus } from '..';
 
 @Injectable()
 export class PermissionGuard extends BaseService implements CanActivate {
-  constructor() {
+  constructor(private readonly userFacadeService: UserAbstractFacadeService) {
     super(PermissionGuard.name);
   }
 
@@ -30,11 +31,42 @@ export class PermissionGuard extends BaseService implements CanActivate {
     // this.logger.debug('uri', uri);
     setContext('uri', uri);
     const user = getContext('user');
-    this.logger.debug('user', user);
+    // this.logger.debug('user', user);
 
-    // if (!user) {
-    //   throw new BadRequestException('A0005');
-    // }
-    return true;
+    if (!user) {
+      throw new BadRequestException('A0005');
+    }
+    // 角色状态(不管理角色不做)
+    // 用户状态
+    const { status } = await this.userFacadeService.findById(user.id);
+    if (status === EStatus.disable) {
+      throw new BadRequestException('A0800');
+    }
+
+    // uri 对应的 rids
+    const uriRids = JSON.parse(
+      await this.lockService.redis.hget(APP_CONFIG.PERMISSION_KEY, uri),
+    );
+    // 用户对应的 rids
+    const userRoleKey = `${APP_CONFIG.ROLE_KEY}${user.id}`;
+    const userRids = await this.takeWithCache(
+      userRoleKey,
+      this.userFacadeService.findRidByUid.bind(this.userFacadeService),
+      user.id,
+      'rid',
+    );
+    let pass = false;
+    userRids?.forEach((rid: number) => {
+      if (uriRids?.includes[rid]) {
+        pass = true;
+      }
+    });
+    if (pass) {
+      return pass;
+    } else {
+      // FIXME 接口权限需要配置上才能打开
+      // throw new BadRequestException('A0008');
+      return true;
+    }
   }
 }
