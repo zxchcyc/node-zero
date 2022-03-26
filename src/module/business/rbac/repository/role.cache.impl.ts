@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { OrderByCondition, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { RoleEntity } from './role.entity';
 import { RoleAbstractRepoService } from './role.abstract';
-import { FindRoleReqBo, FindRoleResBo } from '../bo/role.bo';
 import { BaseCacheTyprOrmService } from 'src/internal/typeorm/crud/base.cache.typeorm.imp';
+import { RoleBo, RolePgBo } from '../bo/role.bo';
+import { RolePgEntity } from './role-pg.entity';
 
 @Injectable()
 export class RoleRepoService
@@ -14,13 +15,23 @@ export class RoleRepoService
   constructor(
     @InjectRepository(RoleEntity)
     private readonly roleRepo: Repository<RoleEntity>,
+    @InjectRepository(RolePgEntity)
+    private readonly rolePgRepo: Repository<RolePgEntity>,
   ) {
     super(roleRepo, RoleRepoService.name);
   }
 
-  async find(data: FindRoleReqBo): Promise<FindRoleResBo[]> {
-    const orderBy = { isTop: 'DESC', sort: 'ASC', id: 'DESC' };
-    const result = await super.find(data, orderBy as OrderByCondition);
-    return result;
+  async saveRole(data: RoleBo): Promise<RoleBo> {
+    await this.roleRepo.upsert(data, ['code']);
+    return this.roleRepo.findOne({ code: data.code });
+  }
+
+  async saveRolePg(data: RolePgBo): Promise<void> {
+    await this.rolePgRepo.upsert(data, ['rid', 'pgid']);
+    return;
+  }
+
+  async findRolePg(): Promise<RolePgBo[]> {
+    return this.rolePgRepo.find();
   }
 }

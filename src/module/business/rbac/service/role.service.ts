@@ -11,7 +11,6 @@ import {
   BatchDeleteReqBo,
   BatchUpdateReqBo,
 } from '../bo/role.bo';
-import { ERoleStatus } from '../enum/role.enum';
 import { RoleAbstractRepoService } from '../repository/role.abstract';
 
 @Injectable()
@@ -35,16 +34,11 @@ export class RoleService extends BaseService {
   }
 
   async create(data: CreateRoleReqBo): Promise<RoleBo> {
-    data.pubAt = new Date();
     const result = await this.roleRepoService.create(data);
     return result;
   }
 
   async updateById(id: number, data: UpdateRoleReqBo): Promise<void> {
-    const { status } = data;
-    if (status === ERoleStatus.done) {
-      data.pubAt = new Date();
-    }
     const result = this.roleRepoService.updateById(id, this._.omit(data, []));
     return result;
   }
@@ -67,9 +61,7 @@ export class RoleService extends BaseService {
     const { ids } = data;
     const ops = [];
     ids.forEach((id) =>
-      ops.push(
-        this.updateById(id, this._.pick(data, ['status', 'isTop', 'sort'])),
-      ),
+      ops.push(this.updateById(id, this._.pick(data, ['status']))),
     );
     ops.length && (await Promise.all(ops));
     return;

@@ -9,9 +9,11 @@ import {
   BatchDeleteReqBo,
   BatchUpdateReqBo,
   FindUserResBo,
+  UserRoleBo,
 } from '../bo/user.bo';
 import { EUserType } from '../enum/user.enum';
 import { UserAggService } from '../service/user-agg.service';
+import { UserRoleService } from '../service/user-role.service';
 import { UserService } from '../service/user.service';
 import { UserAbstractFacadeService } from './user.facade.abstract';
 
@@ -23,6 +25,7 @@ export class UserFacadeService
   constructor(
     private readonly userService: UserService,
     private readonly userAggService: UserAggService,
+    private readonly userRoleService: UserRoleService,
   ) {
     super(UserFacadeService.name);
   }
@@ -53,5 +56,8 @@ export class UserFacadeService
   }
   async findByAccount(type: EUserType, account: string) {
     return this.userService.findByAccount(type, account);
+  }
+  async findRidByUid(uid: number | number[]): Promise<UserRoleBo[]> {
+    return this.userRoleService.findRidByUid(uid);
   }
 }

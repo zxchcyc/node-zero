@@ -13,10 +13,12 @@ import { UserService } from './service/user.service';
 import { RocketTagService } from './application/rocketmq/rocket-tag.service';
 import { RocketmqProcessor } from './application/rocketmq/rocketmq.processor';
 import { UserAggService } from './service/user-agg.service';
+import { UserRoleEntity } from './repository/user-role.entity';
+import { UserRoleService } from './service/user-role.service';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
+  imports: [TypeOrmModule.forFeature([UserEntity, UserRoleEntity])],
   controllers: [UserWebController],
   providers: [
     {
@@ -29,12 +31,13 @@ import { UserAggService } from './service/user-agg.service';
     },
     UserService,
     UserAggService,
+    UserRoleService,
     UserScheduleService,
     BullTagService,
     BullProcessor,
     RocketTagService,
     RocketmqProcessor,
   ],
-  exports: [],
+  exports: [UserAbstractFacadeService],
 })
 export class UserModule {}

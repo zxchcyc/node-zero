@@ -5,6 +5,7 @@ import {
   CreateRoleReqBo,
   RoleBo,
   UpdateRoleReqBo,
+  RolePgBo,
 } from '../bo/role.bo';
 
 export abstract class RoleAbstractRepoService {
@@ -14,4 +15,8 @@ export abstract class RoleAbstractRepoService {
   abstract create(data: CreateRoleReqBo): Promise<RoleBo>;
   abstract updateById(id: number, data: UpdateRoleReqBo): Promise<void>;
   abstract deleteById(id: number): Promise<void>;
+
+  abstract saveRole(data: RoleBo): Promise<RoleBo>;
+  abstract saveRolePg(data: RolePgBo): Promise<void>;
+  abstract findRolePg(): Promise<RolePgBo[]>;
 }
