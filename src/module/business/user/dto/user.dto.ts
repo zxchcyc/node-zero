@@ -8,13 +8,15 @@ import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
+  IsMobilePhone,
   IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
+import { EStatus } from 'src/common';
 import { ReqPaginatorDto } from 'src/common/dto';
-import { EUserStatus, EUserType } from '../enum/user.enum';
+import { EUserType } from '../enum/user.enum';
 
 export class UserDto {
   @ApiProperty({ description: '数据库ID', type: Number })
@@ -22,68 +24,51 @@ export class UserDto {
   @Type(() => Number)
   id: number;
 
-  @ApiProperty({ description: '序号', type: Number })
-  @IsNotEmpty()
-  @IsOptional()
-  sort?: number;
-
-  @ApiProperty({ description: '置顶(1置顶 0不置顶)', type: Number })
-  @IsNotEmpty()
-  @IsOptional()
-  isTop?: number;
-
-  @ApiProperty({ description: '是否结束(1结束 0没结束)', type: Number })
-  @IsNotEmpty()
-  @IsOptional()
-  finish?: number;
+  @IsString()
+  @ApiProperty({ description: '名称' })
+  name: string;
 
   @IsString()
-  @ApiProperty({ description: '内容' })
-  content: string;
+  @ApiProperty({ description: '账号' })
+  account: string;
 
   @IsString()
-  @ApiProperty({ description: '视频' })
-  @IsOptional()
-  video?: string;
+  @ApiProperty({ description: '密码' })
+  password: string;
+
+  @IsMobilePhone()
+  @ApiProperty({ description: '电话' })
+  phone: string;
 
   @IsString()
-  @ApiProperty({ description: '标题' })
-  @IsOptional()
-  title?: string;
+  @ApiProperty({ description: '注册时间', format: 'date-time' })
+  regAt: Date;
 
   @IsString()
-  @ApiProperty({ description: '封面' })
-  @IsOptional()
-  cover?: string;
+  @ApiProperty({ description: '最后登录时间', format: 'date-time' })
+  loginAt: Date;
 
-  @ApiProperty({ description: '状态 1 已发布 2 未发布', enum: EUserStatus })
-  @IsEnum(EUserStatus)
-  @IsNumber()
+  @ApiProperty({ description: '状态 1 启动 2 禁用', enum: EStatus })
+  @IsEnum(EStatus)
   @Type(() => Number)
   @IsOptional()
-  status?: EUserStatus;
+  status?: EStatus;
 
   @ApiProperty({
-    description:
-      'CMS类型 1 文章 2 科普 3 学术 4 优惠政策 5 积分规则 6会员等级 7经销商发现',
+    description: '用户类型 1 管理员 2 经销商/终端用户',
     enum: EUserType,
   })
   @IsEnum(EUserType)
   @Type(() => Number)
   @IsOptional()
-  readonly type?: EUserType;
-
-  @IsString()
-  @IsOptional()
-  @ApiProperty({ description: '发布时间', format: 'date-time' })
-  pubAt?: Date;
+  type?: EUserType;
 }
 
 export class FindUserReqDto extends IntersectionType(
   ReqPaginatorDto,
-  PickType(PartialType(UserDto), ['title', 'type', 'finish', 'status'] as const),
+  PickType(PartialType(UserDto), ['type', 'status'] as const),
 ) {
-  @ApiProperty({ description: 'ID数组(前端不传)', type: [Number] })
+  @ApiProperty({ description: 'ID数组', type: [Number] })
   @IsArray()
   @IsNumber({}, { each: true })
   @Transform((v) => {
@@ -95,54 +80,57 @@ export class FindUserReqDto extends IntersectionType(
   })
   @IsOptional()
   ids?: number[];
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty({ description: '模糊查询字段：phone/account/name' })
+  keyword?: string;
 }
 
-export class FindUserResDto extends PickType(UserDto, [
-  'title',
-  'status',
-  'id',
-  'sort',
-  'isTop',
-  'pubAt',
-  'cover',
-  'content',
-] as const) {}
+export class FindUserResDto extends UserDto {}
 
-export class CreateUserReqDto extends PickType(UserDto, [
-  'type',
-  'title',
-  'cover',
-  'video',
-  'content',
-  'finish',
-  'pubAt',
-] as const) {}
+export class RoleDeptDto {
+  @IsArray()
+  @ApiProperty({ description: '账号角色ID', type: [Number] })
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  rids?: number[];
+
+  @IsArray()
+  @ApiProperty({ description: '账号部门ID', type: [Number] })
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  dids?: number[];
+}
+
+export class CreateUserReqDto extends IntersectionType(
+  RoleDeptDto,
+  PickType(UserDto, [
+    'name',
+    'phone',
+    'account',
+    'password',
+    'status',
+    'type',
+  ] as const),
+) {}
 
 export class FindOneUserResDto extends PickType(UserDto, [
+  'name',
+  'phone',
+  'account',
+  'password',
+  'status',
   'type',
-  'title',
-  'cover',
-  'video',
-  'content',
-  'finish',
 ] as const) {}
 
-export class UpdateUserReqDto extends PickType(PartialType(UserDto), [
-  'type',
-  'title',
-  'cover',
-  'video',
-  'content',
-  'finish',
-  'isTop',
-  'sort',
-  'status',
-] as const) {}
+export class UpdateUserReqDto extends IntersectionType(
+  RoleDeptDto,
+  PickType(PartialType(UserDto), ['name', 'phone', 'status', 'type'] as const),
+) {}
 
 export class BatchUpdateReqDto extends PickType(PartialType(UserDto), [
   'status',
-  'isTop',
-  'sort',
 ] as const) {
   @IsArray()
   @ApiProperty({ description: 'ID数组', type: [Number] })

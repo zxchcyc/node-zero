@@ -11,7 +11,7 @@ import {
   BatchDeleteReqBo,
   BatchUpdateReqBo,
 } from '../bo/user.bo';
-import { EUserStatus } from '../enum/user.enum';
+import { EUserType } from '../enum/user.enum';
 import { UserAbstractRepoService } from '../repository/user.abstract';
 
 @Injectable()
@@ -35,17 +35,15 @@ export class UserService extends BaseService {
   }
 
   async create(data: CreateUserReqBo): Promise<UserBo> {
-    data.pubAt = new Date();
     const result = await this.userRepoService.create(data);
     return result;
   }
 
   async updateById(id: number, data: UpdateUserReqBo): Promise<void> {
-    const { status } = data;
-    if (status === EUserStatus.done) {
-      data.pubAt = new Date();
-    }
-    const result = this.userRepoService.updateById(id, this._.omit(data, []));
+    const result = this.userRepoService.updateById(
+      id,
+      this._.omit(data, ['rids', 'dids']),
+    );
     return result;
   }
 
@@ -67,11 +65,17 @@ export class UserService extends BaseService {
     const { ids } = data;
     const ops = [];
     ids.forEach((id) =>
-      ops.push(
-        this.updateById(id, this._.pick(data, ['status', 'isTop', 'sort'])),
-      ),
+      ops.push(this.updateById(id, this._.pick(data, ['status']))),
     );
     ops.length && (await Promise.all(ops));
     return;
+  }
+
+  async findByPhone(type: EUserType, phone: string) {
+    return this.userRepoService.findByPhone(type, phone);
+  }
+
+  async findByAccount(type: EUserType, account: string) {
+    return this.userRepoService.findByAccount(type, account);
   }
 }

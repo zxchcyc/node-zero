@@ -13,10 +13,14 @@ import {
 export class UserBo extends UserDto {}
 export class FindUserReqBo extends FindUserReqDto {}
 export class FindUserResBo extends PartialType(FindUserResDto) {}
-export class CreateUserReqBo extends CreateUserReqDto {}
+export class CreateUserReqBo extends CreateUserReqDto {
+  regAt?: Date;
+}
 export class FindOneUserResBo extends FindOneUserResDto {}
 export class BatchUpdateReqBo extends BatchUpdateReqDto {}
 export class BatchDeleteReqBo extends BatchDeleteReqDto {}
 export class UpdateUserReqBo extends UpdateUserReqDto {
-  pubAt?: Date;
+  account?: string;
+  password?: string;
+  loginAt?: Date;
 }

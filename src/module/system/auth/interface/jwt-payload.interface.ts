@@ -1,4 +1,5 @@
-import { ELoginTerminal, ELoginWebSite, EUserType } from 'src/common';
+import { ELoginTerminal, ELoginWebSite } from 'src/common';
+import { EUserType } from 'src/module/business/user/enum/user.enum';
 
 export interface IJwtPayload {
   id: number;

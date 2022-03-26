@@ -1,3 +1,4 @@
+import { EStatus } from 'src/common';
 import {
   Column,
   CreateDateColumn,
@@ -7,10 +8,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { EUserStatus, EUserType } from '../enum/user.enum';
+import { EUserType } from '../enum/user.enum';
 
-@Entity({ name: 'user_demo', synchronize: false })
-@Index(['deletedAt', 'type', 'title'])
+@Entity({ name: 'user', synchronize: true })
+@Index(['deletedAt', 'type', 'account'], { unique: true })
+@Index(['deletedAt', 'type', 'phone'], { unique: true })
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -24,33 +26,27 @@ export class UserEntity {
   @DeleteDateColumn()
   deletedAt?: Date;
 
-  @Column({ type: 'tinyint', default: null, comment: '类型' })
+  @Column({ type: 'tinyint', default: EUserType.admin, comment: '类型' })
   type: EUserType;
 
-  @Column({ type: 'tinyint', default: EUserStatus.done, comment: '状态' })
-  status: EUserStatus;
+  @Column({ type: 'tinyint', default: EStatus.enable, comment: '状态' })
+  status: EStatus;
 
-  @Column({ type: 'datetime', nullable: true, comment: '发布时间' })
-  pubAt: Date;
+  @Column({ type: 'varchar', length: 15, nullable: false, comment: '密码' })
+  password: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, comment: '标题' })
-  title: string;
+  @Column({ type: 'varchar', length: 11, nullable: false, comment: '手机号' })
+  phone: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, comment: '封面' })
-  cover: string;
+  @Column({ type: 'varchar', length: 11, nullable: false, comment: '账号' })
+  account: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: true, comment: '视频' })
-  video: string;
+  @Column({ type: 'varchar', length: 11, default: null, comment: '名称' })
+  name: string;
 
-  @Column({ type: 'text', nullable: false, comment: '文章内容' })
-  content: string;
+  @Column({ type: 'datetime', nullable: false, comment: '注册时间' })
+  regAt: Date;
 
-  @Column({ type: 'tinyint', default: 1, comment: '是否结束' })
-  finish: number;
-
-  @Column({ type: 'int', nullable: false, default: 0, comment: '序号' })
-  sort: number;
-
-  @Column({ type: 'tinyint', nullable: false, default: 0, comment: '是否置顶' })
-  isTop: number;
+  @Column({ type: 'datetime', nullable: true, comment: '最后登录时间' })
+  loginAt: Date;
 }

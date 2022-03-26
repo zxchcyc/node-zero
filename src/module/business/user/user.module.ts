@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BullProcessor } from './application/bullmq/bull.processor';
 import { BullTagService } from './application/bullmq/bull-tag.service';
@@ -12,7 +12,9 @@ import { UserEntity } from './repository/user.entity';
 import { UserService } from './service/user.service';
 import { RocketTagService } from './application/rocketmq/rocket-tag.service';
 import { RocketmqProcessor } from './application/rocketmq/rocketmq.processor';
+import { UserAggService } from './service/user-agg.service';
 
+@Global()
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserWebController],
@@ -26,6 +28,7 @@ import { RocketmqProcessor } from './application/rocketmq/rocketmq.processor';
       useClass: UserRepoService,
     },
     UserService,
+    UserAggService,
     UserScheduleService,
     BullTagService,
     BullProcessor,
