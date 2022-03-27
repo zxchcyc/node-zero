@@ -24,12 +24,12 @@ import {
   BatchDeleteReqDto,
   BatchUpdateReqDto,
 } from 'src/module/business/cms/dto/cms.dto';
-import { JwtAuthWhiteListGuard } from 'src/module/system/auth/guard/jwt-auth-whitelist.guard';
+import { JwtAuthGuard } from 'src/module/system/auth/guard/jwt-auth.guard';
 
 @ApiTags('WebV1Cms')
 @Controller('web/v1')
 @UseGuards(PermissionGuard)
-@UseGuards(JwtAuthWhiteListGuard)
+@UseGuards(JwtAuthGuard)
 export class CmsWebController extends BaseController {
   constructor(private readonly facadeService: CmsAbstractFacadeService) {
     super(CmsWebController.name);

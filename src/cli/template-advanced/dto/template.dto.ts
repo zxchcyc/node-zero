@@ -64,8 +64,7 @@ export class TemplateDto {
   status?: ETemplateStatus;
 
   @ApiProperty({
-    description:
-      'CMS类型 1 文章 2 科普 3 学术 4 优惠政策 5 积分规则 6会员等级 7经销商发现',
+    description: 'CMS类型 1 文章 2 科普 3 学术 4 优惠政策 5 积分规则 6会员等级',
     enum: ETemplateType,
   })
   @IsEnum(ETemplateType)
@@ -81,7 +80,12 @@ export class TemplateDto {
 
 export class FindTemplateReqDto extends IntersectionType(
   ReqPaginatorDto,
-  PickType(PartialType(TemplateDto), ['title', 'type', 'finish', 'status'] as const),
+  PickType(PartialType(TemplateDto), [
+    'title',
+    'type',
+    'finish',
+    'status',
+  ] as const),
 ) {
   @ApiProperty({ description: 'ID数组(前端不传)', type: [Number] })
   @IsArray()

@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-26 22:17:26
+ * @LastEditTime: 2022-03-27 15:57:39
  * @LastEditors: archer zheng
  * @Description: 功能权限守卫
  */
@@ -36,7 +36,6 @@ export class PermissionGuard extends BaseService implements CanActivate {
     if (!user) {
       throw new BadRequestException('A0005');
     }
-    // 角色状态(不管理角色不做)
     // 用户状态
     const { status } = await this.userFacadeService.findById(user.id);
     if (status === EStatus.disable) {

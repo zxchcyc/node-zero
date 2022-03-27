@@ -62,8 +62,8 @@ export class RbacSyncService extends BaseService {
   }
 
   async syncCache(plist: PermissionBo[], pgplist: PgPBo[]): Promise<void> {
-    const rolelist = await this.roleRepoService.findRolePg();
-    const rolelistGroup = this._.groupBy(rolelist, 'pgid');
+    const rolePglist = await this.roleRepoService.findRolePg();
+    const rolelistGroup = this._.groupBy(rolePglist, 'pgid');
     const pgplistGroup = this._.groupBy(pgplist, 'pid');
 
     const data = new Map<string, Set<number>>();
@@ -92,6 +92,10 @@ export class RbacSyncService extends BaseService {
     ops.length && (await Promise.all(ops));
   }
 
+  /**
+   * @description: 如果 ROLE_LIST 动态配置,那么角色更新,删除的时候需要同步一下
+   * @author: archer zheng
+   */
   async sync() {
     await this.syncPermission(
       PERMISSION_GROUP_LIST as PermissionGroupBo[],
@@ -100,17 +104,19 @@ export class RbacSyncService extends BaseService {
     const pglist = await this.permissionRepoService.findPermissionGroup();
     const plist = await this.permissionRepoService.findPermission();
     const pgplist = await this.permissionRepoService.findPgP();
-    await this.syncRole(ROLE_LIST as unknown as RoleBo[], pglist);
+    await this.syncRole(ROLE_LIST as RoleBo[], pglist);
     await this.syncCache(plist, pgplist);
     this.logger.debug('结束同步权限包、角色信息');
   }
 
   /**
-    @ApiExtension('x-permission', {
+   * @description: 接口配置
+   * @ApiExtension('x-permission', {
       moduleName: '受试者管理',
       groupName: ['数据录入'],
     })
-  */
+   * @author: archer zheng
+   */
   getPermissionList() {
     const paths = this.envService.get('openapiPaths');
     const permissionListFromDecorator = Object.keys(paths)

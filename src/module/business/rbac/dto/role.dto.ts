@@ -10,7 +10,6 @@ import {
   IsEnum,
   IsNotEmpty,
   IsNumber,
-  IsOptional,
   IsString,
 } from 'class-validator';
 import { EStatus } from 'src/common';
@@ -20,7 +19,7 @@ export class RoleDto {
   @ApiProperty({ description: '数据库ID', type: Number })
   @IsNotEmpty()
   @Type(() => Number)
-  id: number;
+  id?: number;
 
   @IsString()
   @ApiProperty({ description: '名称' })
@@ -33,8 +32,7 @@ export class RoleDto {
   @ApiProperty({ description: '状态 1 启动 2 禁用', enum: EStatus })
   @IsEnum(EStatus)
   @Type(() => Number)
-  @IsOptional()
-  status?: EStatus;
+  status: EStatus;
 }
 
 export class FindRoleReqDto extends IntersectionType(

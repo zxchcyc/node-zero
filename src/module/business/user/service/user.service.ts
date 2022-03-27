@@ -40,7 +40,7 @@ export class UserService extends BaseService {
   }
 
   async updateById(id: number, data: UpdateUserReqBo): Promise<void> {
-    const result = this.userRepoService.updateById(
+    const result = await this.userRepoService.updateById(
       id,
       this._.omit(data, ['rids', 'dids']),
     );
@@ -48,7 +48,7 @@ export class UserService extends BaseService {
   }
 
   async deleteById(id: number): Promise<void> {
-    return this.userRepoService.deleteById(id);
+    return await this.userRepoService.deleteById(id);
   }
 
   @Transactional()

@@ -22,7 +22,7 @@ export class TemplateEntity {
   updatedAt: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deletedAt: Date;
 
   @Column({ type: 'tinyint', default: null, comment: '类型' })
   type: ETemplateType;

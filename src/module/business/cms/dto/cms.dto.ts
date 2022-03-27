@@ -64,8 +64,7 @@ export class CmsDto {
   status?: ECmsStatus;
 
   @ApiProperty({
-    description:
-      'CMS类型 1 文章 2 科普 3 学术 4 优惠政策 5 积分规则 6会员等级 7经销商发现',
+    description: 'CMS类型 1 文章 2 科普 3 学术 4 优惠政策 5 积分规则 6会员等级',
     enum: ECmsType,
   })
   @IsEnum(ECmsType)

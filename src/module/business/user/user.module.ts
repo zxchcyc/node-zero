@@ -15,10 +15,14 @@ import { RocketmqProcessor } from './application/rocketmq/rocketmq.processor';
 import { UserAggService } from './service/user-agg.service';
 import { UserRoleEntity } from './repository/user-role.entity';
 import { UserRoleService } from './service/user-role.service';
+import { UserDeptService } from './service/user-dept.service';
+import { UserDeptEntity } from './repository/user-dept.entity';
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([UserEntity, UserRoleEntity])],
+  imports: [
+    TypeOrmModule.forFeature([UserEntity, UserRoleEntity, UserDeptEntity]),
+  ],
   controllers: [UserWebController],
   providers: [
     {
@@ -32,6 +36,7 @@ import { UserRoleService } from './service/user-role.service';
     UserService,
     UserAggService,
     UserRoleService,
+    UserDeptService,
     UserScheduleService,
     BullTagService,
     BullProcessor,

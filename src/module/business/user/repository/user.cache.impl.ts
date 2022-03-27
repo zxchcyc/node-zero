@@ -8,12 +8,14 @@ import {
   FindUserResBo,
   UpdateUserReqBo,
   UserBo,
+  UserDeptBo,
   UserRoleBo,
 } from '../bo/user.bo';
 import { BaseCacheTyprOrmService } from 'src/internal/typeorm/crud/base.cache.typeorm.imp';
 import { EUserType } from '../enum/user.enum';
 import { UserRoleEntity } from './user-role.entity';
 import { APP_CONFIG } from 'src/common';
+import { UserDeptEntity } from './user-dept.entity';
 
 @Injectable()
 export class UserRepoService
@@ -26,6 +28,8 @@ export class UserRepoService
     private readonly userRepo: Repository<UserEntity>,
     @InjectRepository(UserRoleEntity)
     private readonly userRoleRepo: Repository<UserRoleEntity>,
+    @InjectRepository(UserDeptEntity)
+    private readonly userDeptRepo: Repository<UserDeptEntity>,
   ) {
     super(userRepo, UserRepoService.name);
     this.table = userRepo.metadata.tableName;
@@ -123,6 +127,30 @@ export class UserRepoService
   async findRidByUid(uid: number | number[]): Promise<UserRoleBo[]> {
     uid = Array.isArray(uid) ? uid : [uid];
     const result = await this.userRoleRepo.find({ uid: In(uid) });
+    return result;
+  }
+
+  async updateUserDids(uid: number, dids: number[]): Promise<void> {
+    await this.userDeptRepo.delete({ uid });
+    await this.lockService.redis.del(`${APP_CONFIG.DEP_KEY}${uid}`);
+
+    if (dids?.length) {
+      await this.userDeptRepo.save(
+        dids.map((e) => {
+          return { uid, did: e };
+        }),
+      );
+      await this.lockService.redis.set(
+        `${APP_CONFIG.DEP_KEY}${uid}`,
+        JSON.stringify(dids),
+      );
+    }
+    return;
+  }
+
+  async findDidByUid(uid: number | number[]): Promise<UserDeptBo[]> {
+    uid = Array.isArray(uid) ? uid : [uid];
+    const result = await this.userDeptRepo.find({ uid: In(uid) });
     return result;
   }
 }
