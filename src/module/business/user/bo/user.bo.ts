@@ -29,3 +29,8 @@ export type UserRoleBo = {
   uid: number;
   rid: number;
 };
+
+export type UserDeptBo = {
+  uid: number;
+  did: number;
+};

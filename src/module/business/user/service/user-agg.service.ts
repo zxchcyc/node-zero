@@ -8,6 +8,7 @@ import {
   UpdateUserReqBo,
   UserBo,
 } from '../bo/user.bo';
+import { UserDeptService } from './user-dept.service';
 import { UserRoleService } from './user-role.service';
 import { UserService } from './user.service';
 
@@ -16,12 +17,13 @@ export class UserAggService extends BaseService {
   constructor(
     private readonly userService: UserService,
     private readonly userRoleService: UserRoleService,
+    private readonly userDeptService: UserDeptService,
   ) {
     super(UserAggService.name);
   }
 
   async create(data: CreateUserReqBo): Promise<UserBo> {
-    const { type, account, phone, password, rids } = data;
+    const { type, account, phone, password, rids, dids } = data;
     const { hash } = await genPassword(password);
     data.password = hash;
     data.regAt = new Date();
@@ -37,11 +39,14 @@ export class UserAggService extends BaseService {
     if (rids?.length) {
       await this.userRoleService.updateUserRids(result.id, rids);
     }
+    if (dids?.length) {
+      await this.userDeptService.updateUserDids(result.id, dids);
+    }
     return result;
   }
 
   async updateById(id: number, data: UpdateUserReqBo): Promise<void> {
-    const { type, phone, account, password, rids } = data;
+    const { type, phone, account, password, rids, dids } = data;
     if (password) {
       // 生成密码
       const { hash } = await genPassword(data.password);
@@ -59,10 +64,13 @@ export class UserAggService extends BaseService {
         throw new BadRequestException('A0804');
       }
     }
-    await this.userService.updateById(id, this._.omit(data, ['rids']));
+    await this.userService.updateById(id, this._.omit(data, ['rids', 'dids']));
 
     if (rids?.length) {
       await this.userRoleService.updateUserRids(id, rids);
+    }
+    if (dids?.length) {
+      await this.userDeptService.updateUserDids(id, dids);
     }
     return;
   }
@@ -73,6 +81,9 @@ export class UserAggService extends BaseService {
     // 获取角色
     const userRids = await this.userRoleService.findRidByUid(uid);
     result.rids = userRids.map((e) => e.rid);
+    // 获取部门
+    const userDids = await this.userDeptService.findDidByUid(uid);
+    result.dids = userDids.map((e) => e.did);
     return result;
   }
 }
