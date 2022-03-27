@@ -20,4 +20,5 @@ export abstract class RoleAbstractRepoService {
   abstract saveRolePg(data: RolePgBo): Promise<void>;
   abstract findRolePg(): Promise<RolePgBo[]>;
   abstract updateRolePgids(rid: number, pgids: number[]): Promise<void>;
+  abstract findPgidByRid(id: number): Promise<RolePgBo[]>;
 }

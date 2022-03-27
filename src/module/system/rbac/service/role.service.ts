@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { BaseService, EStatus } from 'src/common';
+import { BaseService } from 'src/common';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { UserAbstractFacadeService } from '../../user/facade/user.facade.abstract';
 import {
@@ -31,32 +31,37 @@ export class RoleService extends BaseService {
 
   async find(data: FindRoleReqBo): Promise<FindRoleResBo[]> {
     const result = await this.roleRepoService.find(data);
-    // TODO 获取角色管理权限包
     return result;
   }
 
   async findById(id: number): Promise<FindOneRoleResBo> {
     const result = await this.roleRepoService.findById(id);
-    // TODO 获取角色管理权限包
+    // 获取角色管理权限包
+    const rolePgids = await this.roleRepoService.findPgidByRid(id);
+    result.pgids = rolePgids.map((e) => e.pgid);
     return result;
   }
 
   async create(data: CreateRoleReqBo): Promise<RoleBo> {
+    const { pgids } = data;
     const result = await this.roleRepoService.create(data);
-    // TODO 设置角色管理权限包
+    // 设置角色管理权限包
+    if (pgids?.length) {
+      await this.roleRepoService.updateRolePgids(result.id, pgids);
+    }
     return result;
   }
 
   async updateById(id: number, data: UpdateRoleReqBo): Promise<void> {
-    // TODO 设置角色管理权限包
-    const result = await this.roleRepoService.updateById(
-      id,
-      this._.omit(data, []),
-    );
+    const { pgids } = data;
+    const result = await this.roleRepoService.updateById(id, data);
+    // 设置角色管理权限包
+    if (pgids?.length) {
+      await this.roleRepoService.updateRolePgids(id, pgids);
+    }
     // 更新状态的后置条件 1、同步一下缓存
     if (data.status) {
-      const roles = await this.find({ status: EStatus.enable });
-      await this.rbacSyncService.sync(roles as RoleBo[]);
+      await this.rbacSyncService.syncCache();
     }
     return result;
   }
@@ -69,8 +74,7 @@ export class RoleService extends BaseService {
     }
     // 删除的后置条件 1、用户角色处理 2、删除权限包关联关系 1、同步一下缓存
     await this.roleRepoService.updateRolePgids(id, []);
-    const roles = await this.find({ status: EStatus.enable });
-    await this.rbacSyncService.sync(roles as RoleBo[]);
+    await this.rbacSyncService.syncCache();
     return await this.roleRepoService.deleteById(id);
   }
 

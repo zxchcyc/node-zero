@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { RoleEntity } from './role.entity';
 import { RoleAbstractRepoService } from './role.abstract';
 import { BaseCacheTyprOrmService } from 'src/internal/typeorm/crud/base.cache.typeorm.imp';
@@ -33,6 +33,12 @@ export class RoleRepoService
 
   async findRolePg(): Promise<RolePgBo[]> {
     return this.rolePgRepo.find();
+  }
+
+  async findPgidByRid(rid: number | number[]): Promise<RolePgBo[]> {
+    rid = Array.isArray(rid) ? rid : [rid];
+    const result = await this.rolePgRepo.find({ rid: In(rid) });
+    return result;
   }
 
   async updateRolePgids(rid: number, pgids: number[]): Promise<void> {
