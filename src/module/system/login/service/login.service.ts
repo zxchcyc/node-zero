@@ -20,11 +20,11 @@ import { comparePassword } from './password';
 import { verifyCodeUseKey } from './key';
 import { LoginAbstractRepoService } from '../repository/login.abstract';
 import { getContext } from 'src/awesome';
-import { UserBo } from 'src/module/business/user/bo/user.bo';
-import { EUserType } from 'src/module/business/user/enum/user.enum';
+import { UserBo } from 'src/module/system/user/bo/user.bo';
+import { EUserType } from 'src/module/system/user/enum/user.enum';
 import { IJwtPayload } from '../../auth/interface/jwt-payload.interface';
 import { AuthService } from '../../auth/service/auth.service';
-import { UserAbstractFacadeService } from 'src/module/business/user/facade/user.facade.abstract';
+import { UserAbstractFacadeService } from 'src/module/system/user/facade/user.facade.abstract';
 
 @Injectable()
 export class LoginService extends BaseService {

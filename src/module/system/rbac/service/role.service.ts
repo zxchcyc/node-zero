@@ -39,6 +39,7 @@ export class RoleService extends BaseService {
   }
 
   async updateById(id: number, data: UpdateRoleReqBo): Promise<void> {
+    // TODO 更新状态的后置条件 1、同步一下缓存
     const result = await this.roleRepoService.updateById(
       id,
       this._.omit(data, []),
@@ -47,6 +48,8 @@ export class RoleService extends BaseService {
   }
 
   async deleteById(id: number): Promise<void> {
+    // TODO 删除的前提条件 1、没有用户关联
+    // TODO 删除的后置条件 1、用户角色处理 2、同步一下缓存
     return await this.roleRepoService.deleteById(id);
   }
 

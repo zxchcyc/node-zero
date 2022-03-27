@@ -12,7 +12,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { getContext, setContext } from 'src/awesome';
-import { UserAbstractFacadeService } from 'src/module/business/user/facade/user.facade.abstract';
+import { UserAbstractFacadeService } from 'src/module/system/user/facade/user.facade.abstract';
 import { APP_CONFIG, BaseService, EStatus } from '..';
 
 @Injectable()
