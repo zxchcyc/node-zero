@@ -10,6 +10,7 @@ import {
   IsEnum,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
 } from 'class-validator';
 import { EStatus } from 'src/common';
@@ -46,23 +47,28 @@ export class FindRoleResDto extends PickType(RoleDto, [
   'status',
 ] as const) {}
 
-export class CreateRoleReqDto extends PickType(RoleDto, [
-  'name',
-  'code',
-  'status',
-] as const) {}
+export class PermissionGroupDto {
+  @IsArray()
+  @ApiProperty({ description: '权限包ID', type: [Number] })
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  pgids?: number[];
+}
 
-export class FindOneRoleResDto extends PickType(RoleDto, [
-  'name',
-  'code',
-  'status',
-] as const) {}
+export class CreateRoleReqDto extends IntersectionType(
+  PermissionGroupDto,
+  PickType(RoleDto, ['name', 'code', 'status'] as const),
+) {}
 
-export class UpdateRoleReqDto extends PickType(PartialType(RoleDto), [
-  'name',
-  'code',
-  'status',
-] as const) {}
+export class FindOneRoleResDto extends IntersectionType(
+  PermissionGroupDto,
+  PickType(RoleDto, ['name', 'code', 'status'] as const),
+) {}
+
+export class UpdateRoleReqDto extends IntersectionType(
+  PermissionGroupDto,
+  PickType(PartialType(RoleDto), ['name', 'code', 'status'] as const),
+) {}
 
 export class BatchUpdateReqDto extends PickType(PartialType(RoleDto), [
   'status',

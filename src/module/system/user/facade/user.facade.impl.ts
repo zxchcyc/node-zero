@@ -10,9 +10,11 @@ import {
   BatchUpdateReqBo,
   FindUserResBo,
   UserRoleBo,
+  UserDeptBo,
 } from '../bo/user.bo';
 import { EUserType } from '../enum/user.enum';
 import { UserAggService } from '../service/user-agg.service';
+import { UserDeptService } from '../service/user-dept.service';
 import { UserRoleService } from '../service/user-role.service';
 import { UserService } from '../service/user.service';
 import { UserAbstractFacadeService } from './user.facade.abstract';
@@ -26,9 +28,11 @@ export class UserFacadeService
     private readonly userService: UserService,
     private readonly userAggService: UserAggService,
     private readonly userRoleService: UserRoleService,
+    private readonly userDeptService: UserDeptService,
   ) {
     super(UserFacadeService.name);
   }
+
   async count(data: FindUserReqBo): Promise<number> {
     return this.userService.count(data);
   }
@@ -59,5 +63,11 @@ export class UserFacadeService
   }
   async findRidByUid(uid: number | number[]): Promise<UserRoleBo[]> {
     return this.userRoleService.findRidByUid(uid);
+  }
+  async findUidByDid(did: number | number[]): Promise<UserDeptBo[]> {
+    return this.userDeptService.findUidByDid(did);
+  }
+  async findUidByRid(rid: number | number[]): Promise<UserRoleBo[]> {
+    return this.userRoleService.findUidByRid(rid);
   }
 }

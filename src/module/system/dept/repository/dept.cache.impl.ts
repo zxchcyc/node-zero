@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, OrderByCondition, Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { DeptEntity } from './dept.entity';
 import { DeptAbstractRepoService } from './dept.abstract';
-import { FindDeptReqBo, FindDeptResBo } from '../bo/dept.bo';
+import { FindDeptResBo } from '../bo/dept.bo';
 import { BaseCacheTyprOrmService } from 'src/internal/typeorm/crud/base.cache.typeorm.imp';
 
 @Injectable()

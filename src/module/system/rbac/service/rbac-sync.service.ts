@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { APP_CONFIG, BaseService } from 'src/common';
-import { PermissionBo, PermissionGroupBo, PgPBo } from '../bo/permission.bo';
+import { PermissionBo, PermissionGroupBo } from '../bo/permission.bo';
 import { RoleBo } from '../bo/role.bo';
 import { PERMISSION_GROUP_LIST } from '../constant/permission-group';
 import { ROLE_LIST } from '../constant/role';
@@ -61,7 +61,16 @@ export class RbacSyncService extends BaseService {
     return;
   }
 
-  async syncCache(plist: PermissionBo[], pgplist: PgPBo[]): Promise<void> {
+  /**
+   * @description: 缓存权限点到角色的关系
+   * @author: archer zheng
+   */
+  async syncCache(): Promise<void> {
+    // 权限
+    const plist = await this.permissionRepoService.findPermission();
+    // 权限包到权限
+    const pgplist = await this.permissionRepoService.findPgP();
+    // 角色到权限包
     const rolePglist = await this.roleRepoService.findRolePg();
     const rolelistGroup = this._.groupBy(rolePglist, 'pgid');
     const pgplistGroup = this._.groupBy(pgplist, 'pid');
@@ -102,10 +111,8 @@ export class RbacSyncService extends BaseService {
       this.getPermissionList() as PermissionBo[],
     );
     const pglist = await this.permissionRepoService.findPermissionGroup();
-    const plist = await this.permissionRepoService.findPermission();
-    const pgplist = await this.permissionRepoService.findPgP();
     await this.syncRole(ROLE_LIST as RoleBo[], pglist);
-    await this.syncCache(plist, pgplist);
+    await this.syncCache();
     this.logger.debug('结束同步权限包、角色信息');
   }
 

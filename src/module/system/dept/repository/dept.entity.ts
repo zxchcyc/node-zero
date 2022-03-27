@@ -11,6 +11,7 @@ import {
 
 @Entity({ name: 'dept', synchronize: true })
 @Index(['deletedAt', 'chain'])
+@Index(['deletedAt', 'pid'])
 @Index(['deletedAt', 'code'], { unique: true })
 export class DeptEntity {
   @PrimaryGeneratedColumn()

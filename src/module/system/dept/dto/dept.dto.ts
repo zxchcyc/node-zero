@@ -52,7 +52,7 @@ export class DeptDto {
 
 export class FindDeptReqDto extends IntersectionType(
   ReqPaginatorDto,
-  PickType(PartialType(DeptDto), ['name', 'code', 'status'] as const),
+  PickType(PartialType(DeptDto), ['name', 'code', 'status', 'pid'] as const),
 ) {
   @ApiProperty({ description: 'ID数组(前端不传)', type: [Number] })
   @IsArray()

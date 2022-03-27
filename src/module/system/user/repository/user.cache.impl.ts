@@ -130,6 +130,12 @@ export class UserRepoService
     return result;
   }
 
+  async findUidByRid(rid: number | number[]): Promise<UserRoleBo[]> {
+    rid = Array.isArray(rid) ? rid : [rid];
+    const result = await this.userRoleRepo.find({ rid: In(rid) });
+    return result;
+  }
+
   async updateUserDids(uid: number, dids: number[]): Promise<void> {
     await this.userDeptRepo.delete({ uid });
     await this.lockService.redis.del(`${APP_CONFIG.DEP_KEY}${uid}`);
@@ -151,6 +157,12 @@ export class UserRepoService
   async findDidByUid(uid: number | number[]): Promise<UserDeptBo[]> {
     uid = Array.isArray(uid) ? uid : [uid];
     const result = await this.userDeptRepo.find({ uid: In(uid) });
+    return result;
+  }
+
+  async findUidByDid(did: number | number[]): Promise<UserDeptBo[]> {
+    did = Array.isArray(did) ? did : [did];
+    const result = await this.userDeptRepo.find({ did: In(did) });
     return result;
   }
 }
