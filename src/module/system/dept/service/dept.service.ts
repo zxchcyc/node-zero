@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { BaseService, EStatus } from 'src/common';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { UserAbstractFacadeService } from '../../user/facade/user.facade.abstract';
 import {
   FindDeptReqBo,
   FindDeptResBo,
@@ -15,7 +16,10 @@ import { DeptAbstractRepoService } from '../repository/dept.abstract';
 
 @Injectable()
 export class DeptService extends BaseService {
-  constructor(private readonly deptRepoService: DeptAbstractRepoService) {
+  constructor(
+    private readonly deptRepoService: DeptAbstractRepoService,
+    private readonly userFacadeService: UserAbstractFacadeService,
+  ) {
     super(DeptService.name);
   }
 
@@ -25,9 +29,22 @@ export class DeptService extends BaseService {
 
   async find(data: FindDeptReqBo): Promise<FindDeptResBo[]> {
     const result = await this.deptRepoService.find(data);
-    // 状态过滤
-    // TODO 递归生成树
-    return result;
+    // 递归生成树
+    const subset = (pid: number) => {
+      const childs = [];
+      // 查询该pid下的所有子集
+      result.forEach((e) => {
+        if (e.pid === pid) {
+          childs.push(
+            Object.assign(e, {
+              child: subset(e.id),
+            }),
+          );
+        }
+      });
+      return childs;
+    };
+    return subset(Number(this.envService.get('ROOT_DEPTID')));
   }
 
   async findById(id: number): Promise<FindOneDeptResBo> {
@@ -60,8 +77,16 @@ export class DeptService extends BaseService {
   }
 
   async deleteById(id: number): Promise<void> {
-    // TODO 删除的前提条件 1、没有用户关联 2、没有子部门
-    // TODO 删除的后置条件 1、用户部门处理
+    // 删除的前提条件 1、没有用户关联 2、没有子部门
+    const childs = await this.find({ pid: id });
+    if (childs?.length) {
+      throw new BadRequestException('A0901');
+    }
+    const users = await this.userFacadeService.findUidByDid(id);
+    if (users?.length) {
+      throw new BadRequestException('A0902');
+    }
+    // 删除的后置条件 1、用户部门处理
     return await this.deptRepoService.deleteById(id);
   }
 

@@ -16,4 +16,8 @@ export class UserDeptService extends BaseService {
   async updateUserDids(uid: number, dids: number[]): Promise<void> {
     return await this.userRepoService.updateUserDids(uid, dids);
   }
+
+  async findUidByDid(did: number | number[]): Promise<UserDeptBo[]> {
+    return await this.userRepoService.findUidByDid(did);
+  }
 }

@@ -96,7 +96,7 @@ export class RbacSyncService extends BaseService {
    * @description: 如果 ROLE_LIST 动态配置,那么角色更新,删除的时候需要同步一下
    * @author: archer zheng
    */
-  async sync() {
+  async sync(roles?: RoleBo[]) {
     await this.syncPermission(
       PERMISSION_GROUP_LIST as PermissionGroupBo[],
       this.getPermissionList() as PermissionBo[],
@@ -104,7 +104,7 @@ export class RbacSyncService extends BaseService {
     const pglist = await this.permissionRepoService.findPermissionGroup();
     const plist = await this.permissionRepoService.findPermission();
     const pgplist = await this.permissionRepoService.findPgP();
-    await this.syncRole(ROLE_LIST as RoleBo[], pglist);
+    await this.syncRole(roles || (ROLE_LIST as RoleBo[]), pglist);
     await this.syncCache(plist, pgplist);
     this.logger.debug('结束同步权限包、角色信息');
   }

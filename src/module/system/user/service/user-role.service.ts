@@ -15,4 +15,7 @@ export class UserRoleService extends BaseService {
   async updateUserRids(uid: number, rids: number[]): Promise<void> {
     return await this.userRepoService.updateUserRids(uid, rids);
   }
+  async findUidByRid(rid: number | number[]): Promise<UserRoleBo[]> {
+    return await this.userRepoService.findUidByRid(rid);
+  }
 }

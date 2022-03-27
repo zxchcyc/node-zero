@@ -34,4 +34,16 @@ export class RoleRepoService
   async findRolePg(): Promise<RolePgBo[]> {
     return this.rolePgRepo.find();
   }
+
+  async updateRolePgids(rid: number, pgids: number[]): Promise<void> {
+    await this.rolePgRepo.delete({ rid });
+    if (pgids?.length) {
+      await this.rolePgRepo.save(
+        pgids.map((e) => {
+          return { rid, pgid: e };
+        }),
+      );
+    }
+    return;
+  }
 }

@@ -23,4 +23,6 @@ export abstract class UserAbstractRepoService {
   abstract updateUserRids(uid: number, rids: number[]): Promise<void>;
   abstract findDidByUid(uid: number | number[]): Promise<UserDeptBo[]>;
   abstract updateUserDids(uid: number, dids: number[]): Promise<void>;
+  abstract findUidByDid(did: number | number[]): Promise<UserDeptBo[]>;
+  abstract findUidByRid(rid: number | number[]): Promise<UserRoleBo[]>;
 }
