@@ -148,9 +148,9 @@ export class UserRepoService
     return;
   }
 
-  async findUidByDid(did: number | number[]): Promise<UserDeptBo[]> {
-    did = Array.isArray(did) ? did : [did];
-    const result = await this.userDeptRepo.find({ did: In(did) });
+  async findDidByUid(uid: number | number[]): Promise<UserDeptBo[]> {
+    uid = Array.isArray(uid) ? uid : [uid];
+    const result = await this.userDeptRepo.find({ uid: In(uid) });
     return result;
   }
 }
