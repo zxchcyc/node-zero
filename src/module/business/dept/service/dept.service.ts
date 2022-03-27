@@ -35,21 +35,32 @@ export class DeptService extends BaseService {
   }
 
   async create(data: CreateDeptReqBo): Promise<DeptBo> {
-    await this.computedChain(data, 'create');
+    await this.computedChain(data);
     const result = await this.deptRepoService.create(data);
     return result;
   }
 
   async updateById(id: number, data: UpdateDeptReqBo): Promise<void> {
     // 更新状态的前提条件
-    await this.computedChain(data);
-    const result = this.deptRepoService.updateById(id, this._.omit(data, []));
+    // 更新上级部门处理(刚需)
+    const oldDept = await this.findById(id);
+    if (!this._.isNil(data.pid) && data.pid !== oldDept.pid) {
+      await this.computedChain(data);
+    }
+    const result = await this.deptRepoService.updateById(
+      id,
+      this._.omit(data, []),
+    );
+    if (!this._.isNil(data.pid) && data.pid !== oldDept.pid) {
+      // 同步子部门数据 注意缓存（最好不要直接用SQL）
+      await this.syncChildsChain(id, oldDept);
+    }
     return result;
   }
 
   async deleteById(id: number): Promise<void> {
     // 删除的前提条件
-    return this.deptRepoService.deleteById(id);
+    return await this.deptRepoService.deleteById(id);
   }
 
   @Transactional()
@@ -72,24 +83,43 @@ export class DeptService extends BaseService {
     return;
   }
 
-  private async computedChain(
-    data: CreateDeptReqBo | UpdateDeptReqBo,
-    action?: string,
-  ) {
-    if (!data.pid && action === 'create') {
+  private async syncChildsChain(id: number, oldDept: FindOneDeptResBo) {
+    const dept = await this.findById(id);
+    const childs = await this.deptRepoService.getChilds(
+      `${oldDept.chain}_${oldDept.id}`,
+    );
+    const ops = [];
+    childs.forEach((e) => {
+      const chain = e.chain.replace(oldDept.chain, dept.chain);
+      ops.push(
+        this.deptRepoService.updateById(e.id, {
+          level: chain.split('_').length,
+          chain,
+        }),
+      );
+    });
+    ops.length && (await Promise.all(ops));
+  }
+
+  /**
+   * @description: 计算level和train字段
+   * @param {CreateDeptReqBo} data
+   * @author: archer zheng
+   */
+  private async computedChain(data: CreateDeptReqBo | UpdateDeptReqBo) {
+    if (!data.pid) {
       data.pid = Number(this.envService.get('ROOT_DEPTID'));
       data.chain = String(data.pid);
       data.level = data.chain.split('_').length;
-    } else if (data.pid && action === 'create') {
+    } else {
       const pDept = await this.findById(data.pid);
       if (!pDept) {
         throw new BadRequestException('A0900');
       }
       data.chain = `${pDept.chain}_${String(data.pid)}`;
       data.level = data.chain.split('_').length;
-    } else {
-      // 更新的时候,需要更新所有下级
     }
+    return;
   }
 
   /**

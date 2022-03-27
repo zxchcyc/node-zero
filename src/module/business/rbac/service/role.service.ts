@@ -39,12 +39,15 @@ export class RoleService extends BaseService {
   }
 
   async updateById(id: number, data: UpdateRoleReqBo): Promise<void> {
-    const result = this.roleRepoService.updateById(id, this._.omit(data, []));
+    const result = await this.roleRepoService.updateById(
+      id,
+      this._.omit(data, []),
+    );
     return result;
   }
 
   async deleteById(id: number): Promise<void> {
-    return this.roleRepoService.deleteById(id);
+    return await this.roleRepoService.deleteById(id);
   }
 
   @Transactional()

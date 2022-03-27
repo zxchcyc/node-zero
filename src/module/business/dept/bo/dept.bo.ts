@@ -12,13 +12,17 @@ import {
 
 export class DeptBo extends DeptDto {}
 export class FindDeptReqBo extends FindDeptReqDto {}
-export class FindDeptResBo extends PartialType(FindDeptResDto) {}
+export class FindDeptResBo extends PartialType(FindDeptResDto) {
+  chain?: string;
+  level?: number;
+}
 export class CreateDeptReqBo extends CreateDeptReqDto {
   chain?: string;
   level?: number;
 }
 export class FindOneDeptResBo extends FindOneDeptResDto {
-  chain: string;
+  chain?: string;
+  level?: number;
 }
 export class BatchUpdateReqBo extends BatchUpdateReqDto {}
 export class BatchDeleteReqBo extends BatchDeleteReqDto {}

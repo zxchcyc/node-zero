@@ -45,12 +45,15 @@ export class CmsService extends BaseService {
     if (status === ECmsStatus.done) {
       data.pubAt = new Date();
     }
-    const result = this.cmsRepoService.updateById(id, this._.omit(data, []));
+    const result = await this.cmsRepoService.updateById(
+      id,
+      this._.omit(data, []),
+    );
     return result;
   }
 
   async deleteById(id: number): Promise<void> {
-    return this.cmsRepoService.deleteById(id);
+    return await this.cmsRepoService.deleteById(id);
   }
 
   @Transactional()

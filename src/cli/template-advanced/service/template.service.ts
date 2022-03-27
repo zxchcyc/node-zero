@@ -47,7 +47,7 @@ export class TemplateService extends BaseService {
     if (status === ETemplateStatus.done) {
       data.pubAt = new Date();
     }
-    const result = this.templateRepoService.updateById(
+    const result = await this.templateRepoService.updateById(
       id,
       this._.omit(data, []),
     );
@@ -55,7 +55,7 @@ export class TemplateService extends BaseService {
   }
 
   async deleteById(id: number): Promise<void> {
-    return this.templateRepoService.deleteById(id);
+    return await this.templateRepoService.deleteById(id);
   }
 
   @Transactional()

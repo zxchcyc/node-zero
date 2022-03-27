@@ -22,7 +22,7 @@ export class DeptRepoService
     const result = await this.deptRepo
       .createQueryBuilder()
       .where([{ train: Like(`${train}%`) }])
-      .orderBy({ level: 'ASC' })
+      .orderBy({ level: 'DESC' })
       .getMany();
     return result;
   }
