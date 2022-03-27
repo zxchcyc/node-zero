@@ -12,12 +12,12 @@ export class PermissionGroupEntity {
   @Column({ type: 'int', nullable: true, comment: '权限包种类顺序' })
   seqKind: number;
 
-  @Column({ type: 'varchar', nullable: false, comment: '名称' })
+  @Column({ type: 'varchar', length: 20, nullable: false, comment: '名称' })
   name: string;
 
-  @Column({ type: 'varchar', nullable: false, comment: '编码' })
+  @Column({ type: 'varchar', length: 20, nullable: false, comment: '编码' })
   code: string;
 
-  @Column({ type: 'varchar', nullable: false, comment: '种类' })
+  @Column({ type: 'varchar', length: 20, nullable: false, comment: '种类' })
   kind: string;
 }

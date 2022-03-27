@@ -24,12 +24,12 @@ import {
   BatchDeleteReqDto,
   BatchUpdateReqDto,
 } from '../../../../dto/role.dto';
-import { JwtAuthWhiteListGuard } from 'src/module/system/auth/guard/jwt-auth-whitelist.guard';
+import { JwtAuthGuard } from 'src/module/system/auth/guard/jwt-auth.guard';
 
 @ApiTags('WebV1Role')
 @Controller('web/v1')
 @UseGuards(PermissionGuard)
-@UseGuards(JwtAuthWhiteListGuard)
+@UseGuards(JwtAuthGuard)
 export class RoleWebController extends BaseController {
   constructor(private readonly roleService: RoleService) {
     super(RoleWebController.name);

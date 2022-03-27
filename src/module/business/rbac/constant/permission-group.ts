@@ -1,3 +1,4 @@
+// 这个列表一般是手动配置
 export const PERMISSION_GROUP_LIST = [
   {
     name: '账号管理',

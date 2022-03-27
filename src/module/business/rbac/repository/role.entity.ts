@@ -7,12 +7,12 @@ export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar', length: 50, nullable: false, comment: '名称' })
+  @Column({ type: 'varchar', length: 20, nullable: false, comment: '名称' })
   name: string;
 
   @Column({ type: 'tinyint', nullable: false, comment: '状态' })
   status: EStatus;
 
-  @Column({ type: 'varchar', length: 50, nullable: false, comment: '编码' })
+  @Column({ type: 'varchar', length: 20, nullable: false, comment: '编码' })
   code: string;
 }

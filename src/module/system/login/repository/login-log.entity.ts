@@ -27,7 +27,7 @@ export class LoginLogEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({ type: 'varchar', length: 50, nullable: false, comment: 'ip' })
+  @Column({ type: 'varchar', length: 20, nullable: false, comment: 'ip' })
   ip: string;
 
   @Column({ type: 'datetime', nullable: true, comment: '登录时间' })

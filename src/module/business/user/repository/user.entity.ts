@@ -24,7 +24,7 @@ export class UserEntity {
   updatedAt: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deletedAt: Date;
 
   @Column({ type: 'tinyint', default: EUserType.admin, comment: '类型' })
   type: EUserType;

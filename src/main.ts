@@ -75,7 +75,7 @@ async function bootstrap() {
     .setVersion('V1.0.0')
     .addBearerAuth()
     .addServer('http://localhost:3002', 'Local')
-    .addServer('https://node-zero-api-dev.alu120.com', 'Dev')
+    .addServer('https://node-zero-api-dev.zxchcyc.com', 'Dev')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);

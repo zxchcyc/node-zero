@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ECmsStatus, ECmsType } from '../enum/cms.enum';
 
-@Entity({ name: 'cms_demo', synchronize: true })
+@Entity({ name: 'cms', synchronize: true })
 @Index(['deletedAt', 'type', 'title'])
 export class CmsEntity {
   @PrimaryGeneratedColumn()
@@ -22,7 +22,7 @@ export class CmsEntity {
   updatedAt: Date;
 
   @DeleteDateColumn()
-  deletedAt?: Date;
+  deletedAt: Date;
 
   @Column({ type: 'tinyint', default: null, comment: '类型' })
   type: ECmsType;

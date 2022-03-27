@@ -24,12 +24,12 @@ import {
   BatchDeleteReqDto,
   BatchUpdateReqDto,
 } from '../../../../dto/template.dto';
-import { JwtAuthWhiteListGuard } from 'src/module/system/auth/guard/jwt-auth-whitelist.guard';
+import { JwtAuthGuard } from 'src/module/system/auth/guard/jwt-auth.guard';
 
 @ApiTags('WebV1Template')
 @Controller('web/v1')
 @UseGuards(PermissionGuard)
-@UseGuards(JwtAuthWhiteListGuard)
+@UseGuards(JwtAuthGuard)
 export class TemplateWebController extends BaseController {
   constructor(private readonly facadeService: TemplateAbstractFacadeService) {
     super(TemplateWebController.name);
