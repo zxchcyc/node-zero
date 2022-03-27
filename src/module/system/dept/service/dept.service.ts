@@ -25,7 +25,8 @@ export class DeptService extends BaseService {
 
   async find(data: FindDeptReqBo): Promise<FindDeptResBo[]> {
     const result = await this.deptRepoService.find(data);
-    // 递归生成树
+    // 状态过滤
+    // TODO 递归生成树
     return result;
   }
 
@@ -41,10 +42,9 @@ export class DeptService extends BaseService {
   }
 
   async updateById(id: number, data: UpdateDeptReqBo): Promise<void> {
-    // 更新状态的前提条件
-    // 更新上级部门处理(刚需)
     const oldDept = await this.findById(id);
     if (!this._.isNil(data.pid) && data.pid !== oldDept.pid) {
+      // 更新上级部门处理
       await this.computedChain(data);
     }
     const result = await this.deptRepoService.updateById(
@@ -52,6 +52,7 @@ export class DeptService extends BaseService {
       this._.omit(data, []),
     );
     if (!this._.isNil(data.pid) && data.pid !== oldDept.pid) {
+      // 更新上级部门处理
       // 同步子部门数据 注意缓存（最好不要直接用SQL）
       await this.syncChildsChain(id, oldDept);
     }
@@ -59,7 +60,8 @@ export class DeptService extends BaseService {
   }
 
   async deleteById(id: number): Promise<void> {
-    // 删除的前提条件
+    // TODO 删除的前提条件 1、没有用户关联 2、没有子部门
+    // TODO 删除的后置条件 1、用户部门处理
     return await this.deptRepoService.deleteById(id);
   }
 
@@ -83,6 +85,12 @@ export class DeptService extends BaseService {
     return;
   }
 
+  /**
+   * @description: 更新上级部门时所有下级部门数据同步
+   * @param {number} id
+   * @param {FindOneDeptResBo} oldDept
+   * @author: archer zheng
+   */
   private async syncChildsChain(id: number, oldDept: FindOneDeptResBo) {
     const dept = await this.findById(id);
     const childs = await this.deptRepoService.getChilds(

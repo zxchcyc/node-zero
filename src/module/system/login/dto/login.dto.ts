@@ -8,7 +8,7 @@ import {
   IsString,
 } from 'class-validator';
 import { EVerifyCodeType } from 'src/common';
-import { UserDto } from 'src/module/business/user/dto/user.dto';
+import { UserDto } from 'src/module/system/user/dto/user.dto';
 
 export class RefreshTokenResDto {
   @IsString()

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CmsModule } from './business/cms/cms.module';
-import { DeptModule } from './business/dept/dept.module';
-import { RoleModule } from './business/rbac/role.module';
-import { UserModule } from './business/user/user.module';
+import { DeptModule } from './system/dept/dept.module';
+import { RoleModule } from './system/rbac/role.module';
+import { UserModule } from './system/user/user.module';
 import { SystemModule } from './system/system.module';
 
 @Module({
