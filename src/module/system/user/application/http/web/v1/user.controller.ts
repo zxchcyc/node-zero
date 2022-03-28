@@ -10,7 +10,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiExtension,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PermissionGuard, BaseController, ApiCommResponse } from 'src/common';
 import { UserAbstractFacadeService } from '../../../../facade/user.facade.abstract';
 import { IdResDto, IdReqDto } from 'src/common/dto';
@@ -35,6 +40,10 @@ export class UserWebController extends BaseController {
     super(UserWebController.name);
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '账号管理',
+    groupName: ['账号管理'],
+  })
   @Get('/user/count')
   @ApiOperation({ summary: '获取总数' })
   @ApiCommResponse('obj', CountResDto)
@@ -44,6 +53,10 @@ export class UserWebController extends BaseController {
     return { result: { total: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '账号管理',
+    groupName: ['账号管理'],
+  })
   @Get('/user/list')
   @ApiOperation({ summary: '获取分页列表' })
   @ApiCommResponse('paging', FindUserResDto)
@@ -53,6 +66,10 @@ export class UserWebController extends BaseController {
     return { result: { data: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '账号管理',
+    groupName: ['账号管理'],
+  })
   @Post('/user')
   @ApiOperation({ summary: '创建' })
   @ApiCommResponse('obj', IdResDto)
@@ -62,6 +79,10 @@ export class UserWebController extends BaseController {
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '账号管理',
+    groupName: ['账号管理'],
+  })
   @Get('/user/:id')
   @ApiOperation({ summary: '获取详情' })
   @ApiCommResponse('obj', FindOneUserResDto)
@@ -70,6 +91,10 @@ export class UserWebController extends BaseController {
     return { result: await this.facadeService.findById(params.id) };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '账号管理',
+    groupName: ['账号管理'],
+  })
   @Put('/user/:id')
   @ApiOperation({ summary: '修改' })
   @ApiCommResponse('obj', IdResDto)
@@ -79,6 +104,10 @@ export class UserWebController extends BaseController {
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '账号管理',
+    groupName: ['账号管理'],
+  })
   @Delete('/user/batch')
   @ApiOperation({ summary: '批量删除' })
   @ApiCommResponse()
@@ -87,6 +116,10 @@ export class UserWebController extends BaseController {
     return { result: null };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '账号管理',
+    groupName: ['账号管理'],
+  })
   @Patch('/user/batch')
   @ApiOperation({ summary: '批量操作' })
   @ApiCommResponse()

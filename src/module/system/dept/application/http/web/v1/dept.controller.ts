@@ -10,7 +10,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiExtension,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PermissionGuard, BaseController, ApiCommResponse } from 'src/common';
 import { DeptService } from '../../../../service/dept.service';
 import { IdResDto, IdReqDto } from 'src/common/dto';
@@ -35,6 +40,10 @@ export class DeptWebController extends BaseController {
     super(DeptWebController.name);
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '部门管理',
+    groupName: ['部门管理'],
+  })
   @Get('/dept/count')
   @ApiOperation({ summary: '获取总数' })
   @ApiCommResponse('obj', CountResDto)
@@ -44,6 +53,10 @@ export class DeptWebController extends BaseController {
     return { result: { total: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '部门管理',
+    groupName: ['部门管理'],
+  })
   @Get('/dept/list')
   @ApiOperation({ summary: '获取分页列表' })
   @ApiCommResponse('paging', FindDeptResDto)
@@ -53,6 +66,10 @@ export class DeptWebController extends BaseController {
     return { result: { data: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '部门管理',
+    groupName: ['部门管理'],
+  })
   @Post('/dept')
   @ApiOperation({ summary: '创建' })
   @ApiCommResponse('obj', IdResDto)
@@ -62,6 +79,10 @@ export class DeptWebController extends BaseController {
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '部门管理',
+    groupName: ['部门管理'],
+  })
   @Get('/dept/:id')
   @ApiOperation({ summary: '获取详情' })
   @ApiCommResponse('obj', FindOneDeptResDto)
@@ -70,18 +91,23 @@ export class DeptWebController extends BaseController {
     return { result: await this.deptService.findById(params.id) };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '部门管理',
+    groupName: ['部门管理'],
+  })
   @Put('/dept/:id')
   @ApiOperation({ summary: '修改' })
   @ApiCommResponse('obj', IdResDto)
   @ApiExtraModels(IdResDto)
-  async updateById(
-    @Param() params: IdReqDto,
-    @Body() data: UpdateDeptReqDto,
-  ) {
+  async updateById(@Param() params: IdReqDto, @Body() data: UpdateDeptReqDto) {
     const result = await this.deptService.updateById(params.id, data);
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '部门管理',
+    groupName: ['部门管理'],
+  })
   @Delete('/dept/batch')
   @ApiOperation({ summary: '批量删除' })
   @ApiCommResponse()
@@ -90,6 +116,10 @@ export class DeptWebController extends BaseController {
     return { result: null };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '部门管理',
+    groupName: ['部门管理'],
+  })
   @Patch('/dept/batch')
   @ApiOperation({ summary: '批量操作' })
   @ApiCommResponse()
