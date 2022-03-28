@@ -28,6 +28,7 @@ export class DeptService extends BaseService {
   }
 
   async find(data: FindDeptReqBo): Promise<FindDeptResBo[]> {
+    data.limit = null;
     const result = await this.deptRepoService.find(data);
     // 递归生成树
     const subset = (pid: number) => {

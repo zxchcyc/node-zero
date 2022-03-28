@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-28 12:13:28
+ * @LastEditTime: 2022-03-28 22:56:49
  * @LastEditors: archer zheng
  * @Description: 功能权限守卫
  */
@@ -39,7 +39,7 @@ export class PermissionGuard extends BaseService implements CanActivate {
     }
     // 用户状态
     const userInfo = await this.userFacadeService.findById(user.id);
-    this.logger.debug('userInfo', userInfo);
+    // this.logger.debug('userInfo', userInfo);
     if (userInfo.status === EStatus.disable) {
       throw new BadRequestException('A0800');
     }
@@ -52,7 +52,7 @@ export class PermissionGuard extends BaseService implements CanActivate {
     const uriRids = JSON.parse(
       await this.lockService.redis.hget(APP_CONFIG.PERMISSION_KEY, uri),
     );
-    this.logger.debug('uriRids', uriRids);
+    // this.logger.debug('uriRids', uriRids);
     // 用户对应的 rids
     const userRoleKey = `${APP_CONFIG.ROLE_KEY}${user.id}`;
     const userRids = await this.takeWithCache(
@@ -61,7 +61,7 @@ export class PermissionGuard extends BaseService implements CanActivate {
       user.id,
       'rid',
     );
-    this.logger.debug('userRids', userRids);
+    // this.logger.debug('userRids', userRids);
     let pass = false;
     userRids?.forEach((rid: number) => {
       if (uriRids?.includes(rid)) {

@@ -40,6 +40,12 @@
 - [x] 登录/认证
 - [x] 用户
 - [x] 角色/授权
+  ```
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
+  ```
 - [x] 部门
 - [ ] 枚举
 - [ ] 行政区域

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { APP_CONFIG, BaseService } from 'src/common';
+import { APP_CONFIG, BaseService, EStatus } from 'src/common';
 import { PermissionBo, PermissionGroupBo } from '../bo/permission.bo';
 import { RoleBo } from '../bo/role.bo';
 import { PERMISSION_GROUP_LIST } from '../constant/permission-group';
@@ -68,10 +68,30 @@ export class RbacSyncService extends BaseService {
   async syncCache(): Promise<void> {
     // 权限
     const plist = await this.permissionRepoService.findPermission();
+    if (!plist.length) {
+      this.logger.warn('权限列表为空');
+      await this.lockService.redis.del(APP_CONFIG.PERMISSION_KEY);
+      return;
+    }
     // 权限包到权限
     const pgplist = await this.permissionRepoService.findPgP();
-    // 角色到权限包
-    const rolePglist = await this.roleRepoService.findRolePg();
+    if (!pgplist.length) {
+      this.logger.warn('权限包到权限列表为空');
+      await this.lockService.redis.del(APP_CONFIG.PERMISSION_KEY);
+      return;
+    }
+    // 角色到权限包（只拿启用的角色）
+    const enableRoles = await this.roleRepoService.find({
+      status: EStatus.enable,
+    });
+    if (!enableRoles.length) {
+      this.logger.warn('角色到权限包（只拿启用的角色）列表为空');
+      await this.lockService.redis.del(APP_CONFIG.PERMISSION_KEY);
+      return;
+    }
+    const rolePglist = await this.roleRepoService.findRolePg(
+      enableRoles.map((e) => e.id),
+    );
     const rolelistGroup = this._.groupBy(rolePglist, 'pgid');
     const pgplistGroup = this._.groupBy(pgplist, 'pid');
 
