@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-27 15:57:39
+ * @LastEditTime: 2022-03-28 12:13:28
  * @LastEditors: archer zheng
  * @Description: 功能权限守卫
  */
@@ -12,6 +12,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { getContext, setContext } from 'src/awesome';
+import { EUserType } from 'src/module/system/user/enum/user.enum';
 import { UserAbstractFacadeService } from 'src/module/system/user/facade/user.facade.abstract';
 import { APP_CONFIG, BaseService, EStatus } from '..';
 
@@ -37,15 +38,21 @@ export class PermissionGuard extends BaseService implements CanActivate {
       throw new BadRequestException('A0005');
     }
     // 用户状态
-    const { status } = await this.userFacadeService.findById(user.id);
-    if (status === EStatus.disable) {
+    const userInfo = await this.userFacadeService.findById(user.id);
+    this.logger.debug('userInfo', userInfo);
+    if (userInfo.status === EStatus.disable) {
       throw new BadRequestException('A0800');
+    }
+    if (userInfo.type === EUserType.superAdmin) {
+      // 超级管理员直接放行
+      return true;
     }
 
     // uri 对应的 rids
     const uriRids = JSON.parse(
       await this.lockService.redis.hget(APP_CONFIG.PERMISSION_KEY, uri),
     );
+    this.logger.debug('uriRids', uriRids);
     // 用户对应的 rids
     const userRoleKey = `${APP_CONFIG.ROLE_KEY}${user.id}`;
     const userRids = await this.takeWithCache(
@@ -54,9 +61,10 @@ export class PermissionGuard extends BaseService implements CanActivate {
       user.id,
       'rid',
     );
+    this.logger.debug('userRids', userRids);
     let pass = false;
     userRids?.forEach((rid: number) => {
-      if (uriRids?.includes[rid]) {
+      if (uriRids?.includes(rid)) {
         pass = true;
       }
     });

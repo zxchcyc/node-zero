@@ -10,7 +10,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiExtension,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PermissionGuard, BaseController, ApiCommResponse } from 'src/common';
 import { RoleService } from '../../../../service/role.service';
 import { IdResDto, IdReqDto } from 'src/common/dto';
@@ -35,6 +40,10 @@ export class RoleWebController extends BaseController {
     super(RoleWebController.name);
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Get('/role/count')
   @ApiOperation({ summary: '获取总数' })
   @ApiCommResponse('obj', CountResDto)
@@ -44,8 +53,12 @@ export class RoleWebController extends BaseController {
     return { result: { total: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Get('/role/list')
-  @ApiOperation({ summary: '获取分页列表' })
+  @ApiOperation({ summary: '获取角色分页列表' })
   @ApiCommResponse('paging', FindRoleResDto)
   @ApiExtraModels(FindRoleResDto)
   async getPaging(@Query() data: FindRoleReqDto) {
@@ -53,6 +66,10 @@ export class RoleWebController extends BaseController {
     return { result: { data: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Post('/role')
   @ApiOperation({ summary: '创建' })
   @ApiCommResponse('obj', IdResDto)
@@ -62,6 +79,10 @@ export class RoleWebController extends BaseController {
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Get('/role/:id')
   @ApiOperation({ summary: '获取详情' })
   @ApiCommResponse('obj', FindOneRoleResDto)
@@ -70,6 +91,10 @@ export class RoleWebController extends BaseController {
     return { result: await this.roleService.findById(params.id) };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Put('/role/:id')
   @ApiOperation({ summary: '修改' })
   @ApiCommResponse('obj', IdResDto)
@@ -79,6 +104,10 @@ export class RoleWebController extends BaseController {
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Delete('/role/batch')
   @ApiOperation({ summary: '批量删除' })
   @ApiCommResponse()
@@ -87,6 +116,10 @@ export class RoleWebController extends BaseController {
     return { result: null };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Patch('/role/batch')
   @ApiOperation({ summary: '批量操作' })
   @ApiCommResponse()
