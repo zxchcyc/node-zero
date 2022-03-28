@@ -37,7 +37,7 @@ export class DeptService extends BaseService {
         if (e.pid === pid) {
           childs.push(
             Object.assign(e, {
-              child: subset(e.id),
+              childs: subset(e.id),
             }),
           );
         }
@@ -53,12 +53,21 @@ export class DeptService extends BaseService {
   }
 
   async create(data: CreateDeptReqBo): Promise<DeptBo> {
+    const deptExist = await this.deptRepoService.findByCode(data.code);
+    if (deptExist) {
+      throw new BadRequestException('A0903');
+    }
     await this.computedChain(data);
     const result = await this.deptRepoService.create(data);
     return result;
   }
 
+  @Transactional()
   async updateById(id: number, data: UpdateDeptReqBo): Promise<void> {
+    const deptExist = await this.deptRepoService.findByCode(data.code);
+    if (deptExist && deptExist.id !== id) {
+      throw new BadRequestException('A0903');
+    }
     const oldDept = await this.findById(id);
     if (!this._.isNil(data.pid) && data.pid !== oldDept.pid) {
       // 更新上级部门处理
@@ -135,7 +144,7 @@ export class DeptService extends BaseService {
   }
 
   /**
-   * @description: 计算level和train字段
+   * @description: 计算 level 和 chain 字段
    * @param {CreateDeptReqBo} data
    * @author: archer zheng
    */

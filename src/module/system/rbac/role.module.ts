@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { PermissionWebController } from './application/http/web/v1/permission.controller';
 import { RoleWebController } from './application/http/web/v1/role.controller';
 import { RoleScheduleService } from './application/schedule/schedule.service';
 import { PermissionGroupEntity } from './repository/permission-gruop.entity';
@@ -11,6 +12,7 @@ import { RolePgEntity } from './repository/role-pg.entity';
 import { RoleAbstractRepoService } from './repository/role.abstract';
 import { RoleRepoService } from './repository/role.cache.impl';
 import { RoleEntity } from './repository/role.entity';
+import { PermissionService } from './service/permission.service';
 import { RbacSyncService } from './service/rbac-sync.service';
 import { RoleService } from './service/role.service';
 
@@ -24,7 +26,7 @@ import { RoleService } from './service/role.service';
       RolePgEntity,
     ]),
   ],
-  controllers: [RoleWebController],
+  controllers: [RoleWebController, PermissionWebController],
   providers: [
     {
       provide: PermissionAbstractRepoService,
@@ -36,6 +38,7 @@ import { RoleService } from './service/role.service';
     },
     RoleScheduleService,
     RoleService,
+    PermissionService,
     RbacSyncService,
   ],
   exports: [],

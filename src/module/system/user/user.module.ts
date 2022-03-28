@@ -17,13 +17,14 @@ import { UserRoleEntity } from './repository/user-role.entity';
 import { UserRoleService } from './service/user-role.service';
 import { UserDeptService } from './service/user-dept.service';
 import { UserDeptEntity } from './repository/user-dept.entity';
+import { UserRegWebController } from './application/http/web/v1/user-reg.controller';
 
 @Global()
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity, UserRoleEntity, UserDeptEntity]),
   ],
-  controllers: [UserWebController],
+  controllers: [UserWebController, UserRegWebController],
   providers: [
     {
       provide: UserAbstractFacadeService,

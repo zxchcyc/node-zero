@@ -32,10 +32,10 @@ export class UserEntity {
   @Column({ type: 'tinyint', default: EStatus.enable, comment: '状态' })
   status: EStatus;
 
-  @Column({ type: 'varchar', length: 15, nullable: false, comment: '密码' })
+  @Column({ type: 'varchar', length: 255, nullable: false, comment: '密码' })
   password: string;
 
-  @Column({ type: 'varchar', length: 11, nullable: false, comment: '手机号' })
+  @Column({ type: 'varchar', length: 11, nullable: true, comment: '手机号' })
   phone: string;
 
   @Column({ type: 'varchar', length: 11, nullable: false, comment: '账号' })

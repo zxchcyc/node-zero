@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2020-07-27 11:04:10
- * @LastEditTime: 2022-03-27 15:57:39
+ * @LastEditTime: 2022-03-28 10:21:09
  * @LastEditors: archer zheng
  * @Description: 功能权限守卫
  */
@@ -12,6 +12,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { getContext, setContext } from 'src/awesome';
+import { EUserType } from 'src/module/system/user/enum/user.enum';
 import { UserAbstractFacadeService } from 'src/module/system/user/facade/user.facade.abstract';
 import { APP_CONFIG, BaseService, EStatus } from '..';
 
@@ -37,9 +38,13 @@ export class PermissionGuard extends BaseService implements CanActivate {
       throw new BadRequestException('A0005');
     }
     // 用户状态
-    const { status } = await this.userFacadeService.findById(user.id);
-    if (status === EStatus.disable) {
+    const userInfo = await this.userFacadeService.findById(user.id);
+    if (userInfo.status === EStatus.disable) {
       throw new BadRequestException('A0800');
+    }
+    if (userInfo.type === EUserType.superAdmin) {
+      // 超级管理员直接放行
+      return true;
     }
 
     // uri 对应的 rids

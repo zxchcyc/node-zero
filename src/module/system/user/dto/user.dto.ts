@@ -37,6 +37,7 @@ export class UserDto {
   password: string;
 
   @IsMobilePhone()
+  @IsOptional()
   @ApiProperty({ description: '电话' })
   phone: string;
 

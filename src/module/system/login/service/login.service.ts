@@ -92,6 +92,7 @@ export class LoginService extends BaseService {
     if (password === this.envService.get('TEST_SECRET')) {
       isMatch = true;
     } else {
+      this.logger.debug(password, user.password);
       isMatch = await comparePassword(password, user.password);
     }
     if (!isMatch) {
@@ -156,13 +157,10 @@ export class LoginService extends BaseService {
   async loginPreCond(account: string, type: EUserType): Promise<UserBo> {
     let user = <UserBo>{};
     // 后台account登录
-    if (type === EUserType.admin) {
+    if ([EUserType.admin, EUserType.superAdmin].includes(type)) {
       user = await this.userFacadeService.findByAccount(type, account);
-      if (!user) {
-        return;
-      }
+      return user;
     }
-    return user;
   }
 
   async loginPostCond(
