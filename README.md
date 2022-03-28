@@ -1,9 +1,48 @@
 # 说明
-## 功能
+
+## 基础设施
+- [x] BullMQ 监听/发送
+- [x] RocketMQ 监听/发送
+- [x] Websocket 监听/发送
+- [x] Redis/DB 行级缓存
+- [x] Redis 分布式锁
+- [x] Logger/webhook 日志警报
+- [x] Wechat 相关接入
+
+## 通用能力
+- [x] cls-hooked 上下文保存
+- [x] map-reduce 多线程并行计算
+- [x] OSS文件打包加密压缩
+- [x] 加权轮询调度
+- [x] 验签
+- [x] 轻量级流程引擎
+- [x] 轻量级模板引擎
+- [x] 轻量级规则引擎
+## 应用层
+- [x] http 结合 Swagger/DTO 自动生成 API 文档
+- [x] mq 实现 MQTag/MQValidate 订阅消息/参数校验
+- [x] schedule 实现 TaskProcess 支持同步任务锁
+
+## 装饰器/中间件
+- [x] traceId 注入中间件
+- [x] IP 白名单限制中间件
+- [x] 统一异常处理
+- [x] 统一日志处理
+- [x] 统一请求返回处理
+- [x] LoggerDebug 调试日志
+- [x] SharedCalls 进程内共享调用
+- [x] ProcessContext cls-hooked 上下文
+- [x] MQTag 消息分发
+- [x] MQValidate 消息参数校验
+- [x] TaskProcess 任务同步锁
+
+## 系统模块
 - [x] 登录/认证
 - [x] 用户
 - [x] 角色/授权
 - [x] 部门
+- [ ] 枚举
+- [ ] 行政区域
 
 ## 框架图
 
@@ -40,9 +79,8 @@
 
 
 ## 开发体验
-
 ### 提供代码生成器（处理复制粘贴问题）
-```node dist/cli/index.js -m user```
+```node dist/cli/index.js -h```
 ### DTO BO PO 转换问题
 ```使用继承```
 ### typeORM 不支持参数校验 
@@ -51,3 +89,4 @@
 ```@Cron('00 19 19 03 02 *')  ```
 
 ## 安全问题
+### 登录问题
