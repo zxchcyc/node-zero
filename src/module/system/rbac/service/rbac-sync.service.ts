@@ -46,7 +46,7 @@ export class RbacSyncService extends BaseService {
   }
 
   async syncRole(rolelist: RoleBo[], pglist: PermissionGroupBo[]) {
-    const pglistObj = this._.keyBy(pglist, 'code');
+    const pglistObj = this._.keyBy(pglist, 'name');
     const rgpOps = [];
     const rpglist = [];
     for (const e of rolelist) {

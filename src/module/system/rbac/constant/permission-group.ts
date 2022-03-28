@@ -8,10 +8,17 @@ export const PERMISSION_GROUP_LIST = [
     code: 'user',
   },
   {
-    name: '内容管理',
-    kind: '内容管理',
+    name: '角色管理',
+    kind: '角色管理',
     seqKind: null,
     seq: null,
-    code: 'cms',
+    code: 'role',
+  },
+  {
+    name: '部门管理',
+    kind: '部门管理',
+    seqKind: null,
+    seq: null,
+    code: 'dept',
   },
 ];

@@ -10,7 +10,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiExtension,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PermissionGuard, BaseController, ApiCommResponse } from 'src/common';
 import { RoleService } from '../../../../service/role.service';
 import { IdResDto, IdReqDto } from 'src/common/dto';
@@ -44,8 +49,12 @@ export class RoleWebController extends BaseController {
     return { result: { total: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '角色管理',
+    groupName: ['角色管理'],
+  })
   @Get('/role/list')
-  @ApiOperation({ summary: '获取分页列表' })
+  @ApiOperation({ summary: '获取角色分页列表' })
   @ApiCommResponse('paging', FindRoleResDto)
   @ApiExtraModels(FindRoleResDto)
   async getPaging(@Query() data: FindRoleReqDto) {
