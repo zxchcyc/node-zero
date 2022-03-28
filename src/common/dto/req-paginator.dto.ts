@@ -6,7 +6,7 @@ export class ReqPaginatorDto {
   @IsOptional()
   @IsInt()
   @Min(1)
-  // @Max(10000)
+  @Max(10000)
   @Type(() => Number)
   @ApiProperty({
     description: '获取起始页',

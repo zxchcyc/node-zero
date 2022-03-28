@@ -42,6 +42,7 @@ export class FindRoleReqDto extends IntersectionType(
 ) {}
 
 export class FindRoleResDto extends PickType(RoleDto, [
+  'id',
   'name',
   'code',
   'status',
@@ -62,7 +63,7 @@ export class CreateRoleReqDto extends IntersectionType(
 
 export class FindOneRoleResDto extends IntersectionType(
   PermissionGroupDto,
-  PickType(RoleDto, ['name', 'code', 'status'] as const),
+  PickType(RoleDto, ['id', 'name', 'code', 'status'] as const),
 ) {}
 
 export class UpdateRoleReqDto extends IntersectionType(

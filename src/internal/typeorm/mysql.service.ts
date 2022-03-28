@@ -22,7 +22,7 @@ export class MysqlService implements TypeOrmOptionsFactory {
       synchronize: this.envService.get('MYSQL_SYNCHRONIZE') === 'true',
       logging: this.envService.get('MYSQL_LOGGING') === 'true',
       logger: 'advanced-console',
-      maxQueryExecutionTime: 10 * 1000 * 10,
+      maxQueryExecutionTime: 1 * 1000,
     };
   }
 }

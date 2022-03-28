@@ -49,6 +49,8 @@ export class RoleService extends BaseService {
     if (pgids?.length) {
       await this.roleRepoService.updateRolePgids(result.id, pgids);
     }
+    // 同步一下缓存
+    await this.rbacSyncService.syncCache();
     return result;
   }
 

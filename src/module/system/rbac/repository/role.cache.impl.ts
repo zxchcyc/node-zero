@@ -31,8 +31,8 @@ export class RoleRepoService
     return;
   }
 
-  async findRolePg(): Promise<RolePgBo[]> {
-    return this.rolePgRepo.find();
+  async findRolePg(rids: number[]): Promise<RolePgBo[]> {
+    return this.rolePgRepo.find({ rid: In(rids) });
   }
 
   async findPgidByRid(rid: number | number[]): Promise<RolePgBo[]> {

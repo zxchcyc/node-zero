@@ -32,12 +32,10 @@ export class BaseCacheTyprOrmService<T> extends BaseService {
   ): Promise<Partial<T>[]> {
     const { page, limit } = data;
     orderBy = orderBy || (orderByFix(data.sortField) as OrderByCondition);
-    this.logger.debug(orderBy);
-    const queryBuilder = this.repo
-      .createQueryBuilder()
-      .skip((page - 1) * limit)
-      .take(limit)
-      .orderBy(orderBy);
+    let queryBuilder = this.repo.createQueryBuilder().orderBy(orderBy);
+    if (!this._.isNil(limit)) {
+      queryBuilder = queryBuilder.skip((page - 1) * limit).take(limit);
+    }
     findCondition(queryBuilder, data, likeKeys);
     return queryBuilder.getMany();
   }
