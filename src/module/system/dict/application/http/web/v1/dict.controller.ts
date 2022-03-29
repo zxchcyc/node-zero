@@ -10,7 +10,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiExtension,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PermissionGuard, BaseController, ApiCommResponse } from 'src/common';
 import { DictService } from '../../../../service/dict.service';
 import { IdResDto, IdReqDto } from 'src/common/dto';
@@ -35,6 +40,10 @@ export class DictWebController extends BaseController {
     super(DictWebController.name);
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '字典管理',
+    groupName: ['字典管理'],
+  })
   @Get('/dict/count')
   @ApiOperation({ summary: '获取总数' })
   @ApiCommResponse('obj', CountResDto)
@@ -44,6 +53,10 @@ export class DictWebController extends BaseController {
     return { result: { total: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '字典管理',
+    groupName: ['字典管理'],
+  })
   @Get('/dict/list')
   @ApiOperation({ summary: '获取分页列表' })
   @ApiCommResponse('paging', FindDictResDto)
@@ -53,6 +66,10 @@ export class DictWebController extends BaseController {
     return { result: { data: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '字典管理',
+    groupName: ['字典管理'],
+  })
   @Post('/dict')
   @ApiOperation({ summary: '创建' })
   @ApiCommResponse('obj', IdResDto)
@@ -62,6 +79,10 @@ export class DictWebController extends BaseController {
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '字典管理',
+    groupName: ['字典管理'],
+  })
   @Get('/dict/:id')
   @ApiOperation({ summary: '获取详情' })
   @ApiCommResponse('obj', FindOneDictResDto)
@@ -70,18 +91,23 @@ export class DictWebController extends BaseController {
     return { result: await this.dictService.findById(params.id) };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '字典管理',
+    groupName: ['字典管理'],
+  })
   @Put('/dict/:id')
   @ApiOperation({ summary: '修改' })
   @ApiCommResponse('obj', IdResDto)
   @ApiExtraModels(IdResDto)
-  async updateById(
-    @Param() params: IdReqDto,
-    @Body() data: UpdateDictReqDto,
-  ) {
+  async updateById(@Param() params: IdReqDto, @Body() data: UpdateDictReqDto) {
     const result = await this.dictService.updateById(params.id, data);
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '字典管理',
+    groupName: ['字典管理'],
+  })
   @Delete('/dict/batch')
   @ApiOperation({ summary: '批量删除' })
   @ApiCommResponse()
@@ -90,6 +116,10 @@ export class DictWebController extends BaseController {
     return { result: null };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '字典管理',
+    groupName: ['字典管理'],
+  })
   @Patch('/dict/batch')
   @ApiOperation({ summary: '批量操作' })
   @ApiCommResponse()

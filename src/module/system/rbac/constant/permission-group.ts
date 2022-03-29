@@ -21,4 +21,11 @@ export const PERMISSION_GROUP_LIST = [
     seq: null,
     code: 'dept',
   },
+  {
+    name: '字典管理',
+    kind: '字典管理',
+    seqKind: null,
+    seq: null,
+    code: 'dict',
+  },
 ];

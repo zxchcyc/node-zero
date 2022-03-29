@@ -72,16 +72,17 @@ export class FindDictResDto extends PickType(DictDto, [
   'textEn',
 ] as const) {}
 
-export class CreateDictReqDto extends PickType(DictDto, [
-  'status',
-  'sort',
-  'type',
-  'key',
-  'value',
-  'textZhHans',
-  'textZhHant',
-  'textEn',
-] as const) {}
+export class CreateDictReqDto extends IntersectionType(
+  PickType(DictDto, [
+    'type',
+    'key',
+    'value',
+    'textZhHans',
+    'textZhHant',
+    'textEn',
+  ] as const),
+  PickType(PartialType(DictDto), ['sort', 'status'] as const),
+) {}
 
 export class FindOneDictResDto extends PickType(DictDto, [
   'status',
