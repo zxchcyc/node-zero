@@ -18,6 +18,10 @@
 - [x] 轻量级流程引擎
 - [x] 轻量级模板引擎
 - [x] 轻量级规则引擎
+- [ ] 限流
+- [ ] 文件导出
+- [ ] 文件导入
+
 ## 应用层
 - [x] http 结合 Swagger/DTO 自动生成 API 文档
 - [x] mq 实现 MQTag/MQValidate 订阅消息/参数校验
@@ -30,6 +34,7 @@
 - [x] 统一日志处理
 - [x] 统一请求返回处理
 - [x] LoggerDebug 调试日志
+- [x] BaseRetry 重试
 - [x] SharedCalls 进程内共享调用
 - [x] ProcessContext cls-hooked 上下文
 - [x] MQTag 消息分发
@@ -50,6 +55,9 @@
 - [x] 行政区域
 - [x] 字典
 - [ ] 消息
+## 自动化测试
+- [ ] crud api
+
 
 ## 框架图
 
