@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, Timeout } from '@nestjs/schedule';
 import { BaseService, TaskProcess } from 'src/common';
-import { CmsAbstractFacadeService } from '../../facade/cms.facade.abstract';
+import { DictService } from '../../service/dict.service';
 
 @Injectable()
-export class CmsScheduleService extends BaseService {
-  constructor(private readonly facadeService: CmsAbstractFacadeService) {
-    super(CmsScheduleService.name);
+export class DictScheduleService extends BaseService {
+  constructor(private readonly dictService: DictService) {
+    super(DictScheduleService.name);
   }
 
   // 12月31号0点 清除积分

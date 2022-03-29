@@ -14,6 +14,6 @@ export class RegionScheduleService extends BaseService {
   // @TaskProcess({ lock: true, prefix: 'sync-region' })
   async syncRegion() {
     this.logger.verbose('handleTimeout Called once after 2 seconds');
-    // await this.regionSyncService.sync();
+    await this.regionSyncService.sync();
   }
 }
