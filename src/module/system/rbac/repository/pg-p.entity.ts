@@ -1,6 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'pg_p', synchronize: true })
+@Entity({ name: 'pg_p', synchronize: false })
 @Index(['pgid', 'pid'], { unique: true })
 export class PgPEntity {
   @PrimaryGeneratedColumn()

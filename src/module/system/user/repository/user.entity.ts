@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { EUserType } from '../enum/user.enum';
 
-@Entity({ name: 'user', synchronize: true })
+@Entity({ name: 'user', synchronize: false })
 @Index(['deletedAt', 'type', 'account'], { unique: true })
 @Index(['deletedAt', 'type', 'phone'], { unique: true })
 export class UserEntity {

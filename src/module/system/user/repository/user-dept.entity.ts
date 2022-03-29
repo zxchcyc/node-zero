@@ -1,6 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'user_dept', synchronize: true })
+@Entity({ name: 'user_dept', synchronize: false })
 @Index(['did'])
 @Index(['uid', 'did'], { unique: true })
 export class UserDeptEntity {

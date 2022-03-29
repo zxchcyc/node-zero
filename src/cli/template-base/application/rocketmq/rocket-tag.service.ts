@@ -8,10 +8,10 @@ export class RocketTagService extends BaseService {
     super(RocketTagService.name);
   }
 
-  @MQTag(['test'])
+  @MQTag(['demo'])
   @MQValidate()
-  async test(data: any) {
-    this.logger.debug('===test===', data);
+  async demo(data: any) {
+    this.logger.debug('===demo===', data);
     return;
   }
 }

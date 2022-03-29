@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ECmsStatus, ECmsType } from '../enum/cms.enum';
 
-@Entity({ name: 'cms', synchronize: true })
+@Entity({ name: 'cms', synchronize: false })
 @Index(['deletedAt', 'type', 'title'])
 export class CmsEntity {
   @PrimaryGeneratedColumn()

@@ -15,15 +15,5 @@ export class UserScheduleService extends BaseService {
   async demo() {
     this.logger.verbose('Called demo 12月31号0点');
     // await this.rocketmqService.publishMessage('test', { a: 1 });
-    await this.bullmqService.add(
-      {
-        queue: 'user',
-        topic: 'user',
-        tag: 'demo',
-      },
-      {
-        a: 1,
-      },
-    );
   }
 }

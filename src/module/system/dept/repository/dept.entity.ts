@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'dept', synchronize: true })
+@Entity({ name: 'dept', synchronize: false })
 @Index(['deletedAt', 'chain'])
 @Index(['deletedAt', 'pid'])
 @Index(['deletedAt', 'code'], { unique: true })
