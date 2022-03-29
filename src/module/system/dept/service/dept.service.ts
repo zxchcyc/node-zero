@@ -45,7 +45,7 @@ export class DeptService extends BaseService {
       });
       return childs;
     };
-    return subset(Number(this.envService.get('ROOT_DEPTID')));
+    return subset(Number(this.envService.get('ROOT_DEPT_ID')));
   }
 
   async findById(id: number): Promise<FindOneDeptResBo> {
@@ -151,7 +151,7 @@ export class DeptService extends BaseService {
    */
   private async computedChain(data: CreateDeptReqBo | UpdateDeptReqBo) {
     if (!data.pid) {
-      data.pid = Number(this.envService.get('ROOT_DEPTID'));
+      data.pid = Number(this.envService.get('ROOT_DEPT_ID'));
       data.chain = String(data.pid);
       data.level = data.chain.split('_').length;
     } else {

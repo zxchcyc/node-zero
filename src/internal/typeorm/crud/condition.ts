@@ -14,7 +14,8 @@ export function findCondition(queryBuilder: any, data: any, likeKeys?: any[]) {
       continue;
     }
     if (!_.isNil(v) && _.isString(v)) {
-      queryBuilder = queryBuilder.andWhere([{ [k]: Like(`${v}%`) }]);
+      // 默认字符串类型不要like查询
+      queryBuilder = queryBuilder.andWhere([{ [k]: v }]);
       continue;
     }
     if (!_.isNil(v) && _.isArray(v)) {

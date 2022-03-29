@@ -1,6 +1,6 @@
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'permission_group', synchronize: true })
+@Entity({ name: 'permission_group', synchronize: false })
 @Index(['code'], { unique: true })
 export class PermissionGroupEntity {
   @PrimaryGeneratedColumn()

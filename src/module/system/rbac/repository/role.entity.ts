@@ -1,7 +1,7 @@
 import { EStatus } from 'src/common';
 import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({ name: 'role', synchronize: true })
+@Entity({ name: 'role', synchronize: false })
 @Index(['code'], { unique: true })
 export class RoleEntity {
   @PrimaryGeneratedColumn()

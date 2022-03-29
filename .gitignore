@@ -110,3 +110,6 @@ config/.env.local
 
 # webstorm
 .idea/
+
+# region
+src/module/system/region/constant/pcas-code.ts
