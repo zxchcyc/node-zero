@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { BaseService } from 'src/common';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import {
@@ -34,11 +34,21 @@ export class DictService extends BaseService {
   }
 
   async create(data: CreateDictReqBo): Promise<DictBo> {
+    const { type, key } = data;
+    const dictExist = await this.dictRepoService.findByTypeAndKey(type, key);
+    if (dictExist) {
+      throw new BadRequestException('A1100');
+    }
     const result = await this.dictRepoService.create(data);
     return result;
   }
 
   async updateById(id: number, data: UpdateDictReqBo): Promise<void> {
+    const { type, key } = data;
+    const dictExist = await this.dictRepoService.findByTypeAndKey(type, key);
+    if (dictExist && dictExist.id !== id) {
+      throw new BadRequestException('A1100');
+    }
     const result = await this.dictRepoService.updateById(id, data);
     return result;
   }

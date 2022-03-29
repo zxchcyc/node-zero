@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'dict', synchronize: true })
-@Index(['deletedAt', 'type'])
+@Index(['deletedAt', 'type', 'key'], { unique: true })
 export class DictEntity {
   @PrimaryGeneratedColumn()
   id: number;

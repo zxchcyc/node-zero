@@ -14,4 +14,5 @@ export abstract class DictAbstractRepoService {
   abstract create(data: CreateDictReqBo): Promise<DictBo>;
   abstract updateById(id: number, data: UpdateDictReqBo): Promise<void>;
   abstract deleteById(id: number): Promise<void>;
+  abstract findByTypeAndKey(type: string, key: string): Promise<DictBo>;
 }
