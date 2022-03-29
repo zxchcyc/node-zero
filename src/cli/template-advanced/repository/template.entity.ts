@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { ETemplateStatus, ETemplateType } from '../enum/template.enum';
 
-@Entity({ name: 'template_demo', synchronize: false })
+@Entity({ name: 'template', synchronize: false })
 @Index(['deletedAt', 'type', 'title'])
 export class TemplateEntity {
   @PrimaryGeneratedColumn()

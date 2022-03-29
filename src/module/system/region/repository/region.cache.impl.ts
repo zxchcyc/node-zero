@@ -18,14 +18,13 @@ export class RegionRepoService
     super(regionRepo, RegionRepoService.name);
   }
 
-  async find(data: FindRegionReqBo): Promise<FindRegionResBo[]>{
-    const orderBy = { code: 'ASC', };
+  async find(data: FindRegionReqBo): Promise<FindRegionResBo[]> {
+    const orderBy = { code: 'ASC' };
     const result = await super.find(data, orderBy as OrderByCondition);
     return result;
   }
-  async createMany(data: RegionBo[]): Promise<void>{
-    await this.regionRepo.insert(data)
-    return 
+  async createMany(data: RegionBo[]): Promise<void> {
+    await this.regionRepo.insert(data);
+    return;
   }
-
 }
