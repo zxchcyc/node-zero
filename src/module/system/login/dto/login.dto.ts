@@ -1,12 +1,6 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsBoolean,
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-} from 'class-validator';
+import { IsBoolean, IsEnum, IsNumber, IsString } from 'class-validator';
 import { EVerifyCodeType } from 'src/common';
 import { UserDto } from 'src/module/system/user/dto/user.dto';
 
@@ -48,7 +42,6 @@ export class LoginResDto extends LoginDto {
 
 export class TraceIdReqDto {
   @ApiProperty({ description: '追踪ID', type: String })
-  @IsNotEmpty()
   @IsString()
   traceId: string;
 }

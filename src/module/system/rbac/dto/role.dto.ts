@@ -8,7 +8,6 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -18,7 +17,7 @@ import { ReqPaginatorDto } from 'src/common/dto';
 
 export class RoleDto {
   @ApiProperty({ description: '数据库ID', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   id?: number;
 

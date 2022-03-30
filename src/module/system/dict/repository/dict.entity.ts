@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity({ name: 'dict', synchronize: true })
+@Entity({ name: 'dict', synchronize: false })
 @Index(['deletedAt', 'type', 'key'], { unique: true })
 export class DictEntity {
   @PrimaryGeneratedColumn()
