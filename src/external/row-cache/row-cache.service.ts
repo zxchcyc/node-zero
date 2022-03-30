@@ -28,7 +28,7 @@ export class RowCacheService {
     return this.take(id, key, query);
   }
 
-  async take(
+  private async take(
     id: number,
     key: string,
     query: (conditions: Record<string, any>) => Promise<any>,
@@ -36,7 +36,7 @@ export class RowCacheService {
     return this.doTake(id, key, query);
   }
 
-  async doTake(
+  private async doTake(
     id: number,
     key: string,
     query: (conditions: Record<string, any>) => Promise<any>,
@@ -77,7 +77,7 @@ export class RowCacheService {
     return JSON.parse(data);
   }
 
-  async takeWithExpire(
+  private async takeWithExpire(
     indexs: Record<string, any>,
     key: string,
     query: (conditions: Record<string, any>) => Promise<any>,
@@ -131,18 +131,6 @@ export class RowCacheService {
         this.keyer(this.tableName(key), primaryKey),
         primaryQuery,
       );
-
-      // update 的情况下是怎么删除唯一索引到主键的 key 的
-      // let dirty = false;
-      // for (const [k, v] of Object.entries(indexs)) {
-      //   if (data[k] !== v) {
-      //     dirty = true;
-      //     break;
-      //   }
-      // }
-      // if (dirty) {
-      //   return null;
-      // }
       return data;
     }
 

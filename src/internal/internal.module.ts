@@ -1,6 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { MyBullModule } from './bull/bull.module';
 import { EnvModule } from './env/env.module';
+import { LimitModule } from './limit/limit.module';
 import { LockModule } from './lock/lock.module';
 import { MyLoggerModule } from './logger/logger.module';
 import { OssModule } from './oss/oss.module';
@@ -18,6 +19,7 @@ import { MyTypeOrmModule } from './typeorm/typeorm.module';
     MyBullModule,
     IoRedisModule,
     LockModule,
+    LimitModule,
     OssModule,
   ],
   exports: [
@@ -28,6 +30,7 @@ import { MyTypeOrmModule } from './typeorm/typeorm.module';
     MyBullModule,
     IoRedisModule,
     LockModule,
+    LimitModule,
     OssModule,
   ],
 })

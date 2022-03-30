@@ -8,7 +8,9 @@
 - [x] Redis 分布式锁
 - [x] Logger/webhook 日志警报
 - [x] Wechat 相关接入
-- [ ] 限流
+- [x] 限流
+- [ ] 熔断
+- [ ] 降级
 
 ## 通用能力
 - [x] cls-hooked 上下文保存
