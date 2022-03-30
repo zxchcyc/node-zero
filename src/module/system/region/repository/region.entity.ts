@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, Index } from 'typeorm';
 
-@Entity({ name: 'region', synchronize: true })
+@Entity({ name: 'region', synchronize: false })
 @Index(['name'])
 @Index(['code'], { unique: true })
 @Index(['pCode'])

@@ -3,6 +3,7 @@ import { AuthModule } from './auth/auth.module';
 import { DeptModule } from './dept/dept.module';
 import { DictModule } from './dict/dict.module';
 import { LoginModule } from './login/login.module';
+import { MsgModule } from './msg/msg.module';
 import { RoleModule } from './rbac/role.module';
 import { RegionModule } from './region/region.module';
 import { UserModule } from './user/user.module';
@@ -17,6 +18,7 @@ import { UserModule } from './user/user.module';
     DeptModule,
     RegionModule,
     DictModule,
+    MsgModule,
   ],
   exports: [
     AuthModule,
@@ -27,6 +29,7 @@ import { UserModule } from './user/user.module';
     DeptModule,
     RegionModule,
     DictModule,
+    MsgModule,
   ],
   providers: [],
 })
