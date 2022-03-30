@@ -15,11 +15,11 @@ export class DemoService extends BaseService {
     // const result = await this.limitService.periodLimit('test', 10, 60);
     // const result = await this.limitService.tokenLimit(
     //   'test',
-    //   'testT',
+    //   'testTime',
     //   10,
     //   60,
-    //   new Date().getTime(),
-    //   600,
+    //   this.moment().unix(),
+    //   100,
     // );
     // this.logger.debug(result);
   }

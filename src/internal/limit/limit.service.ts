@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-09-17 21:18:17
- * @LastEditTime: 2022-03-30 16:57:38
+ * @LastEditTime: 2022-03-30 20:52:59
  * @LastEditors: archer zheng
  * @Description: 限流
  */
@@ -69,7 +69,7 @@ export class LimitService {
    * @param {number} capacity 令牌桶最大值
    * @param {number} now 当前时间戳
    * @param {number} requested 开发者需要获取的token数
-   * @return {number}
+   * @return {number} null | 1
    * @author: archer zheng
    */
   async tokenLimit(
