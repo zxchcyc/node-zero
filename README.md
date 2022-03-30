@@ -8,6 +8,7 @@
 - [x] Redis 分布式锁
 - [x] Logger/webhook 日志警报
 - [x] Wechat 相关接入
+- [ ] 限流
 
 ## 通用能力
 - [x] cls-hooked 上下文保存
@@ -18,13 +19,11 @@
 - [x] 轻量级流程引擎
 - [x] 轻量级模板引擎
 - [x] 轻量级规则引擎
-- [x] exceljs
-- [ ] 限流
+- [x] exceljs 导入导出
 
 ## 应用层
 - [x] http 结合 Swagger/DTO 自动生成 API 文档
 - [x] mq 实现 MQTag/MQValidate 订阅消息/参数校验
-- [x] schedule 实现 TaskProcess 支持同步任务锁
 
 ## 装饰器/中间件
 - [x] traceId 注入中间件
