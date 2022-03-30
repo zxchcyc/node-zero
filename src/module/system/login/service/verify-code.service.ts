@@ -13,7 +13,6 @@ import {
 } from '../bo/login.bo';
 import * as svgCaptcha from 'svg-captcha';
 import { SmsService } from 'src/external/sms/sms.service';
-import { genPassword } from './password';
 import {
   captchaKey,
   validateCaptchaKey,
