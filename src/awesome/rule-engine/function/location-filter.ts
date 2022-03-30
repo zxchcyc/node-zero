@@ -1,6 +1,6 @@
-export const locationFilter = (datas, location) =>
+export const locationFilter = (data, location) =>
   location
-    ? datas.filter((data) =>
+    ? data.filter((data) =>
         Object.keys(location).every((key) => data[key] === location[key]),
       )
-    : datas;
+    : data;
