@@ -12,5 +12,15 @@ export class DemoService extends BaseService {
   // @Cron('00 55 13 05 02 *')
   async handleTimeout() {
     this.logger.verbose('handleTimeout Called once after 1 seconds');
+    // const result = await this.limitService.periodLimit('test', 10, 60);
+    // const result = await this.limitService.tokenLimit(
+    //   'test',
+    //   'testT',
+    //   10,
+    //   60,
+    //   new Date().getTime(),
+    //   600,
+    // );
+    // this.logger.debug(result);
   }
 }

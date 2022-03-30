@@ -7,6 +7,7 @@ import { WebhookService } from 'src/external/webhook/webhook.service';
 import { RowCacheService } from 'src/external/row-cache/row-cache.service';
 import { AbstractRocketmqService } from 'src/external/rocketmq/adapter/rocketmq.service.abstract';
 import { AbstractBullMqService } from 'src/external/bullmq/adapter/bullmq.service.abstract';
+import { LimitService } from 'src/internal/limit/limit.service';
 
 /**
  * 抽象基础服务
@@ -19,6 +20,8 @@ export abstract class BaseService {
   protected readonly rocketmqService: AbstractRocketmqService;
   @Inject()
   protected readonly lockService: LockService;
+  @Inject()
+  protected readonly limitService: LimitService;
   @Inject()
   protected readonly envService: EnvService;
   @Inject()
