@@ -8,7 +8,6 @@ import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -18,22 +17,19 @@ import { ETemplateStatus, ETemplateType } from '../enum/template.enum';
 
 export class TemplateDto {
   @ApiProperty({ description: '数据库ID', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   id: number;
 
   @ApiProperty({ description: '序号', type: Number })
-  @IsNotEmpty()
   @IsOptional()
   sort?: number;
 
   @ApiProperty({ description: '置顶(1置顶 0不置顶)', type: Number })
-  @IsNotEmpty()
   @IsOptional()
   isTop?: number;
 
   @ApiProperty({ description: '是否结束(1结束 0没结束)', type: Number })
-  @IsNotEmpty()
   @IsOptional()
   finish?: number;
 

@@ -9,7 +9,9 @@ import {
   BatchDeleteReqBo,
   BatchUpdateReqBo,
   FindMsgResBo,
+  MsgBodyBo,
 } from '../bo/msg.bo';
+import { MsgDistributeService } from '../service/msg-distribute.service';
 import { MsgService } from '../service/msg.service';
 import { MsgAbstractFacadeService } from './msg.facade.abstract';
 
@@ -18,7 +20,10 @@ export class MsgFacadeService
   extends BaseService
   implements MsgAbstractFacadeService
 {
-  constructor(private readonly msgService: MsgService) {
+  constructor(
+    private readonly msgService: MsgService,
+    private readonly msgDistributeService: MsgDistributeService,
+  ) {
     super(MsgFacadeService.name);
   }
   async count(data: FindMsgReqBo): Promise<number> {
@@ -41,5 +46,13 @@ export class MsgFacadeService
   }
   async batchUpdate(data: BatchUpdateReqBo): Promise<void> {
     return this.msgService.batchUpdate(data);
+  }
+
+  async distribute(data: MsgBo): Promise<void> {
+    return this.msgDistributeService.distribute(data);
+  }
+
+  async publish(uids: number | number[], data: MsgBodyBo) {
+    return this.msgDistributeService.create(uids, data);
   }
 }

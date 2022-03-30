@@ -5,24 +5,19 @@ import {
   PickType,
 } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import {
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-} from 'class-validator';
+import { IsArray, IsEnum, IsNumber, IsString } from 'class-validator';
 import { EStatus } from 'src/common';
 import { ReqPaginatorDto } from 'src/common/dto';
 
 export class DictDto {
   @ApiProperty({ description: '数据库ID', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   id: number;
 
   @ApiProperty({ description: '序号', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
+  @Type(() => Number)
   sort: number;
 
   @IsString()
@@ -34,7 +29,8 @@ export class DictDto {
   key: string;
 
   @ApiProperty({ description: '字典值', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
+  @Type(() => Number)
   value: number;
 
   @IsString()

@@ -5,7 +5,7 @@ import {
   PickType,
 } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ReqPaginatorDto } from 'src/common/dto';
 
 export class RegionDto {
@@ -26,7 +26,7 @@ export class RegionDto {
   chain: string;
 
   @ApiProperty({ description: '行政区域深度', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   level: number;
 }

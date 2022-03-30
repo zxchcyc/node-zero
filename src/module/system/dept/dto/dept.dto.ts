@@ -8,7 +8,6 @@ import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -18,7 +17,7 @@ import { ReqPaginatorDto } from 'src/common/dto';
 
 export class DeptDto {
   @ApiProperty({ description: '数据库ID', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   id: number;
 
@@ -35,12 +34,12 @@ export class DeptDto {
   chain: string;
 
   @ApiProperty({ description: '上级部门ID', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   pid: number;
 
   @ApiProperty({ description: '部门深度', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   level: number;
 

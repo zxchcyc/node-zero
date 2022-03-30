@@ -8,8 +8,8 @@ import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
+  IsObject,
   IsOptional,
   IsString,
 } from 'class-validator';
@@ -18,7 +18,7 @@ import { EMsgStatus, EMsgTag, EReadStatus } from '../enum/msg.enum';
 
 export class MsgDto {
   @ApiProperty({ description: '数据库ID', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   id: number;
 
@@ -44,14 +44,17 @@ export class MsgDto {
   tag: EMsgTag;
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ description: '消息标题' })
   title: string;
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ description: '消息内容' })
   content: string;
 
   @IsString()
+  @IsOptional()
   @ApiProperty({ description: '落地参数' })
   attached: string;
 
@@ -124,4 +127,26 @@ export class BatchDeleteReqDto extends PickType(MsgDto, [] as const) {
   @ApiProperty({ description: 'ID数组', type: [Number] })
   @IsNumber({}, { each: true })
   ids: number[];
+}
+
+export class PublishMsgReqDto extends IntersectionType(
+  PickType(MsgDto, ['tag'] as const),
+  PickType(PartialType(MsgDto), ['title', 'content'] as const),
+) {
+  @IsObject()
+  @ApiProperty({ description: '落地参数' })
+  @IsOptional()
+  attached: Record<string, any>;
+
+  @IsArray()
+  @ApiProperty({ description: 'ID数组', type: [Number] })
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  uids: number[];
+
+  @ApiProperty({ description: '数据库ID', type: Number })
+  @IsNumber()
+  @Type(() => Number)
+  @IsOptional()
+  uid: number;
 }

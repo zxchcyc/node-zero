@@ -9,7 +9,6 @@ import {
   IsArray,
   IsEnum,
   IsMobilePhone,
-  IsNotEmpty,
   IsNumber,
   IsOptional,
   IsString,
@@ -20,7 +19,7 @@ import { EUserType } from '../enum/user.enum';
 
 export class UserDto {
   @ApiProperty({ description: '数据库ID', type: Number })
-  @IsNotEmpty()
+  @IsNumber()
   @Type(() => Number)
   id: number;
 

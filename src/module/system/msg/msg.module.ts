@@ -10,6 +10,7 @@ import { MsgAbstractRepoService } from './repository/msg.abstract';
 import { MsgRepoService } from './repository/msg.cache.impl';
 import { MsgEntity } from './repository/msg.entity';
 import { MsgService } from './service/msg.service';
+import { MsgDistributeService } from './service/msg-distribute.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([MsgEntity])],
@@ -24,6 +25,7 @@ import { MsgService } from './service/msg.service';
       useClass: MsgRepoService,
     },
     MsgService,
+    MsgDistributeService,
     MsgScheduleService,
     BullTagService,
     BullProcessor,

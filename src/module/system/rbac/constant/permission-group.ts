@@ -28,4 +28,11 @@ export const PERMISSION_GROUP_LIST = [
     seq: null,
     code: 'dict',
   },
+  {
+    name: '消息管理',
+    kind: '消息管理',
+    seqKind: null,
+    seq: null,
+    code: 'msg',
+  },
 ];

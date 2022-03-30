@@ -16,4 +16,8 @@ export class MsgRepoService
   ) {
     super(msgRepo, MsgRepoService.name);
   }
+
+  async countByMsgid(msgid: string): Promise<number> {
+    return await this.msgRepo.count({ msgid });
+  }
 }

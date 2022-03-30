@@ -10,7 +10,12 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiExtraModels, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiExtension,
+  ApiExtraModels,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { PermissionGuard, BaseController, ApiCommResponse } from 'src/common';
 import { MsgAbstractFacadeService } from '../../../../facade/msg.facade.abstract';
 import { IdResDto, IdReqDto } from 'src/common/dto';
@@ -35,6 +40,10 @@ export class MsgWebController extends BaseController {
     super(MsgWebController.name);
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '消息管理',
+    groupName: ['消息管理'],
+  })
   @Get('/msg/count')
   @ApiOperation({ summary: '获取总数' })
   @ApiCommResponse('obj', CountResDto)
@@ -44,6 +53,10 @@ export class MsgWebController extends BaseController {
     return { result: { total: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '消息管理',
+    groupName: ['消息管理'],
+  })
   @Get('/msg/list')
   @ApiOperation({ summary: '获取分页列表' })
   @ApiCommResponse('paging', FindMsgResDto)
@@ -53,6 +66,10 @@ export class MsgWebController extends BaseController {
     return { result: { data: result } };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '消息管理',
+    groupName: ['消息管理'],
+  })
   @Post('/msg')
   @ApiOperation({ summary: '创建' })
   @ApiCommResponse('obj', IdResDto)
@@ -62,6 +79,10 @@ export class MsgWebController extends BaseController {
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '消息管理',
+    groupName: ['消息管理'],
+  })
   @Get('/msg/:id')
   @ApiOperation({ summary: '获取详情' })
   @ApiCommResponse('obj', FindOneMsgResDto)
@@ -70,18 +91,23 @@ export class MsgWebController extends BaseController {
     return { result: await this.facadeService.findById(params.id) };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '消息管理',
+    groupName: ['消息管理'],
+  })
   @Put('/msg/:id')
   @ApiOperation({ summary: '修改' })
   @ApiCommResponse('obj', IdResDto)
   @ApiExtraModels(IdResDto)
-  async updateById(
-    @Param() params: IdReqDto,
-    @Body() data: UpdateMsgReqDto,
-  ) {
+  async updateById(@Param() params: IdReqDto, @Body() data: UpdateMsgReqDto) {
     const result = await this.facadeService.updateById(params.id, data);
     return { result };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '消息管理',
+    groupName: ['消息管理'],
+  })
   @Delete('/msg/batch')
   @ApiOperation({ summary: '批量删除' })
   @ApiCommResponse()
@@ -90,6 +116,10 @@ export class MsgWebController extends BaseController {
     return { result: null };
   }
 
+  @ApiExtension('x-permission', {
+    moduleName: '消息管理',
+    groupName: ['消息管理'],
+  })
   @Patch('/msg/batch')
   @ApiOperation({ summary: '批量操作' })
   @ApiCommResponse()

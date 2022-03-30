@@ -14,4 +14,6 @@ export enum EReadStatus {
   'undone' = 2,
 }
 
-export enum EMsgTag {}
+export enum EMsgTag {
+  'demo' = 1,
+}

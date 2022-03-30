@@ -7,6 +7,6 @@ export const ROLE_LIST = [
     name: '管理员',
     code: 'admin',
     status: EStatus.enable,
-    pgList: ['账号管理', '角色管理', '部门管理', '字典管理'],
+    pgList: ['账号管理', '角色管理', '部门管理', '字典管理', '消息管理'],
   },
 ];
