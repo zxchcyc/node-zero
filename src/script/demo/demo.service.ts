@@ -21,14 +21,14 @@ export class DemoService extends BaseService {
     //   this.moment().unix(),
     //   100,
     // );
-    const result = await this.limitService.funnelLimit(
-      'test',
-      'testTime',
-      10,
-      60,
-      this.moment().unix(),
-      1,
-    );
-    this.logger.debug(result);
+    // const result = await this.limitService.funnelLimit(
+    //   'test',
+    //   'testTime',
+    //   10,
+    //   60,
+    //   this.moment().unix(),
+    //   1,
+    // );
+    // this.logger.debug(result);
   }
 }
