@@ -42,7 +42,7 @@ export class LoginService extends BaseService {
     if (!user || user.status === EStatus.disable) {
       throw new BadRequestException('A0800');
     }
-    return await this.authService.genToken(payload);
+    return await this.authService.refreshToken(payload);
   }
 
   async logout(payload: IJwtPayload) {
