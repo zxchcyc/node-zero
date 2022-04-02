@@ -27,8 +27,6 @@ export class WebLoginController extends BaseController {
     super(WebLoginController.name);
   }
 
-  @UseGuards(ThrottlerGuard)
-  @Throttle(1, 60)
   @Post('user/refresh/token')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: '刷新 accessToken' })

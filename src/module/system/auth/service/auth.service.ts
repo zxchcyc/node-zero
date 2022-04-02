@@ -21,6 +21,57 @@ export class AuthService extends BaseService {
     return `${type}:${payload.terminal}:${payload.id}`;
   }
 
+  // 防止并发冲掉token
+  async genTokenOfConcurrency(payload: IJwtPayload): Promise<Partial<Token>> {
+    const token = await this.lockService.redis.get(
+      this.key('refreshToken:concurrency', payload),
+    );
+    if (token) {
+      return {
+        accessToken: token.split('|')[0],
+        refreshToken: token.split('|')[1],
+      };
+    }
+    const accessToken = this.jwtService.sign(payload);
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: jwtConstants.refreshTokenExpiresIn,
+    });
+    await this.lockService.redis.set(
+      this.key('refreshToken:concurrency', payload),
+      `${accessToken}|${refreshToken}`,
+      'EX',
+      10,
+    );
+    return {
+      accessToken,
+      refreshToken,
+    };
+  }
+
+  async refreshToken(payload: IJwtPayload): Promise<Token> {
+    payload.website = ELoginWebSite.nodeZero;
+    const { accessToken, refreshToken } = await this.genTokenOfConcurrency(
+      payload,
+    );
+    await this.lockService.redis.set(
+      this.key('accessToken', payload),
+      accessToken,
+      'EX',
+      jwtConstants.redisAccessTokenExpiresIn,
+    );
+    await this.lockService.redis.set(
+      this.key('refreshToken', payload),
+      refreshToken,
+      'EX',
+      jwtConstants.redisRefreshTokenExpiresIn,
+    );
+    return {
+      accessToken,
+      refreshToken,
+      accessTokenExpiresIn: jwtConstants.accessTokenExpiresIn,
+    };
+  }
+
   async genToken(payload: IJwtPayload): Promise<Token> {
     payload.website = ELoginWebSite.nodeZero;
     const accessToken = this.jwtService.sign(payload);
