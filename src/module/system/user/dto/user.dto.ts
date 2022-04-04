@@ -55,7 +55,7 @@ export class UserDto {
   status?: EStatus;
 
   @ApiProperty({
-    description: '用户类型 1 管理员 2 经销商/终端用户',
+    description: '用户类型 1 管理员 2 C端用户',
     enum: EUserType,
   })
   @IsEnum(EUserType)

@@ -18,7 +18,7 @@ export class WechatMsgService {
       // return 'success';
       eventKey = undefined;
     }
-    // 经销商推广码
+    // 推广码
     const title = `感谢关注❤️
 各地区产品合作请留言，我们会在第一时间回复。
 

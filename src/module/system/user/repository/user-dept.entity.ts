@@ -7,7 +7,7 @@ export class UserDeptEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int', nullable: true, comment: '经销商id' })
+  @Column({ type: 'int', nullable: true, comment: '用户id' })
   uid: number;
 
   @Column({ type: 'int', nullable: true, comment: '部门id' })
