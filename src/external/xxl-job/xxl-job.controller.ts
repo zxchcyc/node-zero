@@ -23,22 +23,31 @@ export class XxljobController {
     summary:
       '忙碌检测：调度中心检测指定执行器上指定任务是否忙碌（运行中）时使用',
   })
-  async idleBeat() {
-    // const result = { code: 500, msg: 'busy' };
-    const result = { code: 200, msg: 'idle' };
+  async idleBeat(@Body() data) {
+    let result: { code: number; msg: string };
+    const completed = await this.xxljobService.idleBeat(data);
+    if (completed) {
+      result = { code: 200, msg: 'idle' };
+    } else {
+      result = { code: 500, msg: 'busy' };
+    }
     return { result: { resType: 'xxljob', data: result } };
   }
 
   @Post('/kill')
   @ApiOperation({ summary: '终止任务' })
   async kill(@Body() data) {
-    const result = { code: 500, msg: `not yet support, jobId(${data.jobId})` };
+    await this.xxljobService.kill(data);
+    const result = { code: 200, msg: `success` };
     return { result: { resType: 'xxljob', data: result } };
   }
 
   @Post('/log')
   @ApiOperation({ summary: '查看日志' })
-  async log() {
+  async log(@Body() data) {
+    // "logDateTim":0,     // 本次调度日志时间
+    // "logId":0,          // 本次调度日志ID
+    // "fromLineNum":0     // 日志开始行号，滚动加载日志
     const result = {
       code: 200,
       content: '',
