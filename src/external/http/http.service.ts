@@ -12,6 +12,7 @@ export class HttpService {
   private readonly baseConfig: axios.AxiosRequestConfig;
   public readonly smsAxios: axios.AxiosInstance;
   public readonly dingAxios: axios.AxiosInstance;
+  public readonly xxljobAxios: axios.AxiosInstance;
 
   private logger: Logger = new Logger(HttpService.name);
   constructor(private readonly envService: EnvService) {
@@ -35,6 +36,16 @@ export class HttpService {
       baseURL: this.envService.get('SMS_API'),
       headers: {
         'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      },
+    });
+
+    // xxljob请求实例
+    this.xxljobAxios = axios.default.create({
+      ...this.baseConfig,
+      baseURL: this.envService.get('XXL_JOB_SCHEDULE_CENTER_URL'),
+      headers: {
+        'Content-Type': 'application/json',
+        'xxl-job-access-token': this.envService.get('XXL_JOB_ACCESSTOKEN'),
       },
     });
   }
@@ -76,6 +87,19 @@ export class HttpService {
     } catch (error) {
       const res = error['response']?.['data'];
       this.logger.error('## 请求第三方服务云片验证码失败', res);
+      throw new HttpException({ errorCode: 'C0001', message: res }, 500);
+    }
+  }
+
+  async xxljobRequest(url: string, data: any) {
+    // this.logger.verbose(`## 请求第三方服务xxljob: ${JSON.stringify(data)}`);
+    try {
+      const result = await this.xxljobAxios.post(url, data);
+      // this.logger.debug(result.data);
+      return result.data;
+    } catch (error) {
+      const res = error['response']?.['data'];
+      // this.logger.error('## 请求第三方服务xxljob失败', res);
       throw new HttpException({ errorCode: 'C0001', message: res }, 500);
     }
   }

@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-09-17 21:21:40
- * @LastEditTime: 2022-03-30 14:34:55
+ * @LastEditTime: 2022-04-05 19:13:40
  * @LastEditors: archer zheng
  * @Description: BULL MQ走这里出去
  */
@@ -27,6 +27,7 @@ export class BullmqService implements AbstractBullMqService {
     @InjectQueue('cms') private cms: Queue,
     @InjectQueue('user') private user: Queue,
     @InjectQueue('msg') private msg: Queue,
+    @InjectQueue('xxljob') private xxljob: Queue,
   ) {
     BULL_QUEUES.forEach((e) => this.queueMap.set(e, this[e]));
   }

@@ -4,7 +4,7 @@ import { Injectable, NestMiddleware } from '@nestjs/common';
 
 @Injectable()
 export class JsonBodyMiddleware implements NestMiddleware {
-  use(req: Request, res: Response, next: () => any) {
-    json({ limit: '1000kb' })(req, res, next);
+  use(request: Request, response: Response, next: () => any) {
+    json({ limit: '1000kb' })(request, response, next);
   }
 }

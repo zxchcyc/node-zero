@@ -8,6 +8,7 @@ import { RowCacheModule } from './row-cache/row-cache.module';
 import { OcrModule } from './ocr/ocr.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { RocketmqModule } from './rocketmq/rocketmq.module';
+import { XxljobModule } from './xxl-job/xxl-job.module';
 
 @Global()
 @Module({
@@ -17,6 +18,7 @@ import { RocketmqModule } from './rocketmq/rocketmq.module';
     BullmqModule,
     RocketmqModule,
     WechatModule,
+    XxljobModule,
     SmsModule,
     RowCacheModule,
     OcrModule,
@@ -28,6 +30,7 @@ import { RocketmqModule } from './rocketmq/rocketmq.module';
     BullmqModule,
     RocketmqModule,
     WechatModule,
+    XxljobModule,
     SmsModule,
     RowCacheModule,
     OcrModule,

@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-09 14:19:55
- * @LastEditTime: 2022-03-24 16:51:59
+ * @LastEditTime: 2022-04-05 18:19:57
  * @LastEditors: archer zheng
  * @Description: 打印请求耗时, 可以加慢请求监控 返回数据格式统一
  */
@@ -30,7 +30,7 @@ export class ResTimeInterceptor implements NestInterceptor {
       .handle()
       .pipe(
         map(async (data) => {
-          if (data?.result?.resType === 'wechat') {
+          if (['wechat', 'xxljob'].includes(data?.result?.resType)) {
             response.status(HttpStatus.OK).send(data.result.data);
           } else if (data?.result?.resType === 'svg') {
             response.type('image/svg+xml');

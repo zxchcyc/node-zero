@@ -4,7 +4,7 @@ import { WeChat } from '@tnwx/wxmp';
 import { WechatMsgProcessor } from './wechat-msg-processor';
 
 @ApiTags('Wechat')
-@Controller('wechat/v1')
+@Controller('wechat')
 export class WechatController {
   constructor(private readonly wechatMsgProcessor: WechatMsgProcessor) {}
 
