@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-09-17 21:21:40
- * @LastEditTime: 2022-04-05 19:13:40
+ * @LastEditTime: 2022-04-05 21:38:48
  * @LastEditors: archer zheng
  * @Description: BULL MQ走这里出去
  */
@@ -130,6 +130,20 @@ export class BullmqService implements AbstractBullMqService {
       });
       await this.queueMap.get(queue).addBulk(tasks);
       return;
+    } catch (error) {
+      this.logger.error(error);
+    }
+  }
+
+  /**
+   * 获取任务详情
+   *
+   * @param {string} queue 队列
+   * @param {string|number} jobId 任务ID
+   */
+  async getJob(queue: string, jobId: string | number) {
+    try {
+      return await this.queueMap.get(queue).getJob(jobId);
     } catch (error) {
       this.logger.error(error);
     }

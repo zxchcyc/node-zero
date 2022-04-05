@@ -1,7 +1,7 @@
 /*
  * @Author: archer zheng
  * @Date: 2021-11-08 17:22:21
- * @LastEditTime: 2022-03-24 17:09:58
+ * @LastEditTime: 2022-04-05 21:39:23
  * @LastEditors: archer zheng
  * @Description: MQ 发送抽象类
  */
@@ -12,6 +12,7 @@ export interface JobOptions {
   attempts?: number | undefined;
   lifo?: boolean | undefined;
   timeout?: number | undefined;
+  jobId?: number | string | undefined;
 }
 
 export interface IBullMsgBody {
@@ -50,4 +51,12 @@ export abstract class AbstractBullMqService {
     data: IBullMsgBody[],
     opts?: JobOptions,
   ): Promise<void>;
+
+  /**
+   * 获取任务详情
+   *
+   * @param {string} queue 队列
+   * @param {string|number} jobId 任务ID
+   */
+  abstract getJob(queue: string, jobId: string | number): Promise<any>;
 }

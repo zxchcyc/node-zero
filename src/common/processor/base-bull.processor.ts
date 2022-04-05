@@ -5,6 +5,7 @@ import {
   OnQueueRemoved,
   // OnQueueCompleted,
   OnQueueStalled,
+  OnQueueCompleted,
   // OnQueueWaiting,
   // OnQueueActive,
   // OnQueueProgress,
@@ -13,8 +14,9 @@ import {
   // OnQueueCleaned,
   // OnQueueDrained,
 } from '@nestjs/bull';
-import { Logger, Injectable } from '@nestjs/common';
+import { Logger, Injectable, Inject } from '@nestjs/common';
 import { Job } from 'bull';
+import { XxljobService } from 'src/external/xxl-job/xxl-job.service';
 
 /**
  * 抽象BULL队列监听器基础服务
@@ -22,8 +24,10 @@ import { Job } from 'bull';
  */
 @Injectable()
 export class BaseBullProcessor {
-  protected logger: Logger;
+  @Inject()
+  protected readonly xxljobService: XxljobService;
 
+  protected logger: Logger;
   protected constructor(serviceName: string) {
     this.logger = new Logger(serviceName);
   }
@@ -88,11 +92,15 @@ export class BaseBullProcessor {
   //   this.logger.log(job, 'OnQueueDrained');
   // }
 
-  // @OnQueueCompleted()
-  // async onQueueCompleted(job: Job, result: any) {
-  //   this.logger.log(job, 'OnQueueCompleted', result);
-  //   if (!result) {
-  //     this.logger.log('任务完成得不正常');
-  //   }
-  // }
+  @OnQueueCompleted()
+  async onQueueCompleted(job: Job, result: any) {
+    // this.logger.log(job, 'OnQueueCompleted', result);
+    const logId = job.data.data?.logId;
+    if (logId) {
+      await this.xxljobService.callback(null, {
+        logId,
+        result: 'success',
+      });
+    }
+  }
 }

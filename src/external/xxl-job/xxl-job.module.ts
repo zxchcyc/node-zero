@@ -1,15 +1,16 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Global, MiddlewareConsumer, Module } from '@nestjs/common';
 import { BullTagService } from './bullmq/bull-tag.service';
 import { BullProcessor } from './bullmq/bull.processor';
 import { XxljobController } from './xxl-job.controller';
 import { XxljobMiddleware } from './xxl-job.middleware';
 import { XxljobService } from './xxl-job.service';
 
+@Global()
 @Module({
   imports: [],
   controllers: [XxljobController],
   providers: [XxljobService, BullTagService, BullProcessor],
-  exports: [],
+  exports: [XxljobService],
 })
 export class XxljobModule {
   configure(consumer: MiddlewareConsumer) {
