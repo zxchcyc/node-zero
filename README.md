@@ -8,8 +8,8 @@
 - [x] Redis 分布式锁
 - [x] Logger/webhook 日志警报
 - [x] Wechat 相关接入
+- [x] xxl-job（任务调度中心支持）
 - [ ] mysql->canal->mq->es（数据同步支持）
-- [ ] xxl-job（任务调度中心支持）
 - [x] 限流（固定时间窗口、令牌桶、漏斗）
 - [ ] 熔断（下游故障）
 - [ ] 降级（稳住核心服务）
