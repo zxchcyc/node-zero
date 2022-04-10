@@ -1,6 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { MyBullModule } from './bull/bull.module';
 import { EnvModule } from './env/env.module';
+import { MyKafkaModule } from './kafka/kafka.module';
 import { LimitModule } from './limit/limit.module';
 import { LockModule } from './lock/lock.module';
 import { MyLoggerModule } from './logger/logger.module';
@@ -15,6 +16,7 @@ import { MyTypeOrmModule } from './typeorm/typeorm.module';
     EnvModule.register({ folder: process.env.CONFIG_FOLDER }),
     MyTypeOrmModule,
     // MyMongooseModule,
+    MyKafkaModule,
     MyLoggerModule,
     MyBullModule,
     IoRedisModule,
@@ -26,6 +28,7 @@ import { MyTypeOrmModule } from './typeorm/typeorm.module';
     EnvModule.register({ folder: process.env.CONFIG_FOLDER }),
     MyTypeOrmModule,
     // MyMongooseModule,
+    MyKafkaModule,
     MyLoggerModule,
     MyBullModule,
     IoRedisModule,
