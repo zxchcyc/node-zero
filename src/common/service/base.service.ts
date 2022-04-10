@@ -8,6 +8,7 @@ import { RowCacheService } from 'src/external/row-cache/row-cache.service';
 import { AbstractRocketmqService } from 'src/external/rocketmq/adapter/rocketmq.service.abstract';
 import { AbstractBullMqService } from 'src/external/bullmq/adapter/bullmq.service.abstract';
 import { LimitService } from 'src/internal/limit/limit.service';
+import { KafkaProducerService } from 'src/external/kafka/Producer.service';
 
 /**
  * 抽象基础服务
@@ -18,6 +19,8 @@ export abstract class BaseService {
   protected readonly bullmqService: AbstractBullMqService;
   @Inject()
   protected readonly rocketmqService: AbstractRocketmqService;
+  @Inject()
+  protected readonly kafkaProducerService: KafkaProducerService;
   @Inject()
   protected readonly lockService: LockService;
   @Inject()

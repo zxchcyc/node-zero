@@ -37,6 +37,4 @@ docker run -d --name kafka --hostname kafka -p 19092:19092 \
 
 docker run -d --restart=always --name=kafka-manager -p 9000:9000 -e ZK_HOSTS="docker.for.mac.host.internal:2181" sheepkiller/kafka-manager
 
-./kafka-console-producer.sh --broker-list localhost:9092 --topic first-topic
-./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first-topic --from-beginning
 

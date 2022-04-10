@@ -3,6 +3,7 @@
 ## 基础设施
 - [x] BullMQ 监听/发送
 - [x] RocketMQ 监听/发送
+- [x] Kafka 监听/发送
 - [x] Websocket 监听/发送
 - [x] Redis/DB 行级缓存
 - [x] Redis 分布式锁

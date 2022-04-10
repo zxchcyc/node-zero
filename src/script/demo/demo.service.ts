@@ -8,10 +8,12 @@ export class DemoService extends BaseService {
     super(DemoService.name);
   }
 
-  @Timeout(1000)
+  @Timeout(10000)
   // @Cron('00 55 13 05 02 *')
   async handleTimeout() {
     this.logger.verbose('handleTimeout Called once after 1 seconds');
+    // const result = await this.kafkaProducerService.post();
+    // this.logger.debug(result);
     // const result = await this.limitService.periodLimit('test', 10, 60);
     // const result = await this.limitService.tokenLimit(
     //   'test',

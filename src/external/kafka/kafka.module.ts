@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { KafkaModule } from '@rob3000/nestjs-kafka';
-import { EnvService } from '../env/env.service';
+import { EnvService } from '../../internal/env/env.service';
+import { KafkaConsumerService } from './consumer.service';
+import { KafkaProducerService } from './Producer.service';
 
 @Module({
   imports: [
@@ -12,7 +14,7 @@ import { EnvService } from '../env/env.service';
             name: 'KAFKA_SERVICE',
             options: {
               client: {
-                clientId: 'test-e2e',
+                clientId: 'node-zero',
                 brokers: [broker],
                 retry: {
                   retries: 2,
@@ -20,7 +22,7 @@ import { EnvService } from '../env/env.service';
                 },
               },
               consumer: {
-                groupId: 'test-e2e-consumer',
+                groupId: 'node-zero-consumer',
                 allowAutoTopicCreation: true,
               },
             },
@@ -30,5 +32,7 @@ import { EnvService } from '../env/env.service';
       inject: [EnvService],
     }),
   ],
+  providers: [KafkaProducerService, KafkaConsumerService],
+  exports: [KafkaProducerService],
 })
 export class MyKafkaModule {}
