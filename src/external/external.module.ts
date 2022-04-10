@@ -9,6 +9,7 @@ import { OcrModule } from './ocr/ocr.module';
 import { WebsocketModule } from './websocket/websocket.module';
 import { RocketmqModule } from './rocketmq/rocketmq.module';
 import { XxljobModule } from './xxl-job/xxl-job.module';
+import { MyKafkaModule } from './kafka/kafka.module';
 
 @Global()
 @Module({
@@ -17,6 +18,7 @@ import { XxljobModule } from './xxl-job/xxl-job.module';
     WebhookModule,
     BullmqModule,
     RocketmqModule,
+    MyKafkaModule,
     WechatModule,
     XxljobModule,
     SmsModule,
@@ -29,6 +31,7 @@ import { XxljobModule } from './xxl-job/xxl-job.module';
     WebhookModule,
     BullmqModule,
     RocketmqModule,
+    MyKafkaModule,
     WechatModule,
     XxljobModule,
     SmsModule,
