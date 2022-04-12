@@ -18,6 +18,7 @@
           "PORT": "3002",
           "NODE_ENV": "local",
           "TASK_ENABLED": "false",
+          "SERVICE_NAME"="node-zero-api",
           "CONFIG_FOLDER": "../config"
         },
         "sourceMaps": true,
